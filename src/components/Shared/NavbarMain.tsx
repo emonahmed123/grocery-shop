@@ -13,10 +13,11 @@ import {
 import { usePathname } from "next/navigation";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useState } from "react";
+import { useAppSelector } from "@/redux/hook";
 const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems = ["Home", "Categories", "Dashboard"];
-
+  const products = useAppSelector((store) => store.cart.products);
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
   return (
@@ -94,11 +95,12 @@ const NavbarMain = () => {
           <Button
             as={Link}
             // color="redd"
-            href="/auth"
+            href="/cart"
             isIconOnly
             variant="shadow"
             className="text-white  bg-primary"
           >
+            <sup>{products.length}</sup>
             <FaCartArrowDown size={20} />
           </Button>
         </NavbarItem>

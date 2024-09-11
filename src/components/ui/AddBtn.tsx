@@ -1,6 +1,10 @@
 import React from "react";
 
-const AddBtn = () => {
+const AddBtn = ({}) => {
+    
+    
+    
+    
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

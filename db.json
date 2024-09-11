@@ -1,0 +1,44 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "name": "Organic Apples",
+            "price": 4.99,
+            "category": "Fruits",
+            "description": "Fresh and organic apples grown locally. Perfect for snacking or baking.",
+            "image": "https://example.com/images/organic-apples.jpg"
+          },
+          {
+            "id": "2",
+            "name": "Whole Wheat Bread",
+            "price": 2.49,
+            "category": "Bakery",
+            "description": "A loaf of whole wheat bread made with 100% whole grains. High in fiber and nutrients.",
+            "image": "https://example.com/images/whole-wheat-bread.jpg"
+          },
+          {
+            "id": "3",
+            "name": "Almond Milk",
+            "price": 3.79,
+            "category": "Dairy-Free",
+            "description": "A carton of unsweetened almond milk, perfect for lactose-intolerant individuals or those seeking a dairy-free alternative.",
+            "image": "https://example.com/images/almond-milk.jpg"
+          },
+          {
+            "id": "4",
+            "name": "Broccoli",
+            "price": 1.99,
+            "category": "Vegetables",
+            "description": "Fresh and nutritious broccoli. Great for steaming or stir-frying.",
+            "image": "https://example.com/images/broccoli.jpg"
+          },
+          {
+            "id": "5",
+            "name": "Chicken Breast",
+            "price": 7.99,
+            "category": "Meat",
+            "description": "Boneless, skinless chicken breast. Lean and versatile, perfect for any meal.",
+            "image": "https://example.com/images/chicken-breast.jpg"
+          }
+    ]
+  }
