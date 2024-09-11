@@ -92,17 +92,23 @@ const NavbarMain = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
+
+
+
           <Button
             as={Link}
             // color="redd"
             href="/cart"
             isIconOnly
             variant="shadow"
-            className="text-white  bg-primary"
+            className="text-white  bg-primary relative"
           >
-            <sup>{products.length}</sup>
+
             <FaCartArrowDown size={20} />
+
+
           </Button>
+          <sup className="text-red-600 text-[18px] absolute top-4 left-6">{products.length}</sup>
         </NavbarItem>
 
 

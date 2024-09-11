@@ -16,13 +16,14 @@ const ProductCard = ({ item }: { item: TGroceryItem }) => {
     return (
         <>
             <Card shadow="sm" className="">
-                <CardBody className="overflow-visible p-0">
+                <CardBody className="overflow-visible p-0 h-[400px]">
                     <Image
                         // shadow="sm"
                         // radius="lg"
-                        height={100}
+                        height={50}
+
                         width={100}
-                        src="https://images.pexels.com/photos/459976/pexddels-photo-459976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        src={item.image}
                         alt="Grocery"
                         className="w-full object-cover rounded-lg"
                     />

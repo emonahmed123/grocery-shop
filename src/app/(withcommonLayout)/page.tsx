@@ -4,7 +4,7 @@ import React from 'react';
 import PopularProducts from '@/components/home/PopularProducts'
 const Home = async () => {
     const res = await fetch('http://localhost:5000/data', {
-        // cache: 'no-store'
+        cache: 'no-store'
     })
 
     const products = await res.json()

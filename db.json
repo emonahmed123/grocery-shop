@@ -6,7 +6,7 @@
             "price": 4.99,
             "category": "Fruits",
             "description": "Fresh and organic apples grown locally. Perfect for snacking or baking.",
-            "image": "https://example.com/images/organic-apples.jpg"
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpaPOaoiIpcA1XsrIAIx_Knp18lgCcwb9-GQ&s"
           },
           {
             "id": "2",
@@ -14,7 +14,7 @@
             "price": 2.49,
             "category": "Bakery",
             "description": "A loaf of whole wheat bread made with 100% whole grains. High in fiber and nutrients.",
-            "image": "https://example.com/images/whole-wheat-bread.jpg"
+            "image": "https://sallysbakingaddiction.com/wp-content/uploads/2024/01/whole-wheat-sandwich-bread-2.jpg"
           },
           {
             "id": "3",
@@ -22,7 +22,7 @@
             "price": 3.79,
             "category": "Dairy-Free",
             "description": "A carton of unsweetened almond milk, perfect for lactose-intolerant individuals or those seeking a dairy-free alternative.",
-            "image": "https://example.com/images/almond-milk.jpg"
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw2wdRT5XmUw_OmObJsWox0BJLSZiGGhO8Jw&s"
           },
           {
             "id": "4",
@@ -30,7 +30,7 @@
             "price": 1.99,
             "category": "Vegetables",
             "description": "Fresh and nutritious broccoli. Great for steaming or stir-frying.",
-            "image": "https://example.com/images/broccoli.jpg"
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3M-gy4Ol4GzHW-5x61xv6m9NQf7e5DFt4hg&s"
           },
           {
             "id": "5",
@@ -38,7 +38,7 @@
             "price": 7.99,
             "category": "Meat",
             "description": "Boneless, skinless chicken breast. Lean and versatile, perfect for any meal.",
-            "image": "https://example.com/images/chicken-breast.jpg"
+            "image": "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/01/How-To-Make-Air-Fryer-Chicken-5-600x400.jpg"
           }
     ]
   }

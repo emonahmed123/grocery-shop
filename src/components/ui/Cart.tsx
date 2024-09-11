@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// "use client"
+"use client"
 
 
 
@@ -17,7 +17,7 @@ const Cart = () => {
               <CartDetails key={product.id} product={product} />
             ))
           ) : (
-            <p className="text-2xl text-red-500"> not product found</p>
+            <p className="text-2xl text-red-500"> Please Product Add</p>
           )}
         </div>
 

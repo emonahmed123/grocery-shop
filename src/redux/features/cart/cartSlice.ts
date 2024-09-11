@@ -7,7 +7,6 @@ const initialState = {
   products: [] as any,
   selectedItems: 0,
   totalPrice: 0,
-  grandTotal: 0,
 };
 
 export const cartSlice = createSlice({
@@ -23,7 +22,6 @@ export const cartSlice = createSlice({
       }
       state.selectedItems = selectSelectedItems(state);
       state.totalPrice = selectTotalPrice(state);
-      state.grandTotal = selectGrandTotal(state);
     },
     updateQuantity: (state: any, action) => {
       const products = state.products.map((product: any) => {
@@ -31,7 +29,7 @@ export const cartSlice = createSlice({
           if (action.payload.type === "increment") {
             product.quantity += 1;
           } else if (action.payload.type === "decrement") {
-            if (product.quantity > 0) {
+            if (product.quantity > 1) {
               product.quantity -= 1;
             } else {
               product.quantity = 1;
@@ -42,14 +40,19 @@ export const cartSlice = createSlice({
       });
       state.selectedItems = selectSelectedItems(state);
       state.totalPrice = selectTotalPrice(state);
-      state.tax = selectTax(state);
-      state.grandTotal = selectGrandTotal(state);
+    },
+    removeFromCart: (state, action) => {
+      console.log("Product ID to remove:", action.payload.id);
+      state.products = state.products.filter(
+        (product: TGroceryItem) => product.id !== action.payload.id
+      );
+      state.selectedItems = selectSelectedItems(state);
+      state.totalPrice = selectTotalPrice(state);
     },
     clearCart: (state) => {
       state.products = [];
       state.selectedItems = 0;
       state.totalPrice = 0;
-      state.grandTotal = 0;
     },
   },
 });
@@ -64,12 +67,7 @@ export const selectTotalPrice = (state: any) =>
     return Number(total + product.quantity * product.price);
   }, 0);
 
-export const selectTax = (state: any) =>
-  selectTotalPrice(state) * state.taxRate;
-
-export const selectGrandTotal = (state: any) => {
-  return selectTotalPrice(state) + selectTotalPrice(state) * state.taxRate;
-};
-export const { addToCart, updateQuantity, clearCart } = cartSlice.actions;
+export const { addToCart, updateQuantity, clearCart, removeFromCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
