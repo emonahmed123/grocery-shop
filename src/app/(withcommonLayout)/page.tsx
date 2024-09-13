@@ -8,7 +8,7 @@ const Home = async () => {
     })
 
     const products = await res.json()
-    console.log(products.data)
+
     return (
         <div  >
             <Banner></Banner>

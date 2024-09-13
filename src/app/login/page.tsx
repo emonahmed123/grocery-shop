@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { Button, Input } from "@nextui-org/react";
+import { login } from "@/utils/actions/Authaction";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 type FormValues = {
     email: string;
@@ -18,15 +21,54 @@ const Loginpage = () => {
         register,
         handleSubmit,
         formState: { errors },
+        reset
     } = useForm<FormValues>();
-
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const onSubmit = async (data: FormValues) => {
-        console.log(data);
 
+        try {
+            setLoading(true);
+            const res = await login(data)
 
+            console.log(res)
+            if (res?.success) {
+                Swal.fire({
+                    title: `${res.message} `,
+                    text: "",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
+                setLoading(false);
 
-    };
+                router.push("/");
+            }
+            else {
+                Swal.fire({
+                    title: "Invaild Creadentail",
+                    text: "",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setLoading(false);
+            }
+        }
+        catch (error: any) {
+            Swal.fire({
+                title: "Some thing is wrong",
+                text: "",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            setLoading(true);
+        }
+
+    }
 
     return (
         <section className="py-[90px] ">
@@ -84,13 +126,8 @@ const Loginpage = () => {
                         </div>
 
                         <div className="form-control mb-8">
-                            <Button
-                                fullWidth
-                                color="primary"
-                                type="submit"
-                                className="btn btn-accent btn-outline font-semibold"
-                            >
-                                Login
+                            <Button fullWidth color="primary" type="submit" className="btn btn-accent btn-outline font-semibold">
+                                {loading ? <Spinner size='sm' color="white" /> : "Login"}
                             </Button>
                         </div>
                         <p className="text-center">
@@ -101,7 +138,7 @@ const Loginpage = () => {
                         </p>
                     </form>
 
-                    <button
+                    {/* <button
                         onClick={() =>
                             signIn("github", {
                                 callbackUrl: "http://localhost:3000",
@@ -109,7 +146,7 @@ const Loginpage = () => {
                         }
                     >
                         github
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </section>

@@ -14,12 +14,18 @@ import { usePathname } from "next/navigation";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useState } from "react";
 import { useAppSelector } from "@/redux/hook";
+import { useAuth } from "@/lib/AuthProviders";
 const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems = ["Home", "Categories", "Dashboard"];
   const products = useAppSelector((store) => store.cart.products);
   const pathname = usePathname();
+  const { user, handleLogout } = useAuth();
   const isActive = (href: string) => pathname === href;
+
+  console.log(user)
+
+
   return (
     <Navbar
       isBordered
@@ -111,17 +117,27 @@ const NavbarMain = () => {
           <sup className="text-red-600 text-[18px] absolute top-4 left-6">{products.length}</sup>
         </NavbarItem>
 
-
         <NavbarItem>
-          <Button
-            as={Link}
-            // color="redd"
-            href="/auth"
-            variant="shadow"
-            className="text-white  bg-primary"
-          >
-            Login
-          </Button>
+          {!user ? (
+            <Button
+              as={Link}
+              color="primary"
+              href="/login"
+              variant="shadow"
+              className="text-black"
+            >
+              Login
+            </Button>
+          ) : (
+            <Button
+              onClick={handleLogout}
+              color="primary"
+              variant="shadow"
+              className="text-black"
+            >
+              Logout
+            </Button>
+          )}
         </NavbarItem>
 
       </NavbarContent>
@@ -142,7 +158,7 @@ const NavbarMain = () => {
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
-    </Navbar>
+    </Navbar >
   )
 }
 export default NavbarMain

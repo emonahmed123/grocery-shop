@@ -6,7 +6,7 @@ import React from 'react';
 
 const ProductDetails = async ({ params }: any) => {
 
-    console.log(params)
+
 
     const res = await fetch(`http://localhost:5000/api/product/${params.productId}`, {
 
