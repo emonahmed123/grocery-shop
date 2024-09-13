@@ -4,6 +4,8 @@
 
 import { clearCart } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { Button } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 
 
@@ -39,15 +41,14 @@ const OrderSummary = () => {
           <span>Clear Cart</span>
 
         </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
+        <Button as={Link}
+          href="/checkout
+"
           className="bg-green-600 px-3 py-2 text-white  mt-2 rounded-md w-full text-xs flex justify-between items-center"
         >
           <span>Proceed Checkout</span>
 
-        </button>
+        </Button>
       </div>
     </div>
   );

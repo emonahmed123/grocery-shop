@@ -8,17 +8,44 @@ import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { TGroceryItem } from '@/Types';
 import { Button } from '@nextui-org/react';
 import React from 'react';
+import Swal from 'sweetalert2';
 
 const AddButtonCart = ({ product }: { product: TGroceryItem }) => {
 
     console.log(product)
-    const count = useAppSelector(state => state.cart)
+    const { products } = useAppSelector(state => state.cart)
+    console.log(products)
+
     const dispatch = useAppDispatch()
     const handle = (product: any) => {
-        dispatch(addToCart(product))
+
+        const isProductExistInList = products.find(
+            (prod: any) => prod._id === product._id
+        );
+
+        if (isProductExistInList) {
+            Swal.fire({
+                title: `${product.name} `,
+                text: "Allready exits in carts ",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else {
+
+            dispatch(addToCart(product))
+            Swal.fire({
+                title: `${product.name} `,
+                text: "Add to cart success",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+
+
     }
 
-    console.log(count)
     return (
         <div>
 

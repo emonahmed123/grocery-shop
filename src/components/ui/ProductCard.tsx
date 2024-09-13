@@ -13,9 +13,12 @@ import Link from "next/link";
 //   import AddBtn from "../ui/AddBtn";
 
 const ProductCard = ({ item }: { item: TGroceryItem }) => {
+
+
+
     return (
         <>
-            <Card shadow="sm" className="">
+            <Card shadow="sm" className="h-[300px]">
                 <CardBody className="overflow-visible p-0 h-[400px]">
                     <Image
                         // shadow="sm"
@@ -25,7 +28,7 @@ const ProductCard = ({ item }: { item: TGroceryItem }) => {
                         width={100}
                         src={item.image}
                         alt="Grocery"
-                        className="w-full object-cover rounded-lg"
+                        className="w-full object-cover h-[200px] rounded-lg"
                     />
                     <h3 className="my-3 px-3">{item.name}</h3>
                 </CardBody>
@@ -33,7 +36,7 @@ const ProductCard = ({ item }: { item: TGroceryItem }) => {
                 <CardFooter className="text-small justify-between">
                     <h1>{item.price}</h1>
                     <Tooltip content="add to cart">
-                        <Button as={Link} href={`/product/${item.id}`} isIconOnly className="bg-transparent">
+                        <Button as={Link} href={`/product/${item._id}`} isIconOnly className="bg-transparent">
                             <AddBtn />
                         </Button>
                     </Tooltip>

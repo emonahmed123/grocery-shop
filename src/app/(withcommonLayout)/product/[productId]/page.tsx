@@ -6,11 +6,14 @@ import React from 'react';
 
 const ProductDetails = async ({ params }: any) => {
 
-    const res = await fetch(`http://localhost:5000/data/${params.productId}`, {
+    console.log(params)
+
+    const res = await fetch(`http://localhost:5000/api/product/${params.productId}`, {
 
     })
 
-    const product = await res.json()
+    const Products = await res.json()
+    const product = Products?.data
     return (
 
 
