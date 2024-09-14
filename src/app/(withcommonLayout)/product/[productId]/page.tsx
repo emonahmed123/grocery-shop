@@ -14,7 +14,7 @@ const ProductDetails = async ({ params }: any) => {
 
 
 
-    const res = await fetch(`http://localhost:5000/api/product/${params.productId}`, {
+    const res = await fetch(`https://grocery-store-server-orpin.vercel.app/api/product/${params.productId}`, {
         cache: 'no-store'
     })
 
