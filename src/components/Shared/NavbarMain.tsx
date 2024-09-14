@@ -81,20 +81,26 @@ const NavbarMain = () => {
         <NavbarItem isActive={isActive("/categories")}>
           <Link
             color={isActive("/categories") ? "primary" : "foreground"}
-            href="/"
+            href="/product"
           >
-            Categories
+            Product
           </Link>
         </NavbarItem>
 
-        <NavbarItem isActive={isActive("/dashboard")}>
-          <Link
-            color={isActive("/dashboard") ? "primary" : "foreground"}
-            href="/dashboard"
-          >
-            Dashboard
-          </Link>
-        </NavbarItem>
+        {user && (
+          <NavbarItem isActive={isActive("/dashboard")}>
+            <Link
+              color={isActive("/dashboard") ? "primary" : "foreground"}
+              href={
+                user.role === "admin"
+                  ? "/dashboard/products"
+                  : "/dashboard/myorder"
+              }
+            >
+              Dashboard
+            </Link>
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>

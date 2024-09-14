@@ -2,6 +2,7 @@
 "use client"
 
 
+import { useAuth } from "@/lib/AuthProviders";
 import { clearCart } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Button } from "@nextui-org/react";
@@ -11,6 +12,10 @@ import React from "react";
 
 
 const OrderSummary = () => {
+
+  const { user } = useAuth();
+
+
   const dispatch = useAppDispatch()
   const { totalPrice, selectedItems } = useAppSelector((store) => store.cart)
   const handleClearCart = () => {
@@ -41,14 +46,23 @@ const OrderSummary = () => {
           <span>Clear Cart</span>
 
         </button>
-        <Button as={Link}
-          href="/checkout
+        {
+          user ? <Button isDisabled={!selectedItems} as={Link}
+            href="/checkout
 "
-          className="bg-green-600 px-3 py-2 text-white  mt-2 rounded-md w-full text-xs flex justify-between items-center"
-        >
-          <span>Proceed Checkout</span>
+            className="bg-green-600 px-3 py-2 text-white  mt-2 rounded-md w-full text-xs flex justify-between items-center"
+          >
+            <span>Proceed Checkout</span>
 
-        </Button>
+          </Button> : <Button as={Link}
+            href="/login
+"
+            className="bg-green-600 px-3 py-2 text-white  mt-2 rounded-md w-full text-xs flex justify-between items-center"
+          >
+            <span>Proceed Checkout</span>
+
+          </Button>
+        }
       </div>
     </div>
   );

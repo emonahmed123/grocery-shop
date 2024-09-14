@@ -71,7 +71,7 @@ const Categories = () => {
                 <div className="flex items-center justify-center">
                     <Button
                         as={Link}
-                        href="/products"
+                        href="/product"
                         color="primary"
                         variant="bordered"
                         className="shadow-2xl shadow-primary hover:bg-primary hover:text-black transition-all duration-500"

@@ -1,58 +1,80 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 
-import { useAppSelector } from "@/redux/hook";
+import { useAuth } from "@/lib/AuthProviders";
+import { clearCart } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 // import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Button, Checkbox, Divider } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 
 const PaymentDetails = () => {
-    //   const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
+    const { user, token } = useAuth()
 
-    //   const { deliveryCharge, selectedItems, total } = useAppSelector(
-    //     (state) => state.cart
-    //   );
+    const router = useRouter();
+    const { products, totalPrice, selectedItems, grandTotal, deliveryCharge } = useAppSelector((store) => store.cart)
+    const productsId = products.map((product: any) => product._id)
+    // console.log(productsId)
+    // console.log(user?.userId)
+    const handleCheckout = async () => {
+        try {
 
 
-    //   const totalAmount = Number(total.toFixed(2));
+            const order = {
+                name: user?.name,
+                userId: user?.userId,
+                totalAmount: grandTotal,
+                products: productsId,
+                quantity: Number(selectedItems),
+            };
+            console.log(order)
 
-    const { totalPrice, selectedItems, grandTotal, deliveryCharge } = useAppSelector((store) => store.cart)
+            const res = await fetch("https://grocery-store-server-orpin.vercel.app/api/bookings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`, // Add the token here
+                },
+                body: JSON.stringify(order),
+            });
+            const data = await res.json();
+            if (data?.success) {
+                Swal.fire({
+                    title: "Order plaece success fully",
+                    text: "",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                router.push('/dashboard/myorder')
+                dispatch(clearCart());
 
+            } else {
+                console.log(data)
+                Swal.fire({
+                    title: `${data.message}`,
+                    text: "Oder Not create",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
-    //   const handleCheckout = async () => {
-    //     try {
-    //       console.log(token, "url line 14");
-    //       const order = {
-    //         userId: user?.userId,
-    //         username: user?.username,
-    //         totalAmount,
-    //         quantity: Number(selectedItems),
-    //       };
-    //       const res = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_SERVER}/order`, {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Authorization: `Bearer ${token}`, // Add the token here
-    //         },
-    //         body: JSON.stringify(order),
-    //       });
-    //       const data = await res.json();
-    //       if (data?.success) {
-    //         toast.success("order  placed successfully", {
-    //           className: "bg-green-500 text-white",
-    //         });
-    //         dispatch(clearCart());
-    //       } else {
-    //         toast.error(data?.message, {
-    //           className: "bg-green-500 text-white",
-    //         });
-    //       }
-    //     } catch (err) {
-    //       toast.error("Something went wrong try Again!", {
-    //         className: "bg-green-500 text-white",
-    //       });
-    //     }
-    //   };
+            }
+        } catch (err) {
+            Swal.fire({
+                title: "Some thing is wrong",
+                text: "",
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+        }
+    };
     return (
         <div className="space-y-5">
             <p className="text-foreground">
@@ -80,20 +102,27 @@ const PaymentDetails = () => {
             <Checkbox isDisabled defaultSelected color="primary">
                 Cash On Delivery
             </Checkbox>
-            <Button
-                // onClick={handleCheckout}
-                // isDisabled={!user}
-                color="primary"
-                variant="shadow"
-                className="w-full text-black"
-            >
-                place an order
-            </Button>
-            {/* {!user && (
-        <p className="text-sm text-red-500">
-          You need to Login to proceed the checkout process
-        </p>
-      )} */}
+            {
+                user && selectedItems ? <Button
+                    onClick={handleCheckout}
+
+                    color="primary"
+                    variant="shadow"
+                    className="w-full text-black"
+                >
+                    place an order
+                </Button> : <Button
+                    onClick={handleCheckout}
+                    isDisabled
+                    color="primary"
+                    variant="shadow"
+                    className="w-full text-black"
+                >
+                    place an order
+                </Button>
+            }
+
+
         </div>
     );
 };

@@ -26,7 +26,7 @@ const SideNav = () => {
         },
         {
             title: "My Orders",
-            url: "/dashboard/my-orders",
+            url: "/dashboard/myorder",
             role: "user",
         },
     ];
@@ -34,7 +34,7 @@ const SideNav = () => {
     const isActive = (href: string) => pathname === href;
 
     return (
-        <ul className="bg-background py-2 px-5 space-y-5 h-[500px]">
+        <ul className="bg-primary py-2 px-1 md:px-5 space-y-5  w-[80px] md:w-[200px] min-h-screen ">
             {user &&
                 navItems
                     .filter((item) => item.role === user.role)
@@ -43,8 +43,8 @@ const SideNav = () => {
                             <Link
                                 href={item.url}
                                 className={`${isActive(item.url)
-                                        ? "text-primary border-b-3 border-primary font-semibold"
-                                        : "foreground"
+                                    ? "text-white border-b-1 border-white font-medium text-[14px]"
+                                    : "foreground"
                                     }`}
                             >
                                 {item.title}

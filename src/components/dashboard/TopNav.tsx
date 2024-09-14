@@ -14,14 +14,16 @@ const TopNav = async () => {
         <>
             <Navbar>
                 {/* for md device  */}
-                <NavbarBrand className="hidden md:block">
+                <NavbarBrand className="block">
                     <Link href="/" className="font-bold text-inherit">
-                        Baby<span className="text-primary">Bliss</span>
+                        EAS<span className="text-primary">
+                            Grocery
+                        </span>
                     </Link>
                 </NavbarBrand>
                 <NavbarContent justify="end">
                     <NavbarItem>
-                        {user && <p className="font-semibold">{user?.username}</p>}
+                        {user && <p className="font-semibold">{user?.name}</p>}
                     </NavbarItem>
                 </NavbarContent>
             </Navbar>

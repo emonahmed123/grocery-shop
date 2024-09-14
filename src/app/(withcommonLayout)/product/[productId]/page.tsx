@@ -4,6 +4,12 @@ import AddButtonCart from '@/components/ui/AddButtonCart';
 import Image from 'next/image';
 import React from 'react';
 
+
+// export async function generateStaticParams() {
+//     return []
+// }
+
+
 const ProductDetails = async ({ params }: any) => {
 
 
@@ -24,7 +30,7 @@ const ProductDetails = async ({ params }: any) => {
 
 
                     <div className='max-w-[600px]'>
-                        <Image src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVNN58XFDLxdqtwwWRSE924NjtuSryXFGxjg&s'} width={600} height={600} alt='hello'></Image>
+                        <Image src={product.image} width={500} height={200} alt='hello'></Image>
                     </div>
 
 

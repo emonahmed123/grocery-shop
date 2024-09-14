@@ -24,12 +24,12 @@ const PopularProducts = ({ products }: { products: TGroceryItem[] }) => {
           </div>
           <Button
             as={Link}
-            href="/products"
+            href="/product"
             color="primary"
             variant="bordered"
             radius="lg"
             className="shadow-2xl shadow-primary hover:bg-primary hover:text-black transition-all duration-500"
-          // endContent={<RightArrow />}
+
           >
             View All
           </Button>

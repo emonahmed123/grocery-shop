@@ -11,6 +11,7 @@ export const signUp = async (data: any) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
+    cache:'no-store'
   });
 
   const userInfo = await res.json();

@@ -57,6 +57,7 @@ export const cartSlice = createSlice({
       state.products = [];
       state.selectedItems = 0;
       state.totalPrice = 0;
+      state.grandTotal = 0;
     },
   },
 });
