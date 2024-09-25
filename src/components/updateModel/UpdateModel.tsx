@@ -46,7 +46,7 @@ const UpdateModel = ({
 
         };
         const res = await fetch(
-            `https://grocery-store-server-orpin.vercel.app/product/${product._id}`,
+            `https://grocery-store-server-orpin.vercel.app/api/product/${product._id}`,
             {
                 method: "PUT",
                 headers: {
