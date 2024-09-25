@@ -11,17 +11,17 @@ const SideNav = () => {
     const navItems = [
         {
             title: "Products",
-            url: "/dashboard/products",
+            url: "/dashboard/allproduct",
             role: "admin",
         },
         {
             title: "Add Product",
-            url: "/dashboard/products/add-product",
+            url: "/dashboard/addproduct",
             role: "admin",
         },
         {
             title: "Orders",
-            url: "/dashboard/orders",
+            url: "/dashboard/allorder",
             role: "admin",
         },
         {

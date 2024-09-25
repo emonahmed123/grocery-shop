@@ -17,7 +17,7 @@ export const AuthProviders = ({ children }: any) => {
     // a async function to get the userInfo
 
     const auth = async () => {
-        const response: any = await getUserInfo();
+        const response: any = await getUserInfo()
         const token = await getToken()
         console.log(token)
         setToken(token)

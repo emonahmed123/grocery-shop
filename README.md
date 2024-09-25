@@ -1,9 +1,8 @@
-# EAS  grocery  Shop
+# EAS grocery Shop
 
 ## Project Description
 
-EAS Grocary is an e-commerce platform offering a curated selection high-quality groceries. From everyday essentials to gourmet ingredients, EAS Grocary  provides customers with safe, reliable, and affordable products to ensure healthy and convenient meals for their families.
-
+EAS Grocary is an e-commerce platform offering a curated selection high-quality groceries. From everyday essentials to gourmet ingredients, EAS Grocary provides customers with safe, reliable, and affordable products to ensure healthy and convenient meals for their families.
 
 ## Technology Stack
 
@@ -68,3 +67,9 @@ cd ../grocery-shop
 npm run dev
 ```
 
+### Admin
+
+```
+email:imonshomon@gmail.com
+password: 123456
+```
