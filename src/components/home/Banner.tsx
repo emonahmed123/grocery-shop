@@ -5,7 +5,7 @@ const Banner = () => {
 
 
     return (
-        <div className=' h-screen  bg-[url("https://i.ibb.co/bmFLW7G/banner.jpg")] bg-cover bg-no-repeat'>
+        <div className=' h-screen  bg-[url("https://i.ibb.co/bmFLW7G/banner.jpg")] bg-cover bg-no-repeat font-poppe'>
 
 
             <div className='w-full bg-[#ffffffc2] h-full  flex justify-center items-center'>

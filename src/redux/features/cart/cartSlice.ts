@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { TGroceryItem } from "@/Types";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -15,6 +16,8 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    /* The `addToCart` function in the code snippet is a Redux reducer function that handles adding a
+   new item to the cart. Here's a breakdown of what it does: */
     addToCart: (state, action) => {
       const isExist = state.products.find(
         (product: TGroceryItem) => product._id === action.payload._id
@@ -26,6 +29,8 @@ export const cartSlice = createSlice({
       state.totalPrice = selectTotalPrice(state);
       state.grandTotal = selectGrandTotal(state);
     },
+    /* The `updateQuantity` function in the code snippet is a Redux reducer function that handles updating
+ the quantity of a specific item in the cart. Here's a breakdown of what it does: */
     updateQuantity: (state: any, action) => {
       const products = state.products.map((product: any) => {
         if (product._id === action.payload._id) {
@@ -45,6 +50,8 @@ export const cartSlice = createSlice({
       state.totalPrice = selectTotalPrice(state);
       state.grandTotal = selectGrandTotal(state);
     },
+    /* The `removeFromCart` function in the code snippet is a Redux reducer function that handles removing
+ a specific item from the cart. Here's a breakdown of what it does: */
     removeFromCart: (state, action) => {
       console.log("Product _id to remove:", action.payload._id);
       state.products = state.products.filter(
@@ -74,6 +81,13 @@ export const selectTotalPrice = (state: any) =>
 
 export const selectGrandTotal = (state: any) => {
   return selectTotalPrice(state) + state.deliveryCharge;
+};
+
+export const selectProductQuantity = (state: any, productId: string) => {
+  const product = state.cart.products?.find(
+    (product: any) => product._id === productId
+  );
+  return product ? product.quantity : 0;
 };
 
 export const { addToCart, updateQuantity, clearCart, removeFromCart } =

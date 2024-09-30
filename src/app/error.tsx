@@ -12,7 +12,7 @@ const ErrorPage = ({
                 Something went wrong!!!
             </p>
             <p className="text-4xl bg-red-500 text-white p-5 w-[50%] mx-auto rounded-xl mt-2">
-                {error.message}
+                {error.message} Cheak your Network
             </p>
             <button
                 onClick={() => reset()}

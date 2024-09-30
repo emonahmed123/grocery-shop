@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "@/lib/provider";
 import ReduxtProvidor from "@/lib/ReduxtProvidor";
-
+import { Poppins } from 'next/font/google'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,6 +15,16 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+
+const poppins = Poppins({
+  variable: '--font-poppins',
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ["100", "200", "400", "500", "600", "700", "800"]
+})
+
+
 
 export const metadata: Metadata = {
   title: "EAS Home",
@@ -29,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`  ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`  ${geistSans.variable} ${geistMono.variable} antialiased  ${poppins.variable}`}
       >
         <ReduxtProvidor>
 

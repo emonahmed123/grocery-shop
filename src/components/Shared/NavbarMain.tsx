@@ -48,7 +48,7 @@ const NavbarMain = () => {
           "data-[active=true]:after:bg-primary",
         ],
       }}
-      className="bg-transparent"
+      className="bg-transparent font-poppe"
     >
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle
@@ -67,7 +67,7 @@ const NavbarMain = () => {
       {/* for md device  */}
       <NavbarBrand className="hidden sm:block">
         <p className="font-bold text-inherit">
-          EAS<span className="text-primary">grocery</span>
+          Eas<span className="text-primary">Grocery</span>
         </p>
       </NavbarBrand>
 
@@ -102,25 +102,24 @@ const NavbarMain = () => {
           </NavbarItem>
         )}
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem>
+      <NavbarContent justify="end" >
+        <NavbarItem className="px-2">
 
 
 
-          <Button
-            as={Link}
-            // color="redd"
+          <Link
+
             href="/cart"
-            isIconOnly
-            variant="shadow"
-            className="text-white  bg-primary relative"
+
+
+            className="text-black   relative"
           >
 
-            <FaCartArrowDown size={20} />
+            <FaCartArrowDown size={30} />
 
 
-          </Button>
-          <sup className="text-red-600 text-[18px] absolute top-4 left-6">{products.length}</sup>
+          </Link>
+          <p className="text-white text-[10px] bg-primary rounded-full px-2 absolute top-0 left-6 ">{products.length}</p>
         </NavbarItem>
 
         <NavbarItem>
@@ -130,7 +129,7 @@ const NavbarMain = () => {
               color="primary"
               href="/login"
               variant="shadow"
-              className="text-black"
+              className="text-white"
             >
               Login
             </Button>

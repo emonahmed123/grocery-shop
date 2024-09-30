@@ -10,6 +10,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        poppe: ["var(--font-poppins)"],
+        mono: ["var(--font-roboto-mono)"],
+      },
       backgroundImage: {},
       colors: {
         background: "var(--background)",

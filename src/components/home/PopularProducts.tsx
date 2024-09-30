@@ -7,9 +7,6 @@ import { TGroceryItem } from '@/Types';
 const PopularProducts = ({ products }: { products: TGroceryItem[] }) => {
 
 
-
-
-
   return (
     <section className=" py-[50px] md:py-[80px]">
       <div className='max-w-Container mx-auto px-5 xl:px-0'>
