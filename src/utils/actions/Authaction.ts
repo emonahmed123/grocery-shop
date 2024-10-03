@@ -5,14 +5,17 @@ import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 
 export const signUp = async (data: any) => {
-  const res = await fetch(`${process.env.BACKEND_URL}/auth/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-    cache:'no-store'
-  });
+  const res = await fetch(
+    `https://grocery-store-server-orpin.vercel.app/api/auth/signup`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
 
   const userInfo = await res.json();
 
@@ -26,13 +29,16 @@ type TLoginInfo = {
 
 export const login = async (loginInfo: TLoginInfo) => {
   // login logic here
-  const res = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(loginInfo),
-  });
+  const res = await fetch(
+    `https://grocery-store-server-orpin.vercel.app/api/auth/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginInfo),
+    }
+  );
 
   const data = await res.json();
   console.log(data.data.accessToken);

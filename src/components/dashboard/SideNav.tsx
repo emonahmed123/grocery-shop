@@ -5,54 +5,55 @@ import React from "react";
 import Link from "next/link";
 
 const SideNav = () => {
-    const { user } = useAuth();
-    const pathname = usePathname();
+  const { user } = useAuth();
+  const pathname = usePathname();
 
-    const navItems = [
-        {
-            title: "Products",
-            url: "/dashboard/allproduct",
-            role: "admin",
-        },
-        {
-            title: "Add Product",
-            url: "/dashboard/addproduct",
-            role: "admin",
-        },
-        {
-            title: "Orders",
-            url: "/dashboard/allorder",
-            role: "admin",
-        },
-        {
-            title: "My Orders",
-            url: "/dashboard/myorder",
-            role: "user",
-        },
-    ];
+  const navItems = [
+    {
+      title: "Products",
+      url: "/dashboard/allproduct",
+      role: "admin",
+    },
+    {
+      title: "Add Product",
+      url: "/dashboard/addproduct",
+      role: "admin",
+    },
+    {
+      title: "Orders",
+      url: "/dashboard/allorder",
+      role: "admin",
+    },
+    {
+      title: "My Orders",
+      url: "/dashboard/myorder",
+      role: "user",
+    },
+  ];
 
-    const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname === href;
 
-    return (
-        <ul className="bg-primary py-2 px-1 md:px-5 space-y-5  w-[80px] md:w-[200px] min-h-screen ">
-            {user &&
-                navItems
-                    .filter((item) => item.role === user.role)
-                    .map((item, index) => (
-                        <li key={index}>
-                            <Link
-                                href={item.url}
-                                className={`${isActive(item.url)
-                                    ? "text-white border-b-1 border-white font-medium text-[14px]"
-                                    : "foreground"
-                                    }`}
-                            >
-                                {item.title}
-                            </Link>
-                        </li>
-                    ))}
-        </ul>
-    );
+  return (
+    <ul className="bg-primary py-2 px-1 md:px-5 space-y-5  w-[80px] md:w-[200px] min-h-screen  h-full">
+      {user &&
+        navItems
+          .filter((item) => item.role === user.role)
+          .map((item, index) => (
+            <li key={index}>
+              <Link
+                href={item.url}
+                className={`${
+                  isActive(item.url)
+                    ? "text-white border-b-1 pb-1 border-white font-medium text-[14px]"
+                    : "foreground"
+                }`}
+              >
+                {item.title}
+              </Link>
+            </li>
+          ))}
+    </ul>
+  );
 };
 
 export default SideNav;

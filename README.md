@@ -52,7 +52,7 @@ Frontend (grocery-shop/.env)
 
 ```bash
 
-BACKEN_URL=http://localhost:5000/api
+BACKEN_URL=https://grocery-store-server-orpin.vercel.app/api
 
 ```
 

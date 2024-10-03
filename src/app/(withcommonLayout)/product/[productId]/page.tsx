@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AddButtonCart from "@/components/ui/AddButtonCart";
+import DelteteBtn from "@/components/ui/delteteBtn";
 import QuantityBtn from "@/components/ui/QuantiryBtn";
 
 import Image from "next/image";
 import React from "react";
+import Review from "./review";
 
 // export async function generateStaticParams() {
 //     return []
@@ -50,10 +52,15 @@ const ProductDetails = async ({ params }: any) => {
 
             <div className="flex gap-x-3">
               <QuantityBtn productId={product?._id} />
+              <DelteteBtn deletedId={product?._id} />
 
               <AddButtonCart product={product}>Add to cart</AddButtonCart>
             </div>
           </div>
+        </div>
+
+        <div className="mt-20">
+          <Review productId={params.productId} />
         </div>
       </div>
     </section>

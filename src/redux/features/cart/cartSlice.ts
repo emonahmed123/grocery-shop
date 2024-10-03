@@ -53,7 +53,7 @@ export const cartSlice = createSlice({
     /* The `removeFromCart` function in the code snippet is a Redux reducer function that handles removing
  a specific item from the cart. Here's a breakdown of what it does: */
     removeFromCart: (state, action) => {
-      console.log("Product _id to remove:", action.payload._id);
+      console.log("Product _id to remove:", action.payload);
       state.products = state.products.filter(
         (product: TGroceryItem) => product._id !== action.payload._id
       );

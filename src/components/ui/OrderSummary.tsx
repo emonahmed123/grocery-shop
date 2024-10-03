@@ -6,57 +6,79 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
+import { MdArrowForward, MdDelete } from "react-icons/md";
 
 const OrderSummary = () => {
   const { user } = useAuth();
 
   const dispatch = useAppDispatch();
-  const { totalPrice, selectedItems } = useAppSelector((store) => store.cart);
+  const { totalPrice, selectedItems, products } = useAppSelector(
+    (store) => store.cart
+  );
   const handleClearCart = () => {
     dispatch(clearCart());
   };
   return (
-    <div className=" lg:w-80 xl:w-[600px] w-full h-full bg-primary bg-opacity-35 rounded">
-      <div className="px-6 py-4 space-y-10">
-        <h1 className="text-2xl font-semibold text-dark">Order Summary</h1>
-        <p className="text-sm text-dark mt-2">
-          Selected Items : {selectedItems}
-        </p>
-        <p className="text-sm text-dark mt-2">
-          Total Price : ${totalPrice.toFixed(3)}
-        </p>
-      </div>
-      <div className="px-4 pb-6">
-        {" "}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleClearCart();
-          }}
-          className="bg-red-500 px-3 py-2 text-white  mt-2 rounded-md w-full text-xs flex justify-between items-center mb-4"
-        >
-          <span>Clear Cart</span>
-        </button>
-        {user ? (
+    <div>
+      <div className=" lg:w-80 xl:w-[500px] w-full h-full border-2  bg-opacity-35 rounded font-poppe px-5 py-5">
+        <div className="mb-5">
+          <p className="text-sm text-dark mb-2">
+            By placing your order, you agree to our company Privacy policy and
+            Conditions of use.
+          </p>
+
+          <h1 className="text-2xl font-semibold text-dark mb-5 ">
+            Order Summary
+          </h1>
+          <p className="text-sm text-dark mb-2">
+            <span className="font-semibold">Total Product : </span>{" "}
+            {products?.length}
+          </p>
+          <p className="text-sm text-dark mb-2">
+            <span className="font-semibold">Total Product Quantity : </span>{" "}
+            {selectedItems}
+          </p>
+          <p className="text-sm text-dark">
+            <span className="font-semibold">Total Price : </span>
+            {totalPrice.toFixed(3)} Tk
+          </p>
+        </div>
+        <div className="">
+          {" "}
           <Button
-            isDisabled={!selectedItems}
-            as={Link}
-            href="/checkout
-"
-            className="bg-green-600 px-3 py-2 text-white  mt-2 rounded-md w-full text-xs flex justify-between items-center"
+            fullWidth
+            color="danger"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClearCart();
+            }}
+            className="mb-4 text-center"
           >
-            <span>Proceed Checkout</span>
+            Clear Cart <MdDelete />
           </Button>
-        ) : (
-          <Button
-            as={Link}
-            href="/login
+          {user ? (
+            <Button
+              isDisabled={!selectedItems}
+              as={Link}
+              href="/checkout
 "
-            className="bg-green-600 px-3 py-2 text-white  mt-2 rounded-md w-full text-xs flex justify-between items-center"
-          >
-            <span>Proceed Checkout</span>
-          </Button>
-        )}
+              fullWidth
+              color="success"
+            >
+              Proceed Checkout <MdArrowForward />
+            </Button>
+          ) : (
+            <Button
+              as={Link}
+              href="/login
+"
+              fullWidth
+              color="success"
+            >
+              Proceed Checkout <MdArrowForward />
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

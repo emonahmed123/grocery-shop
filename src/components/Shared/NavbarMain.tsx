@@ -9,6 +9,7 @@ import {
   NavbarItem,
   Link,
   Button,
+  Badge,
 } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import { FaCartArrowDown } from "react-icons/fa";
@@ -23,8 +24,7 @@ const NavbarMain = () => {
   const { user, handleLogout } = useAuth();
   const isActive = (href: string) => pathname === href;
 
-  console.log(user)
-
+  console.log(user);
 
   return (
     <Navbar
@@ -72,7 +72,7 @@ const NavbarMain = () => {
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem >
+        <NavbarItem>
           <Link color={isActive("/") ? "primary" : "foreground"} href="/">
             Home
           </Link>
@@ -102,24 +102,13 @@ const NavbarMain = () => {
           </NavbarItem>
         )}
       </NavbarContent>
-      <NavbarContent justify="end" >
+      <NavbarContent justify="end">
         <NavbarItem className="px-2">
-
-
-
-          <Link
-
-            href="/cart"
-
-
-            className="text-black   relative"
-          >
-
-            <FaCartArrowDown size={30} />
-
-
+          <Link href="/cart" className="text-black   relative">
+            <Badge color="danger" content={products.length} shape="circle">
+              <FaCartArrowDown size={30} />
+            </Badge>
           </Link>
-          <p className="text-white text-[10px] bg-primary rounded-full px-2 absolute top-0 left-6 ">{products.length}</p>
         </NavbarItem>
 
         <NavbarItem>
@@ -144,17 +133,17 @@ const NavbarMain = () => {
             </Button>
           )}
         </NavbarItem>
-
       </NavbarContent>
 
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
-              className={`${isActive(`${item === "Home" ? "/" : `/${item}`}`)
-                ? "text-primary"
-                : "text-foreground"
-                }`}
+              className={`${
+                isActive(`${item === "Home" ? "/" : `/${item}`}`)
+                  ? "text-primary"
+                  : "text-foreground"
+              }`}
               href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
               size="lg"
             >
@@ -163,7 +152,7 @@ const NavbarMain = () => {
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
-    </Navbar >
-  )
-}
-export default NavbarMain
+    </Navbar>
+  );
+};
+export default NavbarMain;
