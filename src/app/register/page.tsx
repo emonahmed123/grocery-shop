@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import Swal from "sweetalert2";
 
 type FormValues = {
@@ -19,7 +20,11 @@ type FormValues = {
 const Singuppage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
 
+  const toggleVisible = () => {
+    setVisible(!visible);
+  };
   const {
     register,
     handleSubmit,
@@ -122,12 +127,12 @@ const Singuppage = () => {
                   },
                 })}
                 isRequired
-                type="password"
+                type={visible ? "text" : "password"}
                 size="sm"
                 fullWidth
                 label="Password"
                 variant="bordered"
-                className="max-w-md"
+                className="max-w-md relative"
               />
 
               <label htmlFor="password" className=" absolute ">
@@ -138,6 +143,16 @@ const Singuppage = () => {
                   </span>
                 )}
               </label>
+              <span
+                className=" text-gray-400 absolute  inset-0 left-auto px-2 flex items-center cursor-pointer   h-full"
+                onClick={toggleVisible}
+              >
+                {visible ? (
+                  <RxEyeOpen className="w-5 h-5  " />
+                ) : (
+                  <RxEyeClosed className="w-5 h-5 " />
+                )}
+              </span>
             </div>
 
             <div className="form-control mb-8">
