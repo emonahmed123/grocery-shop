@@ -7,10 +7,10 @@ import { TGroceryItem } from "@/Types";
 const PopularProducts = ({ products }: { products: TGroceryItem[] }) => {
   return (
     <section className=" py-[50px] md:py-[80px]">
-      <div className="max-w-Container mx-auto px-5 xl:px-0">
+      <div className="max-w-Container mx-auto px-5 xl:px-0 " id="product">
         <div className="flex flex-col md:flex-row  items-start gap-y-4  md:items-center justify-center mb-10">
           <div className="space-y-3">
-            <h2 className="text-3xl font-semibold gradient">
+            <h2 className="text-3xl font-semibold gradient font-poppe">
               Most Popular Products
             </h2>
             <p className="text-foreground w-full md:w-1/2">

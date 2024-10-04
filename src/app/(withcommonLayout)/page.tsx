@@ -4,6 +4,8 @@ import React from "react";
 import PopularProducts from "@/components/home/PopularProducts";
 import Offer from "@/components/home/Offer";
 import Shpping from "@/components/home/Shpping";
+import Marque from "@/components/home/Marque";
+import Faq from "@/components/home/Faq";
 const Home = async () => {
   const res = await fetch(
     "https://grocery-store-server-orpin.vercel.app/api/product",
@@ -21,6 +23,8 @@ const Home = async () => {
       <PopularProducts products={products.data}></PopularProducts>
       <Offer></Offer>
       <Shpping></Shpping>
+      <Marque></Marque>
+      <Faq></Faq>
     </div>
   );
 };
