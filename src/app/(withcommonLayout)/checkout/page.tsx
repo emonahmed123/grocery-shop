@@ -3,7 +3,7 @@ import PaymentDetails from "@/components/chaeakout/PaymentDetails ";
 import React from "react";
 const CheckoutPage = () => {
   return (
-    <div className="max-w-Container grid lg:grid-cols-2 grid-cols-1 gap-5 mt-8 px-[30px] xl:px-0 py-[90px] mx-auto">
+    <div className="max-w-Container grid lg:grid-cols-2 grid-cols-1 gap-5  px-[30px] xl:px-0 py-[50px] md:py-[90px] mx-auto">
       <CheckoutProductTable />
       <PaymentDetails />
     </div>

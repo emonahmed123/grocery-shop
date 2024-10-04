@@ -4,10 +4,10 @@ import React from "react";
 
 const Banner = () => {
   return (
-    <div className=' h-screen xl:h-[650px]  bg-[url("https://i.ibb.co/bmFLW7G/banner.jpg")] bg-cover bg-no-repeat font-poppe'>
+    <div className=' h-screen md:h-[650px]  bg-[url("https://i.ibb.co/bmFLW7G/banner.jpg")] bg-cover bg-no-repeat font-poppe'>
       <div className="w-full bg-[#ffffffc2] h-full  flex justify-center items-center font-poppe">
-        <div className="max-w-[900px] mx-auto  px-5 xl:px-0">
-          <h1 className=" text-[30px] leading-[40px]  md:text-[70px] md:leading-[80px] font-bold text-center mb-3 md:mb-6 font-poppe">
+        <div className="max-w-[900px] mx-auto px-2">
+          <h1 className=" text-[26px] leading-[36px] md:text-[50px] md:leading-[60px] lg:text-[70px] lg:leading-[80px] font-bold text-center mb-3 md:mb-6 font-poppe">
             Your Local Marketplace for Fresh and Sustainable Good
           </h1>
 

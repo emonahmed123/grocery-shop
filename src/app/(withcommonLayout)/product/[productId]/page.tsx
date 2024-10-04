@@ -22,14 +22,14 @@ const ProductDetails = async ({ params }: any) => {
   const Products = await res.json();
   const product = Products?.data;
   return (
-    <section className="py-[90px] md:py-[60px]">
+    <section className="py-[90px] md:py-[50px]">
       <div className="max-w-Container mx-auto px-5 xl:px-0 font-poppe">
         <p className="mb-5 text-sm text-gray-500">
           {product.category} &gt; {product.name}
         </p>
 
-        <div className="flex justify-between flex-cols lg:flex-row gap-x-6 items-center">
-          <div className="w-[500px] h-[450px]">
+        <div className="flex justify-between gap-5 flex-col md:flex-row lg:gap-x-6 items-center">
+          <div className="w-[330px] md:w-[500px] h-[300px] md:h-[450px]">
             <Image
               className="object-cover h-full w-full"
               src={product.image}

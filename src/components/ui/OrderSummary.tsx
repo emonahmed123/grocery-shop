@@ -20,7 +20,7 @@ const OrderSummary = () => {
   };
   return (
     <div>
-      <div className=" lg:w-80 xl:w-[500px] w-full h-full border-2  bg-opacity-35 rounded font-poppe px-5 py-5">
+      <div className=" lg:w-80 xl:w-[550px] w-full h-full border-2  bg-opacity-35 rounded font-poppe px-5 py-5">
         <div className="mb-5">
           <p className="text-sm text-dark mb-2">
             By placing your order, you agree to our company Privacy policy and

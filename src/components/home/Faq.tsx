@@ -32,7 +32,7 @@ const Faq = () => {
   return (
     <section className="  md:py-[80px] py-[40px] font-poppe">
       <div className="max-w-[1170px] mx-auto px-5 xl:px-0 font-poppe">
-        <h1 className="text-[40px] leading-[50px] md:text-[50px] md:leading-[60px] mb-10 text-center font-semibold">
+        <h1 className="text-[30px] leading-[40px] md:text-[50px] md:leading-[60px] mb-10 text-center font-semibold">
           Frequently Asked Questions
         </h1>
 
