@@ -7,13 +7,15 @@ const Dashlayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className=" h-[100vh]">
+    <div className=" h-[100vh]  ">
       <TopNav />
-      <div className="grid grid-cols-5 gap-5">
-        <div>
+      <div className="grid grid-cols-5">
+        <div className="col-span-1 w-[200px] fixed">
           <SideNav />
         </div>
-        <div className="col-span-4">{children}</div>
+        <div className="col-span-4 px-2 py-2 md:left-[25%] left-[25%]  relative ">
+          {children}
+        </div>
       </div>
     </div>
   );

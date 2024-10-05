@@ -65,6 +65,6 @@ export const removeUserInfo = async () => {
   cookies().delete("token");
 };
 
-export const getToken = () => {
+export const getToken = async () => {
   return cookies().get("token")?.value;
 };

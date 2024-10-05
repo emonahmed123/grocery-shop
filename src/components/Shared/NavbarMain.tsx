@@ -93,8 +93,8 @@ const NavbarMain = () => {
               color={isActive("/dashboard") ? "primary" : "foreground"}
               href={
                 user.role === "admin"
-                  ? "/dashboard/allproduct"
-                  : "/dashboard/myorder"
+                  ? "/dashboard/overview"
+                  : "/dashboard/useroverview"
               }
             >
               Dashboard
