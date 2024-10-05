@@ -48,6 +48,29 @@ export const login = async (loginInfo: TLoginInfo) => {
 
   return data;
 };
+// export const googleToDB = async (loginInfo: any) => {
+//   // login logic here
+//   console.log(loginInfo);
+
+//   // const res = await fetch(
+//   //   `https://grocery-store-server-orpin.vercel.app/api/auth/login`,
+//   //   {
+//   //     method: "POST",
+//   //     headers: {
+//   //       "Content-Type": "application/json",
+//   //     },
+//   //     body: JSON.stringify(loginInfo),
+//   //   }
+//   // );
+
+//   // const data = await res.json();
+//   // console.log(data.data.accessToken);
+//   // if (data?.success) {
+//   //   cookies().set("token", data?.data.accessToken);
+//   // }
+
+//   // return data;
+// };
 
 export const getUserInfo = async () => {
   const token = cookies().get("token")?.value;

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { login } from "@/utils/actions/Authaction";
-import { Button, Input, Spinner, Tooltip } from "@nextui-org/react";
+import { Button, Image, Input, Spinner, Tooltip } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 
 import Link from "next/link";
@@ -181,15 +181,23 @@ const Loginpage = () => {
             </p>
           </form>
 
-          {/* <button
-                        onClick={() =>
-                            signIn("github", {
-                                callbackUrl: "http://localhost:3000",
-                            })
-                        }
-                    >
-                        github
-                    </button> */}
+          <div className="flex items-center justify-center">
+            <button
+              onClick={() =>
+                signIn("Google", {
+                  callbackUrl: "http://localhost:3000",
+                })
+              }
+              className="btn btn-circle mt-2 ml-2 "
+            >
+              <Image
+                src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png"
+                width={50}
+                height={50}
+                alt="google logo"
+              />
+            </button>
+          </div>
         </div>
       </div>
 

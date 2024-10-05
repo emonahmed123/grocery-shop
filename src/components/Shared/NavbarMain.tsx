@@ -16,7 +16,15 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { useState } from "react";
 import { useAppSelector } from "@/redux/hook";
 import { useAuth } from "@/lib/AuthProviders";
-const NavbarMain = () => {
+type userProps = {
+  user?: {
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+  };
+};
+
+const NavbarMain = ({ session }: { session: userProps | null }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuItems = ["Home", "Categories", "Dashboard"];
   const products = useAppSelector((store) => store.cart.products);
@@ -24,7 +32,7 @@ const NavbarMain = () => {
   const { user, handleLogout } = useAuth();
   const isActive = (href: string) => pathname === href;
 
-  console.log(user);
+  console.log(session);
 
   return (
     <Navbar
@@ -112,7 +120,7 @@ const NavbarMain = () => {
         </NavbarItem>
 
         <NavbarItem>
-          {!user ? (
+          {!session?.user && !user ? (
             <Button
               as={Link}
               color="primary"

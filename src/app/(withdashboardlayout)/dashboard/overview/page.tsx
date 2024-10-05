@@ -1,16 +1,25 @@
 import CardDataStats from "@/components/ui/CardDataStats";
 import ChartOne from "@/components/ui/Chart";
+import ChartTwo from "@/components/ui/Chartfive";
 import Table from "@/components/ui/Table";
 
 const Overview = async () => {
-  const products = await fetch(`${process.env.BACKEND_URL}/api/product`);
+  const products = await fetch(`${process.env.BACKEND_URL}/api/product`, {
+    next: {
+      revalidate: 3600,
+    },
+  });
   const { data } = await products.json();
 
   const TotalCulcolition = await fetch(
-    `http://localhost:5000/api/bookings/total-sale`
+    `https://grocery-store-server-orpin.vercel.app/api/bookings/total-sale`,
+    {
+      next: {
+        revalidate: 3600,
+      },
+    }
   );
   const TotalCulcolitions = await TotalCulcolition.json();
-  console.log(TotalCulcolitions);
 
   return (
     <div className="max-w-[1400px] mx-auto mt-5">
@@ -97,8 +106,9 @@ const Overview = async () => {
         </CardDataStats>
       </div>
 
-      <div className="mb-5">
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
+        <ChartTwo />
       </div>
       <div>
         <Table />

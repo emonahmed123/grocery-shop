@@ -1,27 +1,26 @@
+import Footer from "@/components/Shared/Footer";
+import NavbarMain from "@/components/Shared/NavbarMain";
+import { authOption } from "@/utils/authOptions";
+import { getServerSession } from "next-auth";
 
+import React from "react";
 
-import Footer from '@/components/Shared/Footer';
-import NavbarMain from '@/components/Shared/NavbarMain';
-
-
-
-import React from 'react';
-
-const Commonlayout = ({ children,
+const Commonlayout = async ({
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) => {
+  const session = await getServerSession(authOption);
 
-    return (
-        < >
-            <NavbarMain />
+  return (
+    <>
+      <NavbarMain session={session} />
 
+      <div>{children}</div>
 
-            <div>{children}</div>
-
-            <Footer></Footer>
-        </>
-    );
+      <Footer></Footer>
+    </>
+  );
 };
 
-export default Commonlayout 
+export default Commonlayout;

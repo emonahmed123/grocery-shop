@@ -33,7 +33,7 @@ const Categories = () => {
 
   return (
     <section className="py-[50px] md:py-[75px]">
-      <div className=" max-w-Container mx-auto px-5 xl:px-0">
+      <div className=" max-w-[1170px] mx-auto px-5 xl:px-0">
         <div className=" text-center mb-5 ">
           <h2 className="text-3xl font-semibold gradient mb-3">
             Our Categories

@@ -8,7 +8,7 @@ const Overview = async () => {
   const token = await getToken();
   console.log("BALLKLSDFJL", token);
   const TotalCulcolition = await fetch(
-    `http://localhost:5000/api/bookings/totalbuy`,
+    `https://grocery-store-server-orpin.vercel.app/api/bookings/totalbuy`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
