@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const Table = async () => {
-  const users = await fetch("http://localhost:5000/api/auth/alluser");
+  const users = await fetch("http://localhost:5000/api/auth/alluser", {
+    cache: "no-store",
+  });
   const { data } = await users.json();
 
   return (

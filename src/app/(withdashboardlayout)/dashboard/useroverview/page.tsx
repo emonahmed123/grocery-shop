@@ -1,7 +1,7 @@
 import CardDataStats from "@/components/ui/CardDataStats";
 import Charttwo from "@/components/ui/Charttwo";
 
-import Table from "@/components/ui/Table";
+import Tabletwo from "@/components/ui/Tabletwo";
 import { getToken } from "@/utils/actions/Authaction";
 
 const Overview = async () => {
@@ -18,8 +18,23 @@ const Overview = async () => {
   const TotalCulcolitions = await TotalCulcolition.json();
   console.log(TotalCulcolitions);
 
+  const datas = await fetch(
+    "https://grocery-store-server-orpin.vercel.app/api/bookings/user",
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+      //   next: { revalidate: 3600 },
+    }
+  );
+  const { data } = await datas.json();
+
+  console.log("sdfsdf", datas);
+
   return (
-    <div className="max-w-[1400px] mx-auto mt-5">
+    <div className="max-w-[1400px] mx-auto py-10">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5 mb-5">
         <CardDataStats
           title="Total Buy"
@@ -104,10 +119,10 @@ const Overview = async () => {
       </div>
 
       <div className="mb-5">
-        <Charttwo />
+        <Charttwo order={TotalCulcolitions?.data} />
       </div>
       <div>
-        <Table />
+        <Tabletwo data={data} />
       </div>
     </div>
   );
