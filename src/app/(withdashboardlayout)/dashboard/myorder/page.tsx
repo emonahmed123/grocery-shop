@@ -62,9 +62,9 @@ const UserOrdersTable = () => {
   ];
 
   return (
-    <div className="mt-10 h-[100vh] overflow-y-scroll">
+    <div className="py-10  ">
       <h1 className="text-3xl font-semibold text-center mb-5 pb-2  ">
-        My Orders
+        My <span className="text-secondary">Orders</span>
       </h1>
       {orders.length > 0 ? (
         <Table>
@@ -76,23 +76,36 @@ const UserOrdersTable = () => {
           <TableBody>
             {orders?.map((order: any) => (
               <TableRow key={order._id}>
-                <TableCell>
+                <TableCell className="w-16 text-black">
                   {order?.products?.map((product: any) => (
                     <div key={product._id} className="flex items-center gap-5">
                       <Image
-                        src={product.image}
+                        src={product?.image}
                         alt="product_image"
                         width={50}
                         height={50}
                       />
-                      <p>{product.name}</p>
+                      <p>{product?.name}</p>
                     </div>
                   ))}
                 </TableCell>
                 <TableCell className="w-16 text-black">
                   {order?.totalAmount}
                 </TableCell>
-                <TableCell>{order?.status}</TableCell>
+
+                <TableCell className="w-16 text-black">
+                  <span
+                    className={`${
+                      order?.status === "pending"
+                        ? "bg-yellow-500"
+                        : order?.status === "delivered"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                    } text-white px-2 py-1 rounded-md`}
+                  >
+                    {order?.status}
+                  </span>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

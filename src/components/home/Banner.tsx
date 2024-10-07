@@ -25,7 +25,7 @@ const Banner = () => {
               radius="full"
               size="lg"
               variant="shadow"
-              className="bg-gradient-to-tr from-primary to-yellow-500 text-white shadow-lg"
+              className="bg-gradient-to-tr from-primary to-secondary text-white shadow-lg"
             >
               Buy Now
             </Button>

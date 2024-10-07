@@ -1,39 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { getUserInfo } from "@/utils/actions/Authaction";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@nextui-org/navbar";
+
 import { User } from "@nextui-org/react";
 import Link from "next/link";
 
-const TopNav = async () => {
+const TopNav = async ({ UserData }: { UserData: any }) => {
   const user = await getUserInfo();
+  console.log("navbarrr", UserData?.image);
   return (
     <>
-      <Navbar isBordered>
+      <div className="bg-white flex justify-between items-center px-8 py-2 border-b border-gray-200 fixed     top-0 left-0 right-0 z-50">
         {/* for md device  */}
-        <NavbarBrand className="block">
+        <div className="block">
           <Link href="/" className="font-bold text-inherit">
             EAS<span className="text-primary">Grocery</span>
           </Link>
-        </NavbarBrand>
-        <NavbarContent justify="end">
-          <NavbarItem>
+        </div>
+        <div className="flex justify-self-auto">
+          <div>
             {user && (
               <User
                 name={user.name}
                 description={user.role}
                 avatarProps={{
-                  src: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+                  src: `${UserData?.image}`,
                   alt: "Image",
                 }}
               />
             )}
-          </NavbarItem>
-        </NavbarContent>
-      </Navbar>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

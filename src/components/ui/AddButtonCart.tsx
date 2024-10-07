@@ -9,54 +9,54 @@ import React from "react";
 import Swal from "sweetalert2";
 
 const AddButtonCart = ({
-    children,
-    product,
+  children,
+  product,
 }: {
-    children: React.ReactNode;
-    product: TGroceryItem;
+  children: React.ReactNode;
+  product: TGroceryItem;
 }) => {
-    console.log(product);
-    const { products } = useAppSelector((state) => state.cart);
+  console.log(product);
+  const { products } = useAppSelector((state) => state.cart);
 
-    const dispatch = useAppDispatch();
-    const handle = (product: any) => {
-        const isProductExistInList = products.find(
-            (prod: any) => prod._id === product._id
-        );
-
-        if (isProductExistInList) {
-            Swal.fire({
-                title: `${product.name} `,
-                text: "Allready exits in carts ",
-                icon: "error",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-        } else {
-            dispatch(addToCart(product));
-            Swal.fire({
-                title: `${product.name} `,
-                text: "Add to cart success",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-        }
-    };
-
-    return (
-        <div>
-            <Button
-                onClick={(e) => {
-                    e.stopPropagation(), handle(product);
-                }}
-                className="bg-gradient-to-tr from-primary to-yellow-500 text-white shadow-lg"
-            >
-                {" "}
-                {children}{" "}
-            </Button>
-        </div>
+  const dispatch = useAppDispatch();
+  const handle = (product: any) => {
+    const isProductExistInList = products.find(
+      (prod: any) => prod._id === product._id
     );
+
+    if (isProductExistInList) {
+      Swal.fire({
+        title: `${product.name} `,
+        text: "Allready exits in carts ",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      dispatch(addToCart(product));
+      Swal.fire({
+        title: `${product.name} `,
+        text: "Add to cart success",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
+
+  return (
+    <div>
+      <Button
+        onClick={(e) => {
+          e.stopPropagation(), handle(product);
+        }}
+        className="bg-gradient-to-tr from-primary to-secondary text-white shadow-lg"
+      >
+        {" "}
+        {children}{" "}
+      </Button>
+    </div>
+  );
 };
 
 export default AddButtonCart;

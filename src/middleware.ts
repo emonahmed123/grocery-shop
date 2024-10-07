@@ -27,6 +27,7 @@ export async function middleware(req: NextRequest) {
         decodedData?.role !== "admin" &&
         (pathname === "/dashboard/products/add-product" ||
           pathname === "/dashboard/products" ||
+          pathname === "/dashboard/overview " ||
           pathname === "/dashboard/orders")
       ) {
         return NextResponse.redirect(new URL("/dashboard/myorder", req.url));

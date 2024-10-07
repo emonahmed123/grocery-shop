@@ -135,7 +135,7 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
               onClick={handleLogout}
               color="primary"
               variant="shadow"
-              className="text-black"
+              className="text-white"
             >
               Logout
             </Button>

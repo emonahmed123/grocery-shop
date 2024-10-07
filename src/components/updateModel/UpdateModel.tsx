@@ -16,6 +16,7 @@ import {
   Textarea,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
+import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const UpdateModel = ({
@@ -86,8 +87,9 @@ const UpdateModel = ({
         size="sm"
         variant="shadow"
         className="text-white"
+        isIconOnly
       >
-        Edit
+        <FaEdit size={15} />
       </Button>
       <Modal
         isOpen={isOpen}

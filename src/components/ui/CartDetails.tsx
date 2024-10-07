@@ -23,7 +23,7 @@ const CartDetails = ({ product }: any) => {
     dispatch(removeFromCart(payload));
   };
   return (
-    <div className="flex items-center justify-between space-x-1 md:space-x-4 border border-gray-300 rounded-lg p-1 md:p-4 bg-white shadow-md transition-transform transform hover:scale-105 hover:shadow-lg max-w-[700px]  mx-auto">
+    <div className="flex items-center justify-between space-x-1 lg:space-x-4 border border-gray-300 rounded-lg p-1 lg:p-4 bg-white shadow-md transition-transform transform hover:scale-105 hover:shadow-lg max-w-[700px]  mx-auto">
       <Image
         width={40}
         height={40}
@@ -32,7 +32,7 @@ const CartDetails = ({ product }: any) => {
         className="w-24 h-24 object-cover rounded-md"
       />
       <div className="flex-grow mx-4">
-        <h3 className="text-[12px]  md:text-lg font-semibold  truncate mb-2">
+        <h3 className="text-[12px]  lg:text-lg font-semibold  truncate mb-2">
           {product?.name}
         </h3>
         <p className="text-[10px]  md:text-lg font-bold text-red-600">

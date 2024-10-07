@@ -8,11 +8,13 @@ import {
   FaPlus,
   FaPray,
   FaShoppingCart,
+  FaSignOutAlt,
 } from "react-icons/fa";
-import { FaDatabase } from "react-icons/fa6";
+import { FaDatabase, FaUser } from "react-icons/fa6";
 
 const SideNav = () => {
-  const { user } = useAuth();
+  const { user, handleLogout } = useAuth();
+
   const pathname = usePathname();
 
   const navItems = [
@@ -53,29 +55,52 @@ const SideNav = () => {
       url: "/dashboard/myorder",
       role: "user",
     },
+
+    {
+      icon: <FaUser />,
+      title: "My Profile",
+      url: "/dashboard/myprofile",
+      role: ["user", "admin"],
+    },
   ];
 
   const isActive = (href: string) => pathname === href;
 
   return (
-    <ul className="bg-[#1C2434] py-2 px-1 md:px-5 space-y-5  w-[80px] md:w-[100px] lg:w-[200px] min-h-screen  h-full">
+    <ul className="bg-[#1C2434] relative py-2 px-1 md:px-3 space-y-5 w-[50px]  md:w-[70px] lg:w-[180px] xl:w-[200px] min-h-screen  h-full ">
       <p className="text-gray-500 font-bold text-[14px] mb-5">Menu</p>
       {user &&
         navItems
-          .filter((item) => item.role === user.role)
+          .filter((item) =>
+            Array.isArray(item.role)
+              ? item.role.includes(user.role)
+              : item.role === user.role
+          )
           .map((item, index) => (
             <li key={index}>
               <Link
                 href={item.url}
                 className={`${
-                  isActive(item.url) ? "bg-graydark dark:bg-meta-4" : ""
-                } group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
+                  isActive(item.url) ? "bg-graydark " : ""
+                } group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark `}
               >
-                {item.icon}
-                {item.title}
+                <span className="text-white">{item.icon}</span>
+                <span className="hidden lg:block">{item.title}</span>
               </Link>
             </li>
           ))}
+
+      <ul className="absolute bottom-20">
+        <li className="relative top-[90%]">
+          <button
+            onClick={handleLogout}
+            className="text-bodydark1 flex gap-1 px-4 py-2  items-center font-medium"
+          >
+            <FaSignOutAlt />
+            <span className="hidden lg:block">Logout</span>
+          </button>
+        </li>
+      </ul>
     </ul>
   );
 };

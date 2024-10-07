@@ -57,6 +57,7 @@ const ReviewForm = ({ id }: { id: string }) => {
       </h2>
       <Textarea
         label="Review"
+        value={review}
         placeholder="Write your thought about the product"
         className="max-w-2xl"
         onChange={(e) => setReview(e.target.value)}
@@ -70,7 +71,9 @@ const ReviewForm = ({ id }: { id: string }) => {
       >
         Post
       </Button>
-      {!user && <p>You must be logged in to post a review !</p>}
+      {!user && (
+        <p className="text-warning">You must be login Then post a review !</p>
+      )}
     </div>
   );
 };

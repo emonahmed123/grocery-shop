@@ -14,6 +14,7 @@ import {
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AllProducts = () => {
@@ -123,10 +124,10 @@ const AllProducts = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1 className="text-center text-[30px] leading-[40px] mb-5">
-          All Products
+    <div className="font-Poppis py-10">
+      <div className="mb-10">
+        <h1 className="text-center text-[30px] leading-[40px]">
+          All <span className="text-secondary">Products</span>
         </h1>
       </div>
       {loading ? (
@@ -148,8 +149,8 @@ const AllProducts = () => {
                   <Image
                     alt="product_image"
                     src={product.image}
-                    width={50}
-                    height={50}
+                    width={30}
+                    height={30}
                   />
                 </TableCell>
                 <TableCell>{product?.name}</TableCell>
@@ -162,8 +163,10 @@ const AllProducts = () => {
                     color="danger"
                     variant="shadow"
                     size="sm"
+                    className="text-white"
+                    isIconOnly
                   >
-                    Delete
+                    <FaTrash size={15} />
                   </Button>
                 </TableCell>
               </TableRow>

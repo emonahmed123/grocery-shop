@@ -34,7 +34,7 @@ const Overview = async () => {
   console.log("sdfsdf", datas);
 
   return (
-    <div className="max-w-[1400px] mx-auto py-10">
+    <div className="max-w-[1400px] mx-auto lg:py-10 py-1">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5 mb-5">
         <CardDataStats
           title="Total Buy"

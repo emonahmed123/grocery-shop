@@ -23,7 +23,7 @@ const ProductDetails = async ({ params }: any) => {
   const product = Products?.data;
   return (
     <section className="py-[90px] md:py-[50px]">
-      <div className="max-w-Container mx-auto px-5 xl:px-0 font-poppe">
+      <div className="max-w-[1170px] mx-auto px-5 xl:px-0 font-poppe">
         <p className="mb-5 text-sm text-gray-500">
           {product.category} &gt; {product.name}
         </p>
@@ -46,6 +46,25 @@ const ProductDetails = async ({ params }: any) => {
               </h1>
 
               <p className="text-xl mb-3 font-medium">{product?.price}TK</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 220 40"
+                width="90"
+                height="20"
+              >
+                <defs>
+                  <symbol id="star" viewBox="0 0 24 24">
+                    <path d="M12 .587l3.668 7.429L23.524 9.75l-5.68 5.535L19.812 24 12 19.797 4.188 24l1.968-8.715-5.68-5.535 7.856-1.734L12 .587z" />
+                  </symbol>
+                </defs>
+                <g fill="gold">
+                  <use href="#star" x="0" y="0" width="24" height="24" />
+                  <use href="#star" x="44" y="0" width="24" height="24" />
+                  <use href="#star" x="88" y="0" width="24" height="24" />
+                  <use href="#star" x="132" y="0" width="24" height="24" />
+                  <use href="#star" x="176" y="0" width="24" height="24" />
+                </g>
+              </svg>
             </div>
 
             <p className="text-[16px] mb-5"> {product?.description}</p>

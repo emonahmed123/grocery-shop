@@ -20,7 +20,7 @@ const Overview = async () => {
     }
   );
   const TotalCulcolitions = await TotalCulcolition.json();
-
+  console.log("TotalCulcolitions", TotalCulcolitions);
   return (
     <div className="max-w-[1400px] mx-auto mt-5">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5 mb-5">
@@ -54,7 +54,7 @@ const Overview = async () => {
         </CardDataStats>
         <CardDataStats
           title="Total Product"
-          total={data.length}
+          total={data?.length}
           rate="2.59%"
           levelUp
         >
@@ -106,7 +106,7 @@ const Overview = async () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 mb-5 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
       </div>

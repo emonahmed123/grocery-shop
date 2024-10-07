@@ -103,7 +103,7 @@ const PaymentDetails = () => {
           onClick={handleCheckout}
           color="primary"
           variant="shadow"
-          className="w-full text-black"
+          className="w-full text-white"
         >
           place an order
         </Button>
@@ -113,9 +113,9 @@ const PaymentDetails = () => {
           isDisabled
           color="primary"
           variant="shadow"
-          className="w-full text-black"
+          className="w-full text-white"
         >
-          Place an order
+          Place an Order
         </Button>
       )}
     </div>
