@@ -10,16 +10,16 @@ import { FaArrowRight } from "react-icons/fa";
 const ProductCard = ({ item }: { item: TGroceryItem }) => {
   return (
     <>
-      <Card shadow="sm" className="p-5">
-        <CardBody className="p-0 mb-2">
+      <Card className="p-5 shadow-card">
+        <CardBody className="p-0 mb-2 ">
           <Image
             height={200}
             width={200}
             src={item.image}
             alt="Grocery"
-            className="w-full object-cover h-[200px] rounded-lg"
+            className="w-full    object-cover h-[200px]   rounded-lg  "
           />
-          <h3 className="mt-3 mb-1  text-[16px] leading-[20px] font-medium">
+          <h3 className="mt-3 mb-1  text-[16px] leading-[20px] font-medium text-[#000]">
             {item.name}
           </h3>
           <svg
@@ -42,13 +42,13 @@ const ProductCard = ({ item }: { item: TGroceryItem }) => {
             </g>
           </svg>
           <div className="flex justify-between items-center">
-            <h1 className="text-[16px] leading-[20px] font-semibold">
+            <h1 className="text-[16px] leading-[20px] font-semibold text-[#000]">
               {item.price}TK
             </h1>
             <Tooltip content="add to cart">
               <Button
                 isIconOnly
-                className="  bg-gradient-to-tr from-primary to-yellow-500 text-white shadow-lg"
+                className="  bg-gradient-to-tr from-primary to-yellow-500 text-white shadow-lg rounded-full"
               >
                 <AddButtonCart product={item}>
                   <AddBtn />
@@ -60,7 +60,7 @@ const ProductCard = ({ item }: { item: TGroceryItem }) => {
 
         <CardFooter className="w-full p-0">
           <Button
-            className="w-full bg-primary text-white font-semibold text-[16px] leading-[24px] rounded-[5px]"
+            className="w-full bg-[#02b290] text-white font-semibold text-[16px] leading-[24px] rounded-[5px]"
             as={Link}
             href={`/product/${item._id}`}
           >

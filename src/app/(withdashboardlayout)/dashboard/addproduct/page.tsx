@@ -24,14 +24,14 @@ const AddProductPage = () => {
   const onSubmit = async (data: any) => {
     try {
       const { name, description, price, category } = data;
-
+      console.log(category);
       const Nubers = +price;
       let imageUrl = "";
       if (data.image && data.image[0]) {
         const formData = new FormData();
         formData.append("image", data.image[0]);
-        const img_hosting_token = process.env.IMAGE_UPLOAD_TOKEN;
-        console.log(img_hosting_token);
+        // const img_hosting_token = process.env.IMAGE_UPLOAD_TOKEN;
+        // console.log(img_hosting_token);
         const imgBBResponse = await fetch(
           `https://api.imgbb.com/1/upload?key=532c300e73413a775eeaee5314c89018`,
           {
@@ -77,7 +77,7 @@ const AddProductPage = () => {
       );
       const result = await response.json();
 
-      console.log(result);
+      // console.log(result);
       if (result.success) {
         Swal.fire({
           title: "Product Create successfully",
@@ -104,16 +104,17 @@ const AddProductPage = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      console.log(error);
     }
   };
-  console.log(errors);
+  // console.log(errors);
   return (
     <div className="font-poppins py-10 mx-w-[1440px] mx-auto px-2">
       <h1 className="text-3xl font-semibold text-center mb-10  border-gray-300">
         Add <span className="text-secondary">Product</span>
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1  sm:grid-cols-2 gap-6">
           {/* product name */}
           <div>
             <label className="mb-3 block text-sm font-medium text-gray-300 ">

@@ -31,13 +31,13 @@ const Newstls = () => {
   };
 
   return (
-    <section className="bg-[#84C225] py-[50px] md:py-[80px] ">
+    <section className="bg-[#f2f2f2] opacity-100 py-[50px] md:py-[80px]  font-poppe">
       <div className="max-w-[1170px] px-5 lx:px-5 mx-auto">
         <div>
-          <h2 className="text-[28px] leading-tight text-center mb-2 font-semibold text-white">
+          <h2 className="text-[28px] leading-tight text-center mb-2 font-semibold text-[#000]">
             Subscribe to our emails
           </h2>
-          <p className="text-[14px] leading-[24px] text-center text-white mb-5">
+          <p className="text-[14px] leading-[24px] text-center text-[#000] mb-5">
             Be the first to know about new collections and exclusive offers
           </p>
 
@@ -52,6 +52,7 @@ const Newstls = () => {
                 type="email"
                 required
                 placeholder="Your email"
+                className="caret-white"
               />
               <Button
                 isIconOnly

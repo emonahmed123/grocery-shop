@@ -26,11 +26,11 @@ const Faq = () => {
     title: "font-normal text-[16px] text-black font-semibold  ",
     content: " px-2 border  py-5 text-[14px] leading-[24px]",
     trigger:
-      " px-2 bg-[#FAD400]  mt-5 py-2 h-14 flex items-center text-gray-500",
+      " px-2 bg-[#FFFFF] shadow-md  mt-5 py-2 h-14 flex items-center text-gray-500",
     indicator: "text-black",
   };
   return (
-    <section className="  md:py-[80px] py-[40px] font-poppe">
+    <section className="  md:py-[100px] py-[40px] font-poppe ">
       <div className="max-w-[1170px] mx-auto px-5 xl:px-0 font-poppe">
         <h1 className="text-[30px] leading-[40px] md:text-[50px] md:leading-[60px] mb-10 text-center font-semibold">
           Frequently Asked Questions

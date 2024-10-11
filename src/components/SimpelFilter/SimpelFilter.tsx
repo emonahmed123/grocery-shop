@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import ProductCard from "@/components/ui/ProductCard";
 import { TGroceryItem } from "@/Types";
 const SimpelFilter = ({ data }: { data: any }) => {
-  console.log(data);
+  // console.log(data);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -25,7 +25,7 @@ const SimpelFilter = ({ data }: { data: any }) => {
         />
       </div>
 
-      <div className="grid  grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-5">
+      <div className="grid  grid-cols-1  md:grid-cols-2  lg:grid-cols-4 gap-5">
         {filterFacilites.map((item: TGroceryItem, i: number) => (
           <ProductCard item={item} key={i}></ProductCard>
         ))}

@@ -46,7 +46,7 @@ const ReviewForm = ({ id }: { id: string }) => {
         icon: "error",
         title: "something went wrong! try again",
       });
-      console.log(result);
+      // console.log(result);
     }
   };
 

@@ -4,32 +4,29 @@ import React from "react";
 
 const Banner = () => {
   return (
-    <div className=' h-screen md:h-[650px]  bg-[url("https://i.ibb.co/bmFLW7G/banner.jpg")] bg-cover bg-no-repeat font-poppe'>
-      <div className="w-full bg-[#ffffffc2] h-full  flex justify-center items-center font-poppe">
-        <div className="max-w-[900px] mx-auto px-2">
-          <h1 className=" text-[26px] leading-[36px] md:text-[50px] md:leading-[60px] lg:text-[70px] lg:leading-[80px] font-bold text-center mb-3 md:mb-6 font-poppe">
-            Your Local Marketplace for Fresh and Sustainable Good
+    <div className='w-full bg-no-repeat bg-cover bg-center flex items-center  bg-fill-thumbnail min-h-[400px] md:min-h-[460px] lg:min-h-[500px] xl:min-h-[550px] 2xl:min-h-[650px] py-20 py:pt-24 mb-5   bg-[url("https://borobazar.vercel.app/assets/images/hero/banner-2.png")]  font-manrope'>
+      <div className="mx-auto h-full flex flex-col text-center px-6 xl:max-w-[750px] 2xl:max-w-[850px] max-w-[480px] md:max-w-[550px]">
+        <div className="text-center">
+          <h1 className=" text-3xl md:text-4xl font-manrope font-extrabold leading-snug md:leading-tight xl:leading-[1.3em] mb-3 md:mb-4 xl:mb-3 -mt-2 xl:-mt-3 2xl:-mt-4 text-brand-tree-dark xl:text-5xl 2xl:text-[55px] text-[#0b4635]">
+            Healthy Vegetable that you Deserve to Eat Fresh
           </h1>
 
-          <p className="text-[16px] text-black leading-[27px] text-center  mb-3 md:mb-6">
-            At Growcery, we connect you with local farmers, artisans, and small
-            businesses to bring fresh, organic, and sustainable products
-            straight to your door. From farm-fresh vegetables to handmade goods,
-            our marketplace supports local producers while providing you with
-            the healthiest and freshest options available!
+          <p className="text-base md:text-[17px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em] xl:px-16 text-brand-dark text-opacity-80 2xl:px-32 mb-5">
+            We source and sell the very best beef, lamb and pork, sourced with
+            the greatest care from farmer.
           </p>
-          <div className="flex justify-center items-center">
-            <Button
-              as={Link}
-              href="#product"
-              radius="full"
-              size="lg"
-              variant="shadow"
-              className="bg-gradient-to-tr from-primary to-secondary text-white shadow-lg"
-            >
-              Buy Now
-            </Button>
-          </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <Button
+            as={Link}
+            href="#product"
+            radius="full"
+            size="lg"
+            variant="shadow"
+            className="bg-[#02b290] text-[#FFFFFF] "
+          >
+            Buy Now
+          </Button>
         </div>
       </div>
     </div>

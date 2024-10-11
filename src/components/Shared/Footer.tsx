@@ -1,32 +1,39 @@
+import Image from "next/image";
+
 const Footer = () => {
   return (
     <>
       <footer>
-        <div className="pt-[70px] pb-[30px] bg-gradient-to-tr from-primary to-danger font-Poppis">
+        <div className="pt-[70px] pb-[30px] bg-[#FFFFFF]   font-poppe">
           <div className="max-w-[1170px] mx-auto px-5 xl:px-0">
             <div className="flex lg:items-start justify-between flex-col lg:flex-row gap-y-[60px] mb-[30px]">
               <div className="max-w-[370px]">
                 <a className="mb-[40px]" href="">
-                  EAS<span className="text-white">Grocery</span>
+                  <Image
+                    width={130}
+                    height={30}
+                    src="https://borobazar.vercel.app/_next/static/media/logo.026129ac.svg"
+                    alt="logo"
+                  />
                 </a>
 
-                <p className="text-16px leading-28px mt-[30px] text-white">
-                  Find best quality foods meat ,fish all over there.good quality
-                  and better other
+                <p className="text-brand-muted text-sm leading-7 lg:leading-[27px] lg:text-15px mt-[40px]">
+                  We offer high-quality foods and the best delivery service, and
+                  the food market you can blindly trust
                 </p>
               </div>
 
               <div className="max-w-[723px]">
                 <div className="flex gap-x-[60px] lg:gap-x-[110px] justify-between flex-wrap">
                   <div>
-                    <h5 className="text-20px leading-30px font-bold text-white mb-[24px]">
+                    <h5 className="text-20px leading-30px font-bold text-[#000] mb-[24px]">
                       Company
                     </h5>
 
                     <ul>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           Careers
@@ -34,7 +41,7 @@ const Footer = () => {
                       </li>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           Press
@@ -42,7 +49,7 @@ const Footer = () => {
                       </li>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           About us
@@ -51,14 +58,14 @@ const Footer = () => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="text-20px leading-30px font-bold text-white mb-[24px]">
+                    <h5 className="text-20px leading-30px font-bold text-[#000] mb-[24px]">
                       About Us
                     </h5>
 
                     <ul>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           Blog
@@ -67,7 +74,7 @@ const Footer = () => {
 
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           Community
@@ -75,7 +82,7 @@ const Footer = () => {
                       </li>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           FAQ
@@ -84,14 +91,14 @@ const Footer = () => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="text-20px leading-30px font-bold  text-white mb-[24px]">
+                    <h5 className="text-20px leading-30px font-bold  text-[#000] mb-[24px]">
                       Contact Us
                     </h5>
 
                     <ul>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           LinkedIn
@@ -99,7 +106,7 @@ const Footer = () => {
                       </li>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           Facebook
@@ -107,7 +114,7 @@ const Footer = () => {
                       </li>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           Instagram
@@ -115,7 +122,7 @@ const Footer = () => {
                       </li>
                       <li className="mb-[18px]">
                         <a
-                          className="text-[16px] leading-26px text-white"
+                          className="text-[16px] leading-26px text-[#000]"
                           href=""
                         >
                           Twitter
@@ -127,21 +134,21 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="max-w-[1170px] mx-auto h-[1px] bg-white mb-[30px]"></div>
+            <div className="max-w-[1170px] mx-auto h-[1px] bg-[#000] mb-[30px]"></div>
 
             <div className="flex justify-between flex-col md:flex-row gap-y-[30px]">
               <div className="flex gap-x-[15px] sm:gap-x-[30px]">
-                <a className="text-[14px] leading-24px text-white" href="">
+                <a className="text-[14px] leading-24px text-[#000]" href="">
                   Terms of Service
                 </a>
-                <a className="text-[14px] leading-24px text-white" href="">
+                <a className="text-[14px] leading-24px text-[#000]" href="">
                   Privacy Policy
                 </a>
-                <a className="text-[14px] leading-24px text-white" href="">
+                <a className="text-[14px] leading-24px text-[#000]" href="">
                   Cookie Policy
                 </a>
               </div>
-              <p className="text-[14px] leading-24px text-white">
+              <p className="text-[14px] leading-24px text-[#000]">
                 Copyright © 2024 Company All Rights Reserved
               </p>
             </div>

@@ -50,7 +50,7 @@ const AddButtonCart = ({
         onClick={(e) => {
           e.stopPropagation(), handle(product);
         }}
-        className="bg-gradient-to-tr from-primary to-secondary text-white shadow-lg"
+        className="bg-[#02b290] text-[#ffff]"
       >
         {" "}
         {children}{" "}

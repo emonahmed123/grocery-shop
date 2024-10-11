@@ -3,9 +3,9 @@ import React from "react";
 
 const Shpping = () => {
   return (
-    <section className=" py-[60px]">
+    <section className=" py-[60px]  md:pt-[90px] md:pb-[130px]">
       <div className="max-w-[1110px] px-5 mx-auto ">
-        <div className="flex justify-between flex-wrap gap-5">
+        <div className="flex justify-between flex-wrap gap-x-5 gap-y-10">
           <div className="flex items-center gap-3  mx-w-[50%] cursor-pointer">
             <div>
               <Image

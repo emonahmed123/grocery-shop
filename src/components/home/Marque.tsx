@@ -4,13 +4,13 @@ import Marquee from "react-fast-marquee";
 
 const Marque = () => {
   return (
-    <section className="py-[60px] bg-red-500 ">
+    <section className="py-[60px] md:py-[90px] bg-[#1bd4a1]  ">
       <Marquee
-        gradientWidth={20}
+        // gradientWidth={20}
         pauseOnHover={true}
-        gradient={true}
+        // gradient={true}
         speed={100}
-        className="max-w-[1440px] mx-auto"
+        className="max-w-[1400px] mx-auto px-2"
       >
         <ul className="flex  px-5 py-5 items-center justify-around gap-5 min-w-fit flex-shrink-0 text-[26px]">
           <li>

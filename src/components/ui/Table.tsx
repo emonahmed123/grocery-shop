@@ -16,13 +16,13 @@ const Table = async () => {
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-                Package
+                Name
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                Invoice date
+                Email
               </th>
               <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
-                Status
+                Role
               </th>
             </tr>
           </thead>
@@ -40,9 +40,9 @@ const Table = async () => {
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p
                     className={`inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium ${
-                      user?.role === "Paid"
+                      user?.role === "admin"
                         ? "bg-success text-success"
-                        : user?.role === "Unpaid"
+                        : user?.role === "user"
                         ? "bg-danger text-danger"
                         : "bg-warning text-warning"
                     }`}

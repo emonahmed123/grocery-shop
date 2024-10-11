@@ -52,7 +52,7 @@ const CheckoutProductTable = () => {
                       className="object-fill h-full w-full rounded-md"
                     />
                   </div>
-                  <p>{product.name}</p>
+                  <p className="text-[14px]">{product.name}</p>
                 </div>
               </TableCell>
               <TableCell>{product.price}</TableCell>

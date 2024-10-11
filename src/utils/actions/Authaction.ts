@@ -41,36 +41,42 @@ export const login = async (loginInfo: TLoginInfo) => {
   );
 
   const data = await res.json();
-  console.log(data.data.accessToken);
+  // console.log(data.data.accessToken);
   if (data?.success) {
     cookies().set("token", data?.data.accessToken);
   }
 
   return data;
 };
-// export const googleToDB = async (loginInfo: any) => {
-//   // login logic here
-//   console.log(loginInfo);
+export const googleToDB = async (loginInfo: any) => {
+  // login logic here
+  const info = {
+    name: loginInfo.name,
+    email: loginInfo.email,
+    image: loginInfo.image,
+    password: "12345",
+  };
 
-//   // const res = await fetch(
-//   //   `https://grocery-store-server-orpin.vercel.app/api/auth/login`,
-//   //   {
-//   //     method: "POST",
-//   //     headers: {
-//   //       "Content-Type": "application/json",
-//   //     },
-//   //     body: JSON.stringify(loginInfo),
-//   //   }
-//   // );
+  const res = await fetch(
+    ` https://grocery-store-server-orpin.vercel.app
+api/auth/googleUser`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(info),
+    }
+  );
 
-//   // const data = await res.json();
-//   // console.log(data.data.accessToken);
-//   // if (data?.success) {
-//   //   cookies().set("token", data?.data.accessToken);
-//   // }
+  const data = await res.json();
+  console.log(data.data?.accessToken, "aldkfdslk");
+  if (data?.data?.accessToken) {
+    cookies().set("token", data?.data.accessToken);
+  }
 
-//   // return data;
-// };
+  return data;
+};
 
 export const getUserInfo = async () => {
   const token = cookies().get("token")?.value;

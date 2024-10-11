@@ -13,13 +13,15 @@ const config: Config = {
       fontFamily: {
         poppe: ["var(--font-poppins)"],
         mono: ["var(--font-roboto-mono)"],
+        manrope: ["var(--font-manrope)"],
       },
       backgroundImage: {},
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
         // primary: "#EC7FB4",
-        primary: "#3c50e0",
+        // primary: "#3c50e0",
+        primary: "#02b290",
 
         current: "currentColor",
         transparent: "transparent",
@@ -265,6 +267,7 @@ const config: Config = {
         12: "0px 0.5px 3px 0px rgba(0, 0, 0, 0.18)",
         13: "0px 1px 3px 0px rgba(0, 0, 0, 0.08)",
         14: "0px 2px 3px 0px rgba(0, 0, 0, 0.10)",
+        16: "rgba(91, 115, 137, 0.08) 0px 2px 4px",
       },
       dropShadow: {
         1: "0px 1px 0px #E2E8F0",

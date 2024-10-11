@@ -9,10 +9,11 @@ import {
   TableRow,
   TableCell,
   Button,
-  Spinner,
 } from "@nextui-org/react";
 import { useAuth } from "@/lib/AuthProviders";
 import Swal from "sweetalert2";
+
+import { FaShippingFast } from "react-icons/fa";
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -120,12 +121,15 @@ const OrdersPage = () => {
   return (
     <>
       <div className="mt-10">
-        <h1 className="text-3xl font-semibold text-center mb-10 pb-2 border-b-2 border-gray-300 ">
+        <h1 className="text-3xl font-semibold text-center mb-10   border-gray-300 mt-2 ">
           All Orders
         </h1>
         {loading ? (
-          <div className="flex items-center justify-center">
-            <Spinner />
+          <div className="flex items-center justify-center h-screen">
+            <div className="relative">
+              <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+              <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin"></div>
+            </div>
           </div>
         ) : (
           <Table>
@@ -140,18 +144,34 @@ const OrdersPage = () => {
                   <TableCell>{order?.userId.name}</TableCell>
                   <TableCell>{order?.totalAmount}</TableCell>
                   <TableCell>{order?.quantity}</TableCell>
-                  <TableCell>{order?.status}</TableCell>
+                  <TableCell>
+                    <p
+                      className={`inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium ${
+                        order?.status === "delivered"
+                          ? "bg-success text-success"
+                          : order?.status === "pending"
+                          ? "bg-danger text-danger"
+                          : "bg-warning text-warning"
+                      }`}
+                    >
+                      {order?.status}
+                    </p>
+                  </TableCell>
                   <TableCell>
                     {order?.status === "delivered" ? (
-                      <p className="text-green-500">Delivery Completed</p>
+                      <Button isDisabled variant="shadow" size="sm" isIconOnly>
+                        {" "}
+                        <FaShippingFast />
+                      </Button>
                     ) : (
                       <Button
                         onClick={() => handleDeliveredProduct(order._id)}
                         color="primary"
                         variant="shadow"
                         size="sm"
+                        isIconOnly
                       >
-                        Delivered
+                        <FaShippingFast />
                       </Button>
                     )}
                   </TableCell>

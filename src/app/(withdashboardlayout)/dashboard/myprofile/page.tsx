@@ -9,19 +9,23 @@ import { useAuth } from "@/lib/AuthProviders";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import UpdateProrile from "@/components/UpdateProfile/UpdateProrile";
 type FormValues = {
   image: FileList;
 };
 
 type UserData = {
   image: string;
+  name?: string;
+  phone?: string;
+  address?: string;
   // Add other user data fields here
 };
 const Profile = () => {
   const { user, token } = useAuth();
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<UserData | null>(null);
-
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const {
     register,
     handleSubmit,
@@ -32,13 +36,16 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/auth/me`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `https://grocery-store-server-orpin.vercel.app/api/auth/me`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const { data } = await res.json();
 
         setUserData(data);
@@ -60,16 +67,19 @@ const Profile = () => {
     }
   }, [token]);
 
-  const onSubmit = async (data: FormValues) => {
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedImage(event.target.files[0]);
+      handleImageUpload(event.target.files[0]);
+    }
+  };
+
+  const handleImageUpload = async (file: File) => {
     try {
       setLoading(true);
 
-      if (!data.image || !data.image[0]) {
-        throw new Error("No image selected");
-      }
-
       const formData = new FormData();
-      formData.append("image", data.image[0]);
+      formData.append("image", file);
 
       const imgBBResponse = await fetch(
         `https://api.imgbb.com/1/upload?key=532c300e73413a775eeaee5314c89018`,
@@ -86,14 +96,17 @@ const Profile = () => {
       const imgBBData = await imgBBResponse.json();
       const imgUrl = imgBBData.data.url;
 
-      const response = await fetch(`http://localhost:5000/api/auth/change`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ image: imgUrl }),
-      });
+      const response = await fetch(
+        `https://grocery-store-server-orpin.vercel.app/api/auth/change`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ image: imgUrl }),
+        }
+      );
 
       const result = await response.json();
 
@@ -104,7 +117,6 @@ const Profile = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        reset();
         setUserData((prevData) => ({ ...prevData, image: imgUrl }));
       } else {
         throw new Error("Image upload failed on server");
@@ -118,12 +130,83 @@ const Profile = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+    } finally {
       setLoading(false);
     }
   };
-  console.log(userData?.image);
+
+  // const onSubmit = async (data: FormValues) => {
+  //   try {
+  //     setLoading(true);
+
+  //     let imgUrl = "";
+  //     if (data.image || data.image[0]) {
+  //       console.log(data.image, data.image[0]);
+
+  //       const formData = new FormData();
+  //       formData.append("image", data.image[0]);
+
+  //       const imgBBResponse = await fetch(
+  //         `https://api.imgbb.com/1/upload?key=532c300e73413a775eeaee5314c89018`,
+  //         {
+  //           method: "POST",
+  //           body: formData,
+  //         }
+  //       );
+
+  //       if (!imgBBResponse.ok) {
+  //         throw new Error("Image upload failed");
+  //       }
+
+  //       const imgBBData = await imgBBResponse.json();
+  //       imgUrl = imgBBData.data.url;
+  //     }
+
+  //     const response = await fetch(
+  //       `https://grocery-store-server-orpin.vercel.app/api/auth/change`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify({ image: imgUrl }),
+  //       }
+  //     );
+
+  //     const result = await response.json();
+
+  //     if (result.success) {
+  //       Swal.fire({
+  //         title: "Image uploaded successfully",
+  //         icon: "success",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //       reset();
+  //       setUserData((prevData) => ({ ...prevData, image: imgUrl }));
+  //     } else {
+  //       throw new Error("Image upload failed on server");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     Swal.fire({
+  //       title: "Error",
+  //       text: "Something went wrong",
+  //       icon: "error",
+  //       showConfirmButton: false,
+  //       timer: 1500,
+  //     });
+  //     setLoading(false);
+  //   }
+  // };
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     handleSubmit(onSubmit)();
+  //   }
+  // };
   return (
-    <div className="mx-auto max-w-242.5 py-10">
+    <div className="mx-auto max-w-242.5 py-10 font-serif">
       <Breadcrumb pageName="Profile" />
 
       <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -171,7 +254,7 @@ const Profile = () => {
             </label>
           </div> */}
         </div>
-        <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
+        <div className="px-4 pb-6 lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2 rounded-full">
               <img
@@ -179,10 +262,10 @@ const Profile = () => {
                   userData?.image ||
                   "https://i.ibb.co.com/BwKpxDt/435747275-330658906702167-5652712472655907536-n.jpg"
                 }
-                className="w-[250px] h-[150px] bg-cover rounded-[70px] "
+                className="w-[250px] h-[119px] md:h-[150px] bg-cover rounded-[70px] "
                 alt="You have access to change profile "
               />
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form>
                 <label
                   htmlFor="image"
                   className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -209,29 +292,73 @@ const Profile = () => {
                     />
                   </svg>
                   <input
-                    {...register("image")}
+                    // {...register("image")}
                     type="file"
                     name="image"
                     id="image"
                     className="sr-only"
-                    onChange={handleSubmit(onSubmit)}
+                    onChange={handleImageChange}
                   />
                 </label>
               </form>
             </div>
           </div>
           <div className="mt-4">
-            <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-              {user?.name}
+            <h3 className="mb-1.5 text-2xl font-semibold text-center text-black dark:text-white">
+              {userData?.name}
             </h3>
-            <p className="font-medium">{user?.email}</p>
-            <div className="mx-auto mb-5.5 mt-4.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]"></div>
-
-            <div className="mx-auto max-w-180">
-              <h4 className="font-semibold text-black dark:text-white">
-                Location
-              </h4>
+            <p className="font-medium text-center text-gray-500">
+              {user?.role}
+            </p>
+            <div className=" mb-5.5 mt-4.5 grid grid-cols-1 md:grid-cols-2 gap-3 rounded-md  py-2.5">
+              <div>
+                <label className="mb-3 block text-sm font-medium text-gray-400 ">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  defaultValue={userData?.name}
+                  placeholder=" name"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-3 block text-sm font-medium text-gray-400 ">
+                  Email
+                </label>
+                <input
+                  type="text"
+                  defaultValue={user?.email}
+                  placeholder="Email"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-3 block text-sm font-medium text-gray-400 ">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  defaultValue={userData?.phone}
+                  placeholder="phone number"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-3 block text-sm font-medium text-gray-400 ">
+                  Address
+                </label>
+                <input
+                  type="text"
+                  defaultValue={userData?.address}
+                  placeholder="Address"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-2 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
             </div>
+          </div>
+          <div>
+            <UpdateProrile userData={userData} setUserData={setUserData} />
           </div>
         </div>
       </div>

@@ -44,21 +44,21 @@ const CartDetails = ({ product }: any) => {
           onClick={() => handleQuantity("decrement", product?._id)}
           className="bg-primary text-white p-2 rounded-full flex items-center justify-center hover:bg-green-800"
         >
-          <FaMinus />
+          <FaMinus size={10} />
         </button>
         <span className="text-lg font-semibold">{product.quantity}</span>
         <button
           onClick={() => handleQuantity("increment", product._id)}
           className="bg-primary text-white p-2 rounded-full hover:bg-green-800"
         >
-          <FaPlus />
+          <FaPlus size={10} />
         </button>
       </div>
       <button
         onClick={() => handleRemove(product._id)}
         className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700"
       >
-        <MdDelete />
+        <MdDelete size={12} />
       </button>
     </div>
   );

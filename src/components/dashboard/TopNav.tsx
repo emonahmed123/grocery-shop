@@ -3,6 +3,7 @@
 import { getUserInfo } from "@/utils/actions/Authaction";
 
 import { User } from "@nextui-org/react";
+import Image from "next/image";
 import Link from "next/link";
 
 const TopNav = async ({ UserData }: { UserData: any }) => {
@@ -14,14 +15,19 @@ const TopNav = async ({ UserData }: { UserData: any }) => {
         {/* for md device  */}
         <div className="block">
           <Link href="/" className="font-bold text-inherit">
-            EAS<span className="text-primary">Grocery</span>
+            <Image
+              src="https://borobazar.vercel.app/_next/static/media/logo.026129ac.svg"
+              width={131}
+              height={30}
+              alt="logo"
+            />
           </Link>
         </div>
         <div className="flex justify-self-auto">
           <div>
             {user && (
               <User
-                name={user.name}
+                name={UserData?.name}
                 description={user.role}
                 avatarProps={{
                   src: `${UserData?.image}`,

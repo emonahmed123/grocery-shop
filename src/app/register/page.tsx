@@ -3,6 +3,7 @@
 "use client";
 import { signUp } from "@/utils/actions/Authaction";
 import { Button, Input, Spinner } from "@nextui-org/react";
+import Image from "next/image";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -75,7 +76,7 @@ const Singuppage = () => {
   };
 
   return (
-    <section className="py-[80px] max-w-[1170px] mx-auto">
+    <section className="py-[80px] max-w-[1170px] mx-auto px-5 xl:px-0">
       {/* <h1 className="text-center text-4xl mb-5 font-semibold">
         Singup <span className="text-secondary">Here</span>
       </h1>
@@ -183,7 +184,12 @@ const Singuppage = () => {
                 className="mb-5.5 inline-block text-primary italic underline "
                 href="/"
               >
-                EasGrocery
+                <Image
+                  src="https://borobazar.vercel.app/_next/static/media/logo.026129ac.svg"
+                  width={131}
+                  height={30}
+                  alt="logo"
+                />
               </Link>
 
               <p className="2xl:px-20 text-gray-500 mb-2">

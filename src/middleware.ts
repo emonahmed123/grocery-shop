@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (token) {
-    console.log("from if", pathname, "line 21");
+    // console.log("from if", pathname, "line 21");
     try {
       const decodedData = jwtDecode(token.value as string) as any;
       // Check if user role is "user" and protect certain routes

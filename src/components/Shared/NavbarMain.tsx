@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import {
   Navbar,
@@ -16,6 +17,8 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { useState } from "react";
 import { useAppSelector } from "@/redux/hook";
 import { useAuth } from "@/lib/AuthProviders";
+import Image from "next/image";
+import { signOut } from "next-auth/react";
 type userProps = {
   user?: {
     name?: string | null | undefined;
@@ -26,10 +29,16 @@ type userProps = {
 
 const NavbarMain = ({ session }: { session: userProps | null }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuItems = ["Home", "Categories", "Dashboard"];
+
   const products = useAppSelector((store) => store.cart.products);
   const pathname = usePathname();
-  const { user, handleLogout } = useAuth();
+  const { user, token, handleLogout } = useAuth();
+  const menuItems = [
+    "Home",
+    "Categories",
+    "About",
+    ...(user ? ["Dashboard"] : []),
+  ];
   const isActive = (href: string) => pathname === href;
 
   console.log(session);
@@ -67,16 +76,22 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
       {/* for small device */}
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
-          <p className="font-bold text-inherit">
-            EAS<span className="text-primary">grocery</span>
-          </p>
+          <Image
+            src="https://borobazar.vercel.app/_next/static/media/logo.026129ac.svg"
+            width={131}
+            height={30}
+            alt="logo"
+          />
         </NavbarBrand>
       </NavbarContent>
       {/* for md device  */}
       <NavbarBrand className="hidden sm:block">
-        <p className="font-bold text-inherit">
-          Eas<span className="text-primary">Grocery</span>
-        </p>
+        <Image
+          src="https://borobazar.vercel.app/_next/static/media/logo.026129ac.svg"
+          width={131}
+          height={30}
+          alt="logo"
+        />
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -86,12 +101,20 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
           </Link>
         </NavbarItem>
 
-        <NavbarItem isActive={isActive("/categories")}>
+        <NavbarItem isActive={isActive("/product")}>
           <Link
-            color={isActive("/categories") ? "primary" : "foreground"}
+            color={isActive("/product") ? "primary" : "foreground"}
             href="/product"
           >
             Product
+          </Link>
+        </NavbarItem>
+        <NavbarItem isActive={isActive("/about")}>
+          <Link
+            color={isActive("/about") ? "primary" : "foreground"}
+            href="/about"
+          >
+            About
           </Link>
         </NavbarItem>
 
@@ -100,7 +123,7 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
             <Link
               color={isActive("/dashboard") ? "primary" : "foreground"}
               href={
-                user.role === "admin"
+                user?.role === "admin"
                   ? "/dashboard/overview"
                   : "/dashboard/useroverview"
               }
@@ -120,13 +143,11 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
         </NavbarItem>
 
         <NavbarItem>
-          {!session?.user && !user ? (
+          {!user ? (
             <Button
               as={Link}
-              color="primary"
               href="/login"
-              variant="shadow"
-              className="text-white"
+              className="bg-[#02b290] text-[#ffffff]"
             >
               Login
             </Button>
@@ -134,8 +155,7 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
             <Button
               onClick={handleLogout}
               color="primary"
-              variant="shadow"
-              className="text-white"
+              className="text-white bg-[#02b290]"
             >
               Logout
             </Button>
@@ -148,11 +168,19 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className={`${
-                isActive(`${item === "Home" ? "/" : `/${item}`}`)
+                isActive(item === "Home" ? "/" : `/${item.toLowerCase()}`)
                   ? "text-primary"
                   : "text-foreground"
               }`}
-              href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+              href={
+                item === "Home"
+                  ? "/"
+                  : item === "Dashboard"
+                  ? user.role === "admin"
+                    ? "/dashboard/overview"
+                    : "/dashboard/useroverview"
+                  : `/${item.toLowerCase()}`
+              }
               size="lg"
             >
               {item}

@@ -8,6 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Button } from "@nextui-org/react";
 import React from "react";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 import Swal from "sweetalert2";
 
@@ -33,8 +34,12 @@ const DelteteBtn = ({ deletedId }: { deletedId: string }) => {
   return (
     <div>
       {quantity > 0 ? (
-        <Button color="danger" onClick={() => handleDelete(deletedId)}>
-          Delete
+        <Button
+          isIconOnly
+          color="danger"
+          onClick={() => handleDelete(deletedId)}
+        >
+          <FaDeleteLeft />
         </Button>
       ) : null}
     </div>

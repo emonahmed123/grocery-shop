@@ -5,6 +5,7 @@ import React from "react";
 import Link from "next/link";
 import {
   FaFileMedicalAlt,
+  FaHome,
   FaPlus,
   FaPray,
   FaShoppingCart,
@@ -60,6 +61,12 @@ const SideNav = () => {
       icon: <FaUser />,
       title: "My Profile",
       url: "/dashboard/myprofile",
+      role: ["user", "admin"],
+    },
+    {
+      icon: <FaHome />,
+      title: "Back Home",
+      url: "/",
       role: ["user", "admin"],
     },
   ];
