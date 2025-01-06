@@ -13,27 +13,45 @@ export const authOption: NextAuthOptions = {
     // }),
 
     GoogleProvider({
-      clientId: process.env.Client_ID as string,
-      clientSecret: process.env.Client_Secret as string,
+      clientId: process.env.Client_Id as string,
+      clientSecret: process.env.Client_Screte as string,
     }),
   ],
   callbacks: {
-    async signIn({ user }: { user: any }): Promise<boolean> {
+    async signIn({
+      user,
+      account,
+    }: {
+      user: any;
+      account: any;
+    }): Promise<boolean> {
       // Call the server action to save the user in the database
-      try {
-        // // Save the user info to the database
+      // try {
+      //   // // Save the user info to the database
+      //   console.log(user);
+      //   if (user) {
+      //     customGoogle(user);
+      //     return true;
+      //   }
+      // } catch (error) {
+      //   console.error("Error saving user to the database", error);
+      //   return false; // Prevent login if saving fails
+      // }
 
-        // console.log(user);
+      if (account.provider === "google") {
+        try {
+          // Send user info to backend and get the access token
+          const response = await googleToDB(user);
+          // You can handle the response from the backend here
 
-        if (user) {
-          await googleToDB(user);
+          console.log(response);
+        } catch (error) {
+          console.error("Error sending user info to backend:", error);
+          return false; // Fail the sign-in process
         }
-
-        return true;
-      } catch (error) {
-        console.error("Error saving user to the database", error);
-        return false; // Prevent login if saving fails
       }
+
+      return true;
     },
   },
 

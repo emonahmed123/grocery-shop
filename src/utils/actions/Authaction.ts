@@ -2,6 +2,7 @@
 "use server";
 
 import { jwtDecode } from "jwt-decode";
+
 import { cookies } from "next/headers";
 
 export const signUp = async (data: any) => {
@@ -58,7 +59,7 @@ export const googleToDB = async (loginInfo: any) => {
   };
 
   const res = await fetch(
-    ` https://grocery-store-server-orpin.vercel.app
+    ` https://grocery-store-server-orpin.vercel.app/
 api/auth/googleUser`,
     {
       method: "POST",
@@ -71,7 +72,7 @@ api/auth/googleUser`,
 
   const data = await res.json();
   console.log(data.data?.accessToken, "aldkfdslk");
-  if (data?.data?.accessToken) {
+  if (data?.success) {
     cookies().set("token", data?.data.accessToken);
   }
 

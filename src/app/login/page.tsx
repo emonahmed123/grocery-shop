@@ -12,7 +12,8 @@ import { useForm } from "react-hook-form";
 import { FiCheck, FiCopy } from "react-icons/fi";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import Swal from "sweetalert2";
-
+import { getServerSession } from "next-auth";
+import { authOption } from "@/utils/authOptions";
 type FormValues = {
   email: string;
   password: string;
@@ -24,6 +25,7 @@ const Loginpage = () => {
   const [adminCopySuccess, setAdminCopySuccess] = useState(false);
   const [userCopySuccess, setUserCopySuccess] = useState(false);
   const [passwordCopySuccess, setPasswordCopySuccess] = useState(false);
+
   const toggleVisible = () => {
     setVisible(!visible);
   };
@@ -296,7 +298,7 @@ const Loginpage = () => {
                   className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50"
                   onClick={() =>
                     signIn("google", {
-                      callbackUrl:"https://grocery-store-sable.vercel.app",
+                      callbackUrl: "https://grocery-store-sable.vercel.app",
                     })
                   }
                 >

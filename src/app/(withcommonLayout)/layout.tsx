@@ -1,7 +1,5 @@
 import Footer from "@/components/Shared/Footer";
 import NavbarMain from "@/components/Shared/NavbarMain";
-import { authOption } from "@/utils/authOptions";
-import { getServerSession } from "next-auth";
 
 import React from "react";
 
@@ -10,11 +8,9 @@ const Commonlayout = async ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const session = await getServerSession(authOption);
-
   return (
     <>
-      <NavbarMain session={session} />
+      <NavbarMain />
 
       <div>{children}</div>
 

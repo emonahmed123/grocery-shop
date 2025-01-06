@@ -27,7 +27,7 @@ type userProps = {
   };
 };
 
-const NavbarMain = ({ session }: { session: userProps | null }) => {
+const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const products = useAppSelector((store) => store.cart.products);
@@ -40,8 +40,6 @@ const NavbarMain = ({ session }: { session: userProps | null }) => {
     ...(user ? ["Dashboard"] : []),
   ];
   const isActive = (href: string) => pathname === href;
-
-  console.log(session);
 
   return (
     <Navbar
