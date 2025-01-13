@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #02b290; 
+    border-radius: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #02b290;
+  }
+
+
+
 .CoverUel{
     background-image: url(../assets/banner.jpg);
 }

@@ -22,9 +22,9 @@ const TopNav = async () => {
   );
 
   const UserImage = await UserImages.json();
-  console.log(UserImage.data);
 
-  // console.log("navbarrr", UserData?.image);
+
+  console.log("navbarrr", UserImage?.image);
 
   return (
     <>
@@ -42,7 +42,7 @@ const TopNav = async () => {
         </div>
         <div className="flex justify-self-auto">
           <div>
-            <AddDrowop UserData={UserImage?.data} />
+            <AddDrowop UserData={UserImage.data} />
           </div>
         </div>
       </div>
