@@ -74,7 +74,7 @@ const SideNav = () => {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <ul className="bg-[#1C2434] relative py-2 px-1 md:px-3 space-y-5 w-[50px]  md:w-[70px] lg:w-[180px] xl:w-[200px] min-h-screen  h-full ">
+    <ul className="bg-[#1c2434fe] relative py-2 px-1 md:px-3 space-y-5 w-[50px]  md:w-[70px] lg:w-[180px] xl:w-[200px] min-h-screen  h-full ">
       <p className="text-gray-500 font-bold text-[14px] mb-5">Menu</p>
       {user &&
         navItems
@@ -87,9 +87,8 @@ const SideNav = () => {
             <li key={index}>
               <Link
                 href={item.url}
-                className={`${
-                  isActive(item.url) ? "bg-graydark " : ""
-                } group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark `}
+                className={`${isActive(item.url) ? "bg-graydark " : ""
+                  } group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark `}
               >
                 <span className="text-white">{item.icon}</span>
                 <span className="hidden lg:block">{item.title}</span>

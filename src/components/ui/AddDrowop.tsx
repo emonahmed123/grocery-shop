@@ -10,8 +10,11 @@ import {
   User,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useAuth } from "@/lib/AuthProviders";
 
 const AddDrowop = ({ UserData }: { UserData: any }) => {
+  const { handleLogout } = useAuth();
+
   return (
     <div className="overflow-hidden">
       <Dropdown placement="bottom-start" backdrop="blur" showArrow radius="sm">
@@ -36,7 +39,8 @@ const AddDrowop = ({ UserData }: { UserData: any }) => {
             <Link href="/dashboard/myprofile">My Profile</Link>
           </DropdownItem>
 
-          <DropdownItem key="logout" color="danger">
+          <DropdownItem key="logout" color="danger" onPress={handleLogout}>
+
             Log Out
           </DropdownItem>
         </DropdownMenu>
