@@ -12,7 +12,8 @@ import Eeaer from "@/components/about/Eeaer";
 //     return []
 // }
 
-const ProductDetails = async ({ params }: any) => {
+const ProductDetails = async (props: any) => {
+  const params = await props.params;
   const res = await fetch(
     `https://grocery-store-server-orpin.vercel.app/api/product/${params.productId}`,
     {

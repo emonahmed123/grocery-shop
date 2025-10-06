@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
 import { Providers } from "@/lib/provider";
 import ReduxtProvidor from "@/lib/ReduxtProvidor";
+import type { Metadata } from "next";
 import { Manrope, Poppins } from "next/font/google";
+import localFont from "next/font/local";
+import "./globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,16 +36,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  auth,
 }: Readonly<{
   children: React.ReactNode;
+  auth: React.ReactNode;
 }>) {
+  // console.log("auth", auth);
   return (
     <html lang="en">
       <body
         className={`  ${geistSans.variable} ${geistMono.variable} antialiased  ${poppins.variable}  ${manrope.variable}`}
       >
         <ReduxtProvidor>
-          <Providers>{children}</Providers>
+          <Providers>
+            <div>{auth}</div>
+            {children}
+
+            {/* <div id="modal-root" /> */}
+          </Providers>
         </ReduxtProvidor>
       </body>
     </html>

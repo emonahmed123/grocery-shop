@@ -1,24 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+import { useAuth } from "@/lib/AuthProviders";
+import { useAppSelector } from "@/redux/hook";
 import {
+  Badge,
+  Button,
   Navbar,
   NavbarBrand,
-  NavbarMenuToggle,
-  NavbarMenuItem,
-  NavbarMenu,
   NavbarContent,
   NavbarItem,
-  Link,
-  Button,
-  Badge,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
 } from "@nextui-org/react";
-import { usePathname } from "next/navigation";
-import { FaCartArrowDown } from "react-icons/fa";
-import { useState } from "react";
-import { useAppSelector } from "@/redux/hook";
-import { useAuth } from "@/lib/AuthProviders";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { FaCartArrowDown } from "react-icons/fa";
 type userProps = {
   user?: {
     name?: string | null | undefined;
@@ -142,13 +141,9 @@ const NavbarMain = () => {
 
         <NavbarItem>
           {!user ? (
-            <Button
-              as={Link}
-              href="/login"
-              className="bg-[#02b290] text-[#ffffff]"
-            >
+            <Link href="/login" className="bg-[#02b290] text-[#ffffff]">
               Login
-            </Button>
+            </Link>
           ) : (
             <Button
               onClick={handleLogout}

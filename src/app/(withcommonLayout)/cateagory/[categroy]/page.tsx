@@ -8,7 +8,8 @@ type search = {
   category: string;
 };
 
-const Categorey = async ({ searchParams }: { searchParams: search }) => {
+const Categorey = async (props: { searchParams: Promise<search> }) => {
+  const searchParams = await props.searchParams;
   const { category } = searchParams;
 
   const res = await fetch(

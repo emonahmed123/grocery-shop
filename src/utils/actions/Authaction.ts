@@ -44,7 +44,7 @@ export const login = async (loginInfo: TLoginInfo) => {
   const data = await res.json();
   // console.log(data.data.accessToken);
   if (data?.success) {
-    cookies().set("token", data?.data.accessToken);
+    (await cookies()).set("token", data?.data.accessToken);
   }
 
   return data;
@@ -73,14 +73,14 @@ api/auth/googleUser`,
   const data = await res.json();
   console.log(data.data?.accessToken, "aldkfdslk");
   if (data?.success) {
-    cookies().set("token", data?.data.accessToken);
+    (await cookies()).set("token", data?.data.accessToken);
   }
 
   return data;
 };
 
 export const getUserInfo = async () => {
-  const token = cookies().get("token")?.value;
+  const token = (await cookies()).get("token")?.value;
   let decodedData = null;
   if (token) {
     decodedData = (await jwtDecode(token)) as any;
@@ -92,9 +92,9 @@ export const getUserInfo = async () => {
 };
 
 export const removeUserInfo = async () => {
-  cookies().delete("token");
+  (await cookies()).delete("token");
 };
 
 export const getToken = async () => {
-  return cookies().get("token")?.value;
+  return (await cookies()).get("token")?.value;
 };
