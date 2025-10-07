@@ -1,8 +1,11 @@
 import Eeaer from "@/components/about/Eeaer";
 import SimpelFilter from "@/components/SimpelFilter/SimpelFilter";
+import { Metadata } from "next";
 
-import React from "react";
-
+export const metadata: Metadata = {
+  title: "Product",
+  description: "BoroBazer grocery-store",
+};
 const Productpage = async () => {
   const res = await fetch(
     "https://grocery-store-server-orpin.vercel.app/api/product",

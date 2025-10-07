@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { getToken, getUserInfo } from "@/utils/actions/Authaction";
+import { getToken } from "@/utils/actions/Authaction";
 
 import Link from "next/link";
 
@@ -23,8 +23,7 @@ const TopNav = async () => {
 
   const UserImage = await UserImages.json();
 
-
-  console.log("navbarrr", UserImage?.image);
+  // console.log("navbarrr", UserImage?.image);
 
   return (
     <>

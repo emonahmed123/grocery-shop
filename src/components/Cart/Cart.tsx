@@ -56,8 +56,8 @@ const Cart = () => {
                 </p>
                 <SheetClose asChild>
                   <Link
-                    href="/products"
-                    className="px-6 py-3 bg-brand text-white font-semibold rounded-md shadow hover:bg-brand/90 transition duration-300"
+                    href="/product"
+                    className="px-6 py-3 bg-brand text-white font-semibold rounded-md shadow hover:bg-brand/90 transition duration-300 bg-black"
                   >
                     Start Shopping
                   </Link>
