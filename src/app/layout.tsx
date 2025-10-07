@@ -30,18 +30,15 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "EAS Home",
-  description: "EAS grocery-store",
+  title: "Home",
+  description: "BoroBazer grocery-store",
 };
 
 export default function RootLayout({
   children,
-  auth,
 }: Readonly<{
   children: React.ReactNode;
-  auth: React.ReactNode;
 }>) {
-  // console.log("auth", auth);
   return (
     <html lang="en">
       <body
@@ -49,7 +46,6 @@ export default function RootLayout({
       >
         <ReduxtProvidor>
           <Providers>
-            <div>{auth}</div>
             {children}
 
             {/* <div id="modal-root" /> */}

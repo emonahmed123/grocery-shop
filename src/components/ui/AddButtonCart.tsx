@@ -15,7 +15,7 @@ const AddButtonCart = ({
   children: React.ReactNode;
   product: TGroceryItem;
 }) => {
-  console.log(product);
+  // console.log(product);
   const { products } = useAppSelector((state) => state.cart);
 
   const dispatch = useAppDispatch();

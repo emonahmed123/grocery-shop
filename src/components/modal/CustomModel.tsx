@@ -1,31 +1,33 @@
-"use client";
-import { useRouter } from "next/navigation";
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// "use client";
+// import { useRouter } from "next/navigation";
 
-import { useEffect, useRef } from "react";
-const CustomModel = ({ children }) => {
-  const modalRef = useRef(null);
-  const router = useRouter();
+// import { useState } from "react";
+// import { Dialog, DialogContent } from "../ui/dialog";
+// const CustomModel = ({ children }: any) => {
 
-  useEffect(() => {
-    if (!modalRef.current?.open) {
-      modalRef.current?.showModal();
-    }
-  }, []);
+//   // const modalRef = useRef<HTMLDialogElement>(null);
+//   const router = useRouter();
 
-  function onHide() {
-    router.back();
-  }
+//   const onHide = () => {
+//     router.back();
+//   };
 
-  return (
-    <dialog
-      ref={modalRef}
-      onClose={onHide}
-      className=" shadow-md   rounded-md dark:bg-black dark:bg-opacity-95 dark:text-gray-100 w-full "
-    >
-      {children}
-    </dialog>
-    // document.getElementById("modal-root")
-  );
-};
+//   return (
+//     // <dialog
+//     //   ref={modalRef}
+//     //   onClose={onHide}
+//     //   className=" shadow-md   rounded-md dark:bg-black dark:bg-opacity-95 dark:text-gray-100 w-full "
+//     // >
+//     //   <span onClick={onHide}>x</span>
+//     //   {children}
+//     // </dialog>
+//     // document.getElementById("modal-root")
 
-export default CustomModel;
+//     <Dialog defaultOpen={true} open={open} onOpenChange={onHide}>
+//       <DialogContent className="w-full">{children}</DialogContent>
+//     </Dialog>
+//   );
+// };
+
+// export default CustomModel;

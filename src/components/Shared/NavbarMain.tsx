@@ -141,7 +141,10 @@ const NavbarMain = () => {
 
         <NavbarItem>
           {!user ? (
-            <Link href="/login" className="bg-[#02b290] text-[#ffffff]">
+            <Link
+              href="/register"
+              className="bg-[#02b290] px-5 py-2 rounded-[8px] text-[#ffffff]"
+            >
               Login
             </Link>
           ) : (
@@ -174,7 +177,6 @@ const NavbarMain = () => {
                     : "/dashboard/useroverview"
                   : `/${item.toLowerCase()}`
               }
-              size="lg"
             >
               {item}
             </Link>

@@ -111,7 +111,7 @@ const AddProductPage = () => {
   return (
     <div className="font-poppins py-10 mx-w-[1440px] mx-auto px-2">
       <h1 className="text-3xl font-semibold text-center mb-10  border-gray-300">
-        Add <span className="text-secondary">Product</span>
+        Add <span className="text-secondary.foreground">Product</span>
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div className="grid grid-cols-1  sm:grid-cols-2 gap-6">

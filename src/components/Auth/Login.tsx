@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { login } from "@/utils/actions/Authaction";
 
-import { Button, Spinner } from "@nextui-org/react";
+// import { Button, Spinner } from "@nextui-org/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,6 +16,9 @@ import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import Swal from "sweetalert2";
 import Emaillogo from "../svg/Emaillogo";
 import Google from "../svg/Google";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
+
 type FormValues = {
   email: string;
   password: string;
@@ -29,7 +34,7 @@ const Login = () => {
   const textToCopy = "imonshomon@gmail.com";
   const secnodtextCoopy = "emons@gmail.com";
   const password = "123456";
-  const copyToClipboard = async (text: string) => {
+  const copyToClipboard = async (text: string, isAdmin: boolean) => {
     try {
       await navigator.clipboard.writeText(text);
       if (text.includes(textToCopy)) {
@@ -97,7 +102,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white  shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-sm border border-stroke bg-white  shadow-default dark:border-strokedark dark:bg-boxdark w-full">
         <div className="flex  flex-col md:flex-row  p-5 ">
           <div className=" w-full xl:w-1/2">
             <div className=" px-5 text-center">
@@ -269,9 +274,9 @@ const Login = () => {
                   <div className="mb-5">
                     <Button
                       type="submit"
-                      className="w-full cursor-pointer rounded-lg border border-primary bg-primary py-6 text-white transition hover:bg-opacity-90 text-[14px] font-bold "
+                      className="w-full cursor-pointer rounded-lg border border-primary !bg-primary py-6 text-white transition hover:bg-opacity-90 text-[14px] font-bold "
                     >
-                      {loading ? <Spinner size="sm" color="white" /> : "Login"}
+                      {loading ? <Spinner /> : "Login"}
                     </Button>
                   </div>
                 </form>
