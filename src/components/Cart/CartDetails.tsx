@@ -26,8 +26,8 @@ const CartDetails = ({ product }: any) => {
         <Image
           width={40}
           height={40}
-          src={product.image}
-          alt={product.name}
+          src={product?.image}
+          alt={product?.name}
           className="w-20 h-20 object-cover rounded-md"
         />
       </div>
@@ -50,9 +50,9 @@ const CartDetails = ({ product }: any) => {
             >
               <FaMinus size={10} />
             </button>
-            <span className="text-lg font-semibold">{product.quantity}</span>
+            <span className="text-lg font-semibold">{product?.quantity}</span>
             <button
-              onClick={() => handleQuantity("increment", product._id)}
+              onClick={() => handleQuantity("increment", product?._id)}
               className="bg-primary text-white p-2 rounded-full hover:bg-green-800"
             >
               <FaPlus size={10} />
@@ -60,7 +60,7 @@ const CartDetails = ({ product }: any) => {
           </div>
 
           <button
-            onClick={() => handleRemove(product._id)}
+            onClick={() => handleRemove(product?._id)}
             className="text-red-500  p-2 rounded-full"
           >
             Remove

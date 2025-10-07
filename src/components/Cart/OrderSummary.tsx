@@ -36,7 +36,7 @@ const OrderSummary = () => {
           Clear Cart
         </Button>
         <SheetClose asChild>
-          <Link href="/products">
+          <Link href="/product">
             <Button className="bg-black">Back to shop</Button>
           </Link>
         </SheetClose>
