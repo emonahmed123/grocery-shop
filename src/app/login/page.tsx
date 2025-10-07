@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 const Loginpage = () => {
   return (
-    <section className="flex justify-center items-center  h-[100vh] max-w-[1170px] mx-auto px-5 xl:px-0 ">
+    <section className=" py-[50px] md:py-0 flex justify-center items-center  h-[100vh] max-w-[1170px] mx-auto px-5 xl:px-0 ">
       <Login />
     </section>
   );

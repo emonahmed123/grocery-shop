@@ -3,7 +3,6 @@
 import { useAuth } from "@/lib/AuthProviders";
 import { useAppSelector } from "@/redux/hook";
 import {
-  Badge,
   Button,
   Navbar,
   NavbarBrand,
@@ -17,7 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaCartArrowDown } from "react-icons/fa";
+import Cart from "../Cart/Cart";
 type userProps = {
   user?: {
     name?: string | null | undefined;
@@ -28,17 +27,17 @@ type userProps = {
 
 const NavbarMain = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, token, handleLogout } = useAuth();
 
   const products = useAppSelector((store) => store.cart.products);
   const pathname = usePathname();
-  const { user, token, handleLogout } = useAuth();
+  const isActive = (href: string) => pathname === href;
   const menuItems = [
     "Home",
-    "Categories",
+    "Product",
     "About",
     ...(user ? ["Dashboard"] : []),
   ];
-  const isActive = (href: string) => pathname === href;
 
   return (
     <Navbar
@@ -131,18 +130,14 @@ const NavbarMain = () => {
         )}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="px-2">
-          <Link href="/cart" className="text-black   relative">
-            <Badge color="danger" content={products.length} shape="circle">
-              <FaCartArrowDown size={30} />
-            </Badge>
-          </Link>
+        <NavbarItem className="mr-4">
+          <Cart />
         </NavbarItem>
 
         <NavbarItem>
           {!user ? (
             <Link
-              href="/register"
+              href="/login"
               className="bg-[#02b290] px-5 py-2 rounded-[8px] text-[#ffffff]"
             >
               Login

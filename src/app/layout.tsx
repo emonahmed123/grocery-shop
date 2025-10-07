@@ -1,33 +1,9 @@
 import { Providers } from "@/lib/provider";
 import ReduxtProvidor from "@/lib/ReduxtProvidor";
 import type { Metadata } from "next";
-import { Manrope, Poppins } from "next/font/google";
-import localFont from "next/font/local";
+import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["100", "200", "400", "500", "600", "700", "800"],
-});
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
-});
+const josefin = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Home",
@@ -41,15 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`  ${geistSans.variable} ${geistMono.variable} antialiased  ${poppins.variable}  ${manrope.variable}`}
-      >
+      <body className={` ${josefin.className}`}>
         <ReduxtProvidor>
-          <Providers>
-            {children}
-
-            {/* <div id="modal-root" /> */}
-          </Providers>
+          <Providers>{children}</Providers>
         </ReduxtProvidor>
       </body>
     </html>
