@@ -22,7 +22,7 @@ const Review = async ({ productId }: { productId: string }) => {
       <div className="w-full md:w-2/3">
         {reviews.length
           ? reviews?.map((review: TReview) => (
-              <div key={review._id} className="border-b-1 pb-1 mb-3 pb-3">
+              <div key={review._id} className="border-b-1  mb-3 pb-3">
                 <div className="flex items-center gap-2 mb-2">
                   {" "}
                   <Avatar

@@ -1,8 +1,8 @@
 "use client";
-import { Button, Textarea } from "@nextui-org/react";
 import { useAuth } from "@/lib/AuthProviders";
-import { useState } from "react";
 import { postReview } from "@/utils/actions/reviewAction";
+import { Button, Textarea } from "@nextui-org/react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 const ReviewForm = ({ id }: { id: string }) => {
@@ -46,7 +46,7 @@ const ReviewForm = ({ id }: { id: string }) => {
         icon: "error",
         title: "something went wrong! try again",
       });
-      // console.log(result);
+      console.log(result);
     }
   };
 
