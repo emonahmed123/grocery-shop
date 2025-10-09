@@ -1,6 +1,6 @@
+// import { Button } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import React from "react";
 
 const Banner = () => {
   return (

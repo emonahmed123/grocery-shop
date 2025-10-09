@@ -1,10 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import React from "react";
-import ProductCard from "../ui/ProductCard";
-import { TGroceryItem } from "@/Types";
 
-const PopularProducts = ({ products }: { products: TGroceryItem[] }) => {
+import ProductCard from "../ui/ProductCard";
+
+const PopularProducts = async () => {
+  const res = await fetch(
+    "https://grocery-store-server-orpin.vercel.app/api/product",
+    {
+      cache: "no-store",
+    }
+  );
+  const products = await res.json();
+
   return (
     <section className=" py-[50px] md:py-[80px] font-manrope">
       <div className="max-w-[1170px] mx-auto px-5 xl:px-0 " id="product">
@@ -29,7 +37,7 @@ const PopularProducts = ({ products }: { products: TGroceryItem[] }) => {
           </Button>
         </div>
         <div className="grid  grid-cols-1  md:grid-cols-2  lg:grid-cols-4 gap-5">
-          {products?.slice(0, 12).map((item, i) => (
+          {products?.data?.slice(0, 12).map((item: any, i) => (
             <ProductCard item={item} key={i}></ProductCard>
           ))}
         </div>

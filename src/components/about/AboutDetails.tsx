@@ -1,9 +1,8 @@
 import Image from "next/image";
-import React from "react";
 
 const AboutDetails = () => {
   return (
-    <div className="py-8 lg:py-16 2xl:py-20">
+    <section className="py-8 lg:py-16 2xl:py-20">
       <div className="mx-auto max-w-[1920px] px-4 md:px-6 lg:px-8 2xl:px-10">
         <div className="flex flex-col w-full mx-auto max-w-[1200px]">
           <h2 className="text-lg md:text-xl lg:text-[24px] text-brand-dark font-semibold mb-4 lg:mb-7">
@@ -57,7 +56,7 @@ const AboutDetails = () => {
             <Image
               width={590}
               height={400}
-              src="	https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F2.3f856ddb.png&w=640&q=75"
+              src="https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F2.3f856ddb.png&w=640&q=75"
               alt="png"
             />
           </div>
@@ -93,25 +92,25 @@ const AboutDetails = () => {
             <Image
               width={390}
               height={270}
-              src="	https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F3.39e1c1b6.png&w=640&q=75"
+              src="https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F3.39e1c1b6.png&w=640&q=75"
               alt="png"
             />
             <Image
               width={390}
               height={270}
-              src="	https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F4.a18c699b.png&w=640&q=75"
+              src="https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F4.a18c699b.png&w=640&q=75"
               alt="png"
             />
             <Image
               width={390}
               height={270}
-              src="	https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F5.6643c8bf.png&w=640&q=75"
+              src="https://borobazar.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2F5.6643c8bf.png&w=640&q=75"
               alt="png"
             />
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
