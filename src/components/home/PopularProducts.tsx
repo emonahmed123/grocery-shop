@@ -37,8 +37,8 @@ const PopularProducts = async () => {
           </Button>
         </div>
         <div className="grid  grid-cols-1  md:grid-cols-2  lg:grid-cols-4 gap-5">
-          {products?.data?.slice(0, 12).map((item: any, i) => (
-            <ProductCard item={item} key={i}></ProductCard>
+          {products?.data?.slice(0, 12).map((item: any) => (
+            <ProductCard item={item} key={item._id}></ProductCard>
           ))}
         </div>
       </div>

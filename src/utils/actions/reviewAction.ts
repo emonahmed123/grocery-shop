@@ -2,12 +2,15 @@
 
 import { getToken } from "./Authaction";
 
+import { revalidateTag } from "next/cache";
 export const postReview = async (reviewData: {
   userName: string;
   review: string;
   productId: string;
 }) => {
   try {
+    revalidateTag("collection");
+
     const token = await getToken();
     const res = await fetch(
       `https://grocery-store-server-orpin.vercel.app/api/reviews`,
