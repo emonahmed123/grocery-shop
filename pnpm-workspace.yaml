@@ -1,3 +1,7 @@
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
+allowBuilds:
+  # Transitive via the shadcn CLI; postinstall only writes a mock service worker we don't use.
+  msw: false
+  # Prebuilt platform binaries (@img/sharp-win32-x64, @unrs/resolver-binding-*) are installed
+  # as optional deps, so the install scripts aren't needed.
+  sharp: false
+  unrs-resolver: false
