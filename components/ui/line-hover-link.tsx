@@ -33,6 +33,8 @@ export type LineHoverVariant =
   | "scribble";
 
 export interface LineHoverLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  /** Link destination (required by next/link) */
+  href: string;
   /** The animation variant */
   variant?: LineHoverVariant;
   /** Link content */

@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Feel the Thirst in summer anytime",
+    "slug": "feel-the-thirst-in-summer-anytime",
+    "description": "Your body's way of telling you that it's make strong",
+    "image": "/assets/images/collection/1.png"
+  },
+  {
+    "id": 2,
+    "title": "Most popular item for Fast food",
+    "slug": "most-popular-item-for-fast-food",
+    "description": "Tasty and spicy fast food with different flavors.",
+    "image": "/assets/images/collection/2.png"
+  },
+  {
+    "id": 3,
+    "title": "Authentic japanese food in real taste",
+    "slug": "authentic-japanese-food-in-real-taste",
+    "description": "Your body's way of telling you that it's make strong",
+    "image": "/assets/images/collection/3.png"
+  },
+  {
+    "id": 4,
+    "title": "Explore our family of freshest Foods",
+    "slug": "explore-our-family-of-freshest-foods",
+    "description": "Your pet's way of telling you that it's make taste",
+    "image": "/assets/images/collection/4.png"
+  }
+]

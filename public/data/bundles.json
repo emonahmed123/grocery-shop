@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Spring cleaning for home appliance",
+    "slug": "spring-cleaning-for-home-appliance",
+    "description": "Get your clean on supplies.",
+    "image": "/assets/images/bundle/1.png",
+    "tone": "peach"
+  },
+  {
+    "id": 2,
+    "title": "Your pet choice for fresh healthy food",
+    "slug": "your-pet-choice-for-fresh-healthy-food",
+    "description": "Get your clean on supplies.",
+    "image": "/assets/images/bundle/2.png",
+    "tone": "green"
+  },
+  {
+    "id": 3,
+    "title": "Washing item with discount product",
+    "slug": "washing-item-with-discount-product",
+    "description": "Get your clean on supplies.",
+    "image": "/assets/images/bundle/3.png",
+    "tone": "blue"
+  },
+  {
+    "id": 4,
+    "title": "Fresh quality meat item with discount",
+    "slug": "fresh-quality-meat-item-with-discount",
+    "description": "Get your clean on supplies.",
+    "image": "/assets/images/bundle/4.png",
+    "tone": "rose"
+  }
+]
