@@ -8,7 +8,7 @@ const DiscountBanner = () => {
   return (
     <Container className="mb-12 lg:mb-14">
       <Link
-        href="/product"
+        href="/search"
         className="group block overflow-hidden rounded-md"
         aria-label="Super Discount 70% Off"
       >

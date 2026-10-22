@@ -31,7 +31,7 @@ const CollectionCarousel = () => {
               className="basis-full sm:basis-1/2 lg:basis-1/3"
             >
               <Link
-                href="/product"
+                href="/search"
                 className="group my-4 flex flex-col overflow-hidden rounded-md shadow-sm"
               >
                 <div className="overflow-hidden">

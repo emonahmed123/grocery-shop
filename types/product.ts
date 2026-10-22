@@ -10,4 +10,12 @@ export type Product = {
   salePrice?: number;
   /** Highest price for products sold in several variations. */
   maxPrice?: number;
+  description?: string;
+  /** Extra images shown on the product page. */
+  gallery?: string[];
+  tags?: string[];
+  variations?: {
+    name: string;
+    values: string[];
+  };
 };

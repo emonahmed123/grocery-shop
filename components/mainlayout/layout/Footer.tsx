@@ -15,24 +15,29 @@ const socialLinks = [
 const linkColumns = [
   {
     title: "About Us",
-    links: ["About us", "Contact us", "About team", "Customer Support"],
+    links: [
+      { label: "About us", href: "/about-us" },
+      { label: "Contact us", href: "/contact-us" },
+      { label: "About team", href: "/about-us" },
+      { label: "Customer Support", href: "/contact-us" },
+    ],
   },
   {
     title: "Our Information",
     links: [
-      "Privacy policy update",
-      "Terms & conditions",
-      "Return Policy",
-      "Site Map",
+      { label: "Privacy policy update", href: "/privacy" },
+      { label: "Terms & conditions", href: "/terms" },
+      { label: "Return Policy", href: "/privacy" },
+      { label: "Site Map", href: "/" },
     ],
   },
   {
     title: "Community",
     links: [
-      "Announcements",
-      "Answer center",
-      "Discussion boards",
-      "Giving works",
+      { label: "Announcements", href: "/" },
+      { label: "Answer center", href: "/faq" },
+      { label: "Discussion boards", href: "/" },
+      { label: "Giving works", href: "/" },
     ],
   },
 ];
@@ -88,9 +93,9 @@ const Footer = () => {
               </h3>
               <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
                 {column.links.map((link) => (
-                  <li key={link}>
-                    <Link href="/" className="transition-colors duration-200 hover:text-foreground">
-                      {link}
+                  <li key={link.label}>
+                    <Link href={link.href} className="transition-colors duration-200 hover:text-foreground">
+                      {link.label}
                     </Link>
                   </li>
                 ))}

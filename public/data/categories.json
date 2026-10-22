@@ -8,7 +8,29 @@
       "thumbnail": "/assets/images/category/fresh-vegetables.png",
       "original": "/assets/images/category/fresh-vegetables.png"
     },
-    "icon": "/assets/images/category/icon/fresh-vegetables.svg"
+    "icon": "/assets/images/category/icon/fresh-vegetables.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Arugula",
+        "slug": "arugula"
+      },
+      {
+        "id": 2,
+        "name": "Asparagus",
+        "slug": "asparagus"
+      },
+      {
+        "id": 3,
+        "name": "Beets",
+        "slug": "beets"
+      },
+      {
+        "id": 4,
+        "name": "Cabbages",
+        "slug": "cabbages"
+      }
+    ]
   },
   {
     "id": 2,
@@ -19,7 +41,19 @@
       "thumbnail": "/assets/images/category/diet-foods.png",
       "original": "/assets/images/category/diet-foods.png"
     },
-    "icon": "/assets/images/category/icon/diet-foods.svg"
+    "icon": "/assets/images/category/icon/diet-foods.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Whole Eggs",
+        "slug": "whole-eggs"
+      },
+      {
+        "id": 2,
+        "name": "Boiled Potatoes",
+        "slug": "boiled-potatoes"
+      }
+    ]
   },
   {
     "id": 3,
@@ -41,7 +75,24 @@
       "thumbnail": "/assets/images/category/fast-food.png",
       "original": "/assets/images/category/fast-food.png"
     },
-    "icon": "/assets/images/category/icon/fast-food.svg"
+    "icon": "/assets/images/category/icon/fast-food.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Burger",
+        "slug": "burger"
+      },
+      {
+        "id": 2,
+        "name": "Beef Sandwich",
+        "slug": "beef-sandwich"
+      },
+      {
+        "id": 3,
+        "name": "Burrito Supreme",
+        "slug": "burrito-supreme"
+      }
+    ]
   },
   {
     "id": 5,
@@ -52,7 +103,29 @@
       "thumbnail": "/assets/images/category/fruits-items.png",
       "original": "/assets/images/category/fruits-items.png"
     },
-    "icon": "/assets/images/category/icon/fruits-items.svg"
+    "icon": "/assets/images/category/icon/fruits-items.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Apples",
+        "slug": "apples"
+      },
+      {
+        "id": 2,
+        "name": "Melons",
+        "slug": "melons"
+      },
+      {
+        "id": 3,
+        "name": "Berries",
+        "slug": "berries"
+      },
+      {
+        "id": 4,
+        "name": "Citrus",
+        "slug": "citrus"
+      }
+    ]
   },
   {
     "id": 6,
@@ -85,7 +158,19 @@
       "thumbnail": "/assets/images/category/quality-milk.png",
       "original": "/assets/images/category/quality-milk.png"
     },
-    "icon": "/assets/images/category/icon/quality-milk.svg"
+    "icon": "/assets/images/category/icon/quality-milk.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Boiled Milk",
+        "slug": "boiled-milk"
+      },
+      {
+        "id": 2,
+        "name": "Mixed Milk",
+        "slug": "mixed-milk"
+      }
+    ]
   },
   {
     "id": 9,
@@ -96,7 +181,24 @@
       "thumbnail": "/assets/images/category/cold-drinks.png",
       "original": "/assets/images/category/cold-drinks.png"
     },
-    "icon": "/assets/images/category/icon/cold-drinks.svg"
+    "icon": "/assets/images/category/icon/cold-drinks.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Fruit Juice",
+        "slug": "fruit-juice"
+      },
+      {
+        "id": 2,
+        "name": "Ice Coffee",
+        "slug": "ice-coffee"
+      },
+      {
+        "id": 3,
+        "name": "Punch",
+        "slug": "punch"
+      }
+    ]
   },
   {
     "id": 10,
@@ -129,7 +231,24 @@
       "thumbnail": "/assets/images/category/raw-chicken.png",
       "original": "/assets/images/category/raw-chicken.png"
     },
-    "icon": "/assets/images/category/icon/raw-chicken.svg"
+    "icon": "/assets/images/category/icon/raw-chicken.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Chicken leg",
+        "slug": "chicken-leg"
+      },
+      {
+        "id": 2,
+        "name": "Chicken wing",
+        "slug": "chicken-wing"
+      },
+      {
+        "id": 3,
+        "name": "Chicken breast",
+        "slug": "chicken-breast"
+      }
+    ]
   },
   {
     "id": 13,
@@ -140,7 +259,24 @@
       "thumbnail": "/assets/images/category/breakfast-item.png",
       "original": "/assets/images/category/breakfast-item.png"
     },
-    "icon": "/assets/images/category/icon/breakfast-item.svg"
+    "icon": "/assets/images/category/icon/breakfast-item.svg",
+    "children": [
+      {
+        "id": 1,
+        "name": "Pancake",
+        "slug": "pancake"
+      },
+      {
+        "id": 2,
+        "name": "Coffee",
+        "slug": "coffee"
+      },
+      {
+        "id": 3,
+        "name": "Sausage",
+        "slug": "sausage"
+      }
+    ]
   },
   {
     "id": 14,

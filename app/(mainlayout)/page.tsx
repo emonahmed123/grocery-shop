@@ -5,12 +5,7 @@ import DownloadApp from "@/components/mainlayout/home/DownloadApp";
 import Banner from "@/components/mainlayout/home/Hero";
 import ProductGrid from "@/components/mainlayout/home/ProductGrid";
 import PromoCarousel from "@/components/mainlayout/home/PromoCarousel";
-import bestSellerJson from "@/public/data/best-seller-products.json";
-import popularJson from "@/public/data/popular-products.json";
-import type { Product } from "@/types/product";
-
-const bestSellerProducts: Product[] = bestSellerJson;
-const popularProducts: Product[] = popularJson;
+import { getBestSellerProducts, getPopularProducts } from "@/lib/products";
 
 export default function Home() {
   return (
@@ -21,13 +16,13 @@ export default function Home() {
       <ProductGrid
         title="Best seller grocery near you"
         description="We provide best quality & fresh grocery items near your location"
-        products={bestSellerProducts}
+        products={getBestSellerProducts()}
       />
       <DiscountBanner />
       <ProductGrid
         title="Popular product that we sold"
         description="We provide best quality & fresh grocery items near your location"
-        products={popularProducts}
+        products={getPopularProducts()}
       />
       <CollectionCarousel />
       <DownloadApp />

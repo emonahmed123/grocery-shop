@@ -35,6 +35,8 @@ export type LineHoverVariant =
 export interface LineHoverLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Link destination (required by next/link) */
   href: string;
+  /** Marks the link for the current page. */
+  active?: boolean;
   /** The animation variant */
   variant?: LineHoverVariant;
   /** Link content */
@@ -48,7 +50,7 @@ export interface LineHoverLinkProps extends React.AnchorHTMLAttributes<HTMLAncho
  */
 const ArcGraphic = () => (
   <svg
-    className="link-hover__graphic link-hover__graphic--stroke link-hover__graphic--arc"
+    className="link-hover__graphic link-hover__graphic--stroke"
     width="100%"
     height="18"
     viewBox="0 0 59 18"
@@ -65,7 +67,7 @@ const ArcGraphic = () => (
  */
 const ScribbleGraphic = () => (
   <svg
-    className="link-hover__graphic link-hover__graphic--stroke link-hover__graphic--scribble"
+    className="link-hover__graphic link-hover__graphic--stroke"
     width="100%"
     height="9"
     viewBox="0 0 101 9"
@@ -93,7 +95,7 @@ const ScribbleGraphic = () => (
 export const LineHoverLink = React.forwardRef<
   HTMLAnchorElement,
   LineHoverLinkProps
->(({ variant = "slide", children, className, ...props }, ref) => {
+>(({ variant = "slide", active = false, children, className, ...props }, ref) => {
   // Variants that need span wrapper for text animation
   const needsSpan = ["strike", "bounce", "arc", "scribble"].includes(variant);
 
@@ -104,8 +106,9 @@ export const LineHoverLink = React.forwardRef<
   return (
     <Link
       ref={ref}
+      aria-current={active ? "page" : undefined}
       className={cn(
-        "link-hover relative inline-block",
+        "link-hover relative inline-block font-semibold text-muted-foreground transition-colors hover:text-brand aria-[current=page]:text-brand",
         `link-hover--${variant}`,
         className,
       )}
