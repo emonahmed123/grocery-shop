@@ -32,7 +32,7 @@ const PromoCarousel = () => {
               key={bundle.id}
               className="basis-full sm:basis-1/2 lg:basis-1/3"
             >
-              <Link href="/product" className="group flex">
+              <Link href="/search" className="group flex">
                 <div
                   className={cn(
                     "relative flex w-full items-center overflow-hidden",

@@ -1,4 +1,5 @@
 import { plugin as shadcn } from "@shadcn/lint";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
@@ -6,6 +7,8 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // Catches TanStack Query mistakes such as unstable query keys or a missing dependency in the key.
+  ...pluginQuery.configs["flat/recommended"],
   // Design-system guardrails: keep styling on theme tokens and component variants.
   // Rules start at "warn" for existing code; the lint script's --max-warnings cap
   // stops the count from growing. Lower the cap as findings are fixed, then promote

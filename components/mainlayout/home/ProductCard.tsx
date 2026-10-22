@@ -1,16 +1,16 @@
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { assetUrl, formatPrice } from "@/lib/assets";
 import type { Product } from "@/types/product";
-import { Eye, Plus } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 type ProductCardProps = {
   product: Product;
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { name, image, unit, price, salePrice, maxPrice } = product;
+  const { name, slug, image, unit, price, salePrice, maxPrice } = product;
   const hasVariations = maxPrice !== undefined;
   const onSale = salePrice !== undefined;
 
@@ -34,15 +34,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
             On sale
           </Badge>
         )}
-        {/* Variable products open the product page; simple ones go straight to the cart. */}
-        <Button
-          variant="brand"
-          size="icon-lg"
-          className="absolute right-3 bottom-2 md:right-4"
-          aria-label={hasVariations ? `View ${name}` : `Add ${name} to cart`}
-        >
-          {hasVariations ? <Eye /> : <Plus />}
-        </Button>
+        {/* Clicks between the edges fall through to the card link; the button itself stays clickable. */}
+        <div className="pointer-events-none absolute inset-x-3 bottom-2 z-10 flex justify-end *:pointer-events-auto md:inset-x-4">
+          <AddToCartButton product={product} />
+        </div>
       </div>
 
       <div className="flex h-full flex-col px-3 pb-5 md:px-4 lg:px-4.5 lg:pt-1.5 lg:pb-6">
@@ -59,7 +54,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
           )}
         </div>
         <h3 className="mb-1.5 text-sm leading-5 text-foreground sm:leading-6">
-          {name}
+          {/* Stretched link: the whole card opens the product page. */}
+          <Link href={`/products/${slug}`} className="after:absolute after:inset-0">
+            {name}
+          </Link>
         </h3>
         <p className="mt-auto text-sm text-muted-foreground">{unit}</p>
       </div>

@@ -30,7 +30,7 @@ const CategoryCarousel = () => {
               key={category.id}
               className="basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/7"
             >
-              <Link href="/product" className="group block w-full text-center">
+              <Link href={`/search?category=${category.slug}`} className="group block w-full text-center">
                 {/* Two copies of the image slide across on hover. */}
                 <div className="mx-auto mb-3.5 flex aspect-square w-full max-w-44.5 items-center overflow-hidden rounded-full bg-fill-thumbnail xl:mb-4">
                   <div className="flex size-full shrink-0 -translate-x-full scale-50 transform-gpu items-center justify-center transition-all duration-700 group-hover:translate-x-0 group-hover:scale-100">
