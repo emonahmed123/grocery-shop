@@ -1,3 +1,15 @@
+
+
+This is  a ecommomer  project name BoroBazar
+
+
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know
