@@ -2,6 +2,7 @@ import "server-only";
 
 import { httpClient } from "@/lib/axios/httpClient";
 import { type BackendUser, toAuthUser } from "@/services/auth.services";
+import type { AuthTokens } from "@/types/auth.types";
 import type { Order } from "@/types/order.types";
 import type { IChangePasswordPayload, IProfilePayload } from "@/zod/account.validation";
 
@@ -9,7 +10,6 @@ import type { IChangePasswordPayload, IProfilePayload } from "@/zod/account.vali
 const ACCOUNT_ENDPOINTS = {
   myOrders: "/bookings/user",
   updateProfile: "/auth/change",
-  // Not on the backend yet; the form reports that clearly until it exists.
   changePassword: "/auth/change-password",
 };
 
@@ -52,6 +52,14 @@ export async function updateProfile({ name }: IProfilePayload) {
   return toAuthUser(response.data);
 }
 
+/**
+ * The backend rejects tokens issued before a password change, so it answers
+ * with a fresh pair that must replace the cookies.
+ */
 export async function changePassword({ oldPassword, newPassword }: IChangePasswordPayload) {
-  await httpClient.post(ACCOUNT_ENDPOINTS.changePassword, { oldPassword, newPassword });
+  const response = await httpClient.post<AuthTokens>(ACCOUNT_ENDPOINTS.changePassword, {
+    oldPassword,
+    newPassword,
+  });
+  return response.data;
 }

@@ -2,6 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -70,13 +71,9 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
 
         <div className="flex items-center justify-between gap-3">
           <form.Field name="rememberMe">{(field) => <RememberMeField field={field} />}</form.Field>
-          <button
-            type="button"
-            onClick={() => toast.info("Password reset is coming soon")}
-            className="text-sm text-muted-foreground transition-colors hover:text-brand"
-          >
+          <Link href="/forgot-password" className="text-sm text-muted-foreground transition-colors hover:text-brand">
             Forgot password?
-          </button>
+          </Link>
         </div>
 
         {login.error && (

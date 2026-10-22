@@ -47,6 +47,12 @@ async function httpPost<TData>(endpoint: string, data?: unknown, options?: Reque
   return response.data;
 }
 
+async function httpPut<TData>(endpoint: string, data?: unknown, options?: RequestOptions) {
+  const client = await authedClient();
+  const response = await client.put<ApiResponse<TData>>(endpoint, data, options);
+  return response.data;
+}
+
 async function httpPatch<TData>(endpoint: string, data?: unknown, options?: RequestOptions) {
   const client = await authedClient();
   const response = await client.patch<ApiResponse<TData>>(endpoint, data, options);
@@ -62,6 +68,7 @@ async function httpDelete<TData>(endpoint: string, options?: RequestOptions) {
 export const httpClient = {
   get: httpGet,
   post: httpPost,
+  put: httpPut,
   patch: httpPatch,
   delete: httpDelete,
 };

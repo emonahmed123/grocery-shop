@@ -6,7 +6,12 @@ import { createApiClient, httpClient } from "@/lib/axios/httpClient";
 import { AUTH_COOKIES } from "@/lib/tokenUtils";
 import type { ApiResponse } from "@/types/api.types";
 import type { AuthResponse, AuthTokens, AuthUser } from "@/types/auth.types";
-import type { ILoginPayload, IRegisterPayload } from "@/zod/auth.validation";
+import type {
+  IForgotPasswordPayload,
+  ILoginPayload,
+  IRegisterPayload,
+  IResetPasswordPayload,
+} from "@/zod/auth.validation";
 
 // Everything specific to the backend's auth contract lives in this file:
 // endpoint paths and response shapes. Adapting to another backend means
@@ -16,6 +21,9 @@ const AUTH_ENDPOINTS = {
   register: "/auth/signup",
   me: "/auth/me",
   refreshToken: "/auth/refresh-token",
+  // Older backend deployments lack these two; the forms report that clearly.
+  forgotPassword: "/auth/forget-password",
+  resetPassword: "/auth/reset-password",
 };
 
 /** User as the backend sends it (MongoDB `_id`, and sometimes the password hash). */
@@ -62,6 +70,28 @@ export async function getMe() {
   const response = await httpClient.get<BackendUser>(AUTH_ENDPOINTS.me);
   return { message: response.message, data: toAuthUser(response.data) };
 }
+
+/** Asks the backend to email a reset link to this address. */
+export async function requestPasswordReset({ email }: IForgotPasswordPayload) {
+  const response = await httpClient.post<null>(AUTH_ENDPOINTS.forgotPassword, { email });
+  return { message: response.message };
+}
+
+/** Sets a new password using the token from the emailed link. */
+export async function resetPassword({ token, password }: Pick<IResetPasswordPayload, "token" | "password">) {
+  // The backend names the field `newPassword`.
+  const response = await httpClient.post<null>(AUTH_ENDPOINTS.resetPassword, { token, newPassword: password });
+  return { message: response.message };
+}
+
+/**
+ * True when the backend has no such route at all (its catch-all 404 says
+ * "API Not Found"), as opposed to a 404 the route itself returned.
+ */
+export const isMissingEndpoint = (error: unknown) =>
+  axios.isAxiosError<{ message?: string }>(error) &&
+  error.response?.status === 404 &&
+  /api not found/i.test(error.response.data?.message ?? "");
 
 export type RefreshResult =
   | { status: "refreshed"; tokens: AuthTokens }

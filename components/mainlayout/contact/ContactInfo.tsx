@@ -1,21 +1,30 @@
 import Container from "@/components/mainlayout/layout/Container";
+import { siteOwner } from "@/lib/siteConfig";
 import { AtSign, Compass, PhoneCall } from "lucide-react";
 
-const contactDetails = [
+type ContactLine = { text: string; href?: string };
+
+const contactDetails: { title: string; icon: typeof Compass; lines: ContactLine[] }[] = [
   {
     title: "Office Location",
     icon: Compass,
-    lines: ["2756 Quiet Valley Lane, Reseda,", "California, United States"],
+    lines: [
+      { text: `${siteOwner.location.area},` },
+      { text: siteOwner.location.country },
+    ],
   },
   {
     title: "Call us anytime",
     icon: PhoneCall,
-    lines: ["Change the design through a range", "+89 5631 564 +88 5321 036"],
+    lines: [
+      { text: siteOwner.name },
+      { text: siteOwner.phone.display, href: siteOwner.phone.href },
+    ],
   },
   {
     title: "Send Mail",
     icon: AtSign,
-    lines: ["support@demoagency.com", "hire.us@demoteam.io"],
+    lines: [{ text: siteOwner.email, href: `mailto:${siteOwner.email}` }],
   },
 ];
 
@@ -39,11 +48,17 @@ const ContactInfo = () => {
                 {title}
               </h3>
               <p className="text-sm leading-7 text-muted-foreground">
-                {lines.map((line) => (
-                  <span key={line} className="block">
-                    {line}
-                  </span>
-                ))}
+                {lines.map(({ text, href }) =>
+                  href ? (
+                    <a key={text} href={href} className="block transition-colors hover:text-brand">
+                      {text}
+                    </a>
+                  ) : (
+                    <span key={text} className="block">
+                      {text}
+                    </span>
+                  ),
+                )}
               </p>
             </div>
           </div>

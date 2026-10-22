@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Badge } from "@/components/ui/badge";
+import OrderStatusBadge from "@/components/shared/OrderStatusBadge";
 import {
   Table,
   TableBody,
@@ -10,16 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatPrice } from "@/lib/assets";
+import { formatDate, formatOrderId } from "@/lib/format";
 import type { Order } from "@/types/order.types";
-
-const dateFormat = new Intl.DateTimeFormat("en-US", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-});
-
-// Capitalise whatever status the backend sends, e.g. "pending" -> "Pending".
-const formatStatus = (status: string) => status.charAt(0).toUpperCase() + status.slice(1);
 
 const OrdersTable = ({ orders }: { orders: Order[] }) => (
   <Table>
@@ -35,11 +27,10 @@ const OrdersTable = ({ orders }: { orders: Order[] }) => (
     <TableBody>
       {orders.map((order) => (
         <TableRow key={order.id}>
-          {/* The last characters of the id are enough to tell orders apart. */}
           <TableCell>
-            <span className="font-medium">#{order.id.slice(-6).toUpperCase()}</span>
+            <span className="font-medium">{formatOrderId(order.id)}</span>
           </TableCell>
-          <TableCell>{order.createdAt ? dateFormat.format(new Date(order.createdAt)) : "—"}</TableCell>
+          <TableCell>{formatDate(order.createdAt)}</TableCell>
           <TableCell>
             <ul className="flex flex-col gap-2">
               {order.products.map((product) => (
@@ -56,9 +47,7 @@ const OrdersTable = ({ orders }: { orders: Order[] }) => (
             </ul>
           </TableCell>
           <TableCell>
-            <Badge variant={order.status === "delivered" ? "default" : "outline"}>
-              {formatStatus(order.status)}
-            </Badge>
+            <OrderStatusBadge status={order.status} />
           </TableCell>
           <TableCell className="text-right">
             <span className="font-semibold">{formatPrice(order.totalAmount)}</span>

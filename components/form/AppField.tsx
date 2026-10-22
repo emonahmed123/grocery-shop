@@ -21,13 +21,23 @@ const getErrorMessage = (error: unknown) => {
   return String(error);
 };
 
+/** The field's first error, but only once the user has left the field. */
+export const getFieldError = (field: AnyFieldApi) => {
+  const { isTouched, errors } = field.state.meta;
+  return isTouched && errors.length > 0 ? getErrorMessage(errors[0]) : null;
+};
+
 type AppFieldProps = {
   field: AnyFieldApi;
   label: string;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "number" | "url" | "datetime-local";
   placeholder?: string;
   autoComplete?: string;
   disabled?: boolean;
+  /** Id of a `<datalist>` with suggestions. */
+  list?: string;
+  min?: number;
+  step?: number | "any";
 };
 
 /** Text input wired to a TanStack Form field; passwords get a show/hide toggle. */
@@ -38,12 +48,13 @@ const AppField = ({
   placeholder,
   autoComplete,
   disabled = false,
+  list,
+  min,
+  step,
 }: AppFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  // Wait for the user to leave the field before showing errors.
-  const { isTouched, errors } = field.state.meta;
-  const error = isTouched && errors.length > 0 ? getErrorMessage(errors[0]) : null;
+  const error = getFieldError(field);
   const errorId = `${field.name}-error`;
 
   const inputProps = {
@@ -53,6 +64,9 @@ const AppField = ({
     placeholder,
     autoComplete,
     disabled,
+    list,
+    min,
+    step,
     onBlur: field.handleBlur,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => field.handleChange(event.target.value),
     "aria-invalid": error !== null,

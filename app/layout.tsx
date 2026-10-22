@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import { siteOwner } from "@/lib/siteConfig";
 import QueryProvider from "@/providers/QueryProvider";
 import StoreHydration from "@/providers/StoreHydration";
 import "./globals.css";
@@ -28,6 +29,8 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Borobazer",
   description: "Bororbazer Ecommerce Platform",
+  authors: [{ name: siteOwner.name, url: siteOwner.github }],
+  creator: siteOwner.name,
 };
 
 export default function RootLayout({

@@ -1,15 +1,16 @@
+import { FacebookIcon, GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import Container from "@/components/mainlayout/layout/Container";
 import NewsletterForm from "@/components/mainlayout/layout/NewsletterForm";
 import { Separator } from "@/components/ui/separator";
 import { assetUrl } from "@/lib/assets";
+import { siteOwner } from "@/lib/siteConfig";
 import Image from "next/image";
 import Link from "next/link";
 
 const socialLinks = [
-  { name: "Facebook", href: "https://www.facebook.com/", icon: "facebook" },
-  { name: "Twitter", href: "https://twitter.com/", icon: "twitter" },
-  { name: "Instagram", href: "https://www.instagram.com/", icon: "instagram" },
-  { name: "YouTube", href: "https://www.youtube.com/", icon: "youtube" },
+  { name: "Facebook", href: siteOwner.facebook, icon: FacebookIcon, color: "text-facebook" },
+  { name: "GitHub", href: siteOwner.github, icon: GithubIcon, color: "text-github" },
+  { name: "LinkedIn", href: siteOwner.linkedin, icon: LinkedinIcon, color: "text-linkedin" },
 ];
 
 const linkColumns = [
@@ -71,15 +72,10 @@ const Footer = () => {
               </p>
             </div>
             <ul className="flex justify-center gap-4 sm:justify-start md:gap-5">
-              {socialLinks.map((social) => (
-                <li key={social.name} className="transition hover:opacity-80">
-                  <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.name}>
-                    <Image
-                      src={assetUrl(`/assets/images/social/${social.icon}.svg`)}
-                      alt=""
-                      width={20}
-                      height={20}
-                    />
+              {socialLinks.map(({ name, href, icon: Icon, color }) => (
+                <li key={name} className="transition hover:opacity-80">
+                  <a href={href} target="_blank" rel="noreferrer" aria-label={`${siteOwner.name} on ${name}`}>
+                    <Icon className={`size-5 ${color}`} />
                   </a>
                 </li>
               ))}
@@ -120,8 +116,8 @@ const Footer = () => {
         <Separator />
         <div className="flex flex-col items-center gap-3.5 pt-6 text-center md:flex-row md:justify-between lg:pt-7">
           <p className="text-sm leading-7 text-foreground">
-            &copy; Copyright {new Date().getFullYear()} BoroBazar. All rights
-            reserved
+            &copy; Copyright {new Date().getFullYear()} {siteOwner.name}. All
+            rights reserved
           </p>
           <ul className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 lg:gap-7">
             {paymentMethods.map((method) => (
