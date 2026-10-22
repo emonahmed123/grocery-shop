@@ -16,7 +16,7 @@ export const pageLinks: NavLink[] = [
   { label: "FAQ", href: "/faq" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms & Condition", href: "/terms" },
-  { label: "Checkout", href: "/checkout" },
+  
 ];
 
 export function isActiveLink(pathname: string, link: NavLink) {

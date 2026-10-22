@@ -28,14 +28,15 @@
   --chart-3: oklch(0.4 0.16 259.61);
   --chart-4: oklch(0.43 0.16 259.82);
   --chart-5: oklch(0.29 0.07 261.2);
-  --sidebar: oklch(0.97 0 0);
+  /* Admin dashboard sidebar: neutral surface, brand-green active item */
+  --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.21 0.03 263.61);
-  --sidebar-primary: oklch(0.48 0.2 260.47);
+  --sidebar-primary: #02b290;
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.95 0.02 260.18);
-  --sidebar-accent-foreground: oklch(0.48 0.2 260.47);
+  --sidebar-accent: oklch(0.955 0 0);
+  --sidebar-accent-foreground: oklch(0.21 0.03 263.61);
   --sidebar-border: oklch(0.93 0.01 261.82);
-  --sidebar-ring: oklch(0.48 0.2 260.47);
+  --sidebar-ring: #02b290;
 
   /* BoroBazar storefront palette */
   --brand: #02b290;
@@ -148,6 +149,12 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
+  --color-warning: #b45309;
+  /* Social brand marks */
+  --color-facebook: #1877f2;
+  --color-github: #181717;
+  --color-linkedin: #0a66c2;
+  --color-whatsapp: #25d366;
   --color-fill-thumbnail: var(--fill-thumbnail);
   --color-fill-neutral: var(--fill-neutral);
   --color-promo-peach: var(--promo-peach);

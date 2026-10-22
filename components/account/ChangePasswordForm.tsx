@@ -4,7 +4,7 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { changePasswordAction } from "@/app/(mainlayout)/my-account/change-password/_action";
+import { changePasswordAction } from "@/actions/account.actions";
 import AppField from "@/components/form/AppField";
 import AppSubmitButton from "@/components/form/AppSubmitButton";
 import { Alert, AlertDescription } from "@/components/ui/alert";

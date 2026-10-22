@@ -1,4 +1,4 @@
-import ContactForm from "@/components/mainlayout/contact/ContactForm";
+import ContactWhatsApp from "@/components/mainlayout/contact/ContactWhatsApp";
 import Container from "@/components/mainlayout/layout/Container";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { assetUrl } from "@/lib/assets";
@@ -36,7 +36,7 @@ const ContactSupport = () => {
           </ul>
         </div>
         <div className="w-full pt-1.5 md:w-1/2 lg:pl-12 xl:w-2/5">
-          <ContactForm />
+          <ContactWhatsApp />
         </div>
       </div>
     </Container>

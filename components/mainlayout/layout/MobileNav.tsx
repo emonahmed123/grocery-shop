@@ -19,8 +19,9 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLogout, useMe } from "@/hooks/useAuth";
+import { isAdmin } from "@/lib/roles";
 import { getInitials } from "@/lib/utils";
-import { LogOut, Menu, UserRound } from "lucide-react";
+import { LayoutDashboard, LogOut, Menu, UserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -82,10 +83,18 @@ const MobileAccount = () => {
       </div>
       <SheetClose asChild>
         <Button asChild variant="brand" size="lg" className="w-full">
-          <Link href="/my-account/profile">
-            <UserRound data-icon="inline-start" />
-            My Account
-          </Link>
+          {/* Admins manage their account from the dashboard; My Account is for customers. */}
+          {isAdmin(user) ? (
+            <Link href="/dashboard">
+              <LayoutDashboard data-icon="inline-start" />
+              Dashboard
+            </Link>
+          ) : (
+            <Link href="/my-account/profile">
+              <UserRound data-icon="inline-start" />
+              My Account
+            </Link>
+          )}
         </Button>
       </SheetClose>
       <SheetClose asChild>
