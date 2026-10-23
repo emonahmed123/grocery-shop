@@ -20,7 +20,7 @@ import { getInitials } from "@/lib/utils";
 
 /** Login button for guests, avatar menu with logout for signed-in users. */
 const UserMenu = () => {
-  const { data: user, isPending } = useMe();
+  const { data: user, isPending,isError } = useMe();
   const logout = useLogout();
 
   if (isPending) {
@@ -29,6 +29,13 @@ const UserMenu = () => {
         <Skeleton className="h-9 w-24" />
       </div>
     );
+  }
+  if(isError){
+     return(
+ <>
+      <p>error</p>
+      </>
+     )
   }
 
   if (!user) {
