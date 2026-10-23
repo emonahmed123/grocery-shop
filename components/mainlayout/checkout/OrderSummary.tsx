@@ -1,21 +1,29 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
+import ProductImage from "@/components/shared/ProductImage";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { assetUrl, formatPrice } from "@/lib/assets";
+import { useMe } from "@/hooks/useAuth";
+import { usePlaceOrder } from "@/hooks/useCheckout";
+import { formatPrice } from "@/lib/assets";
+import { isAdmin } from "@/lib/roles";
 import { useCartHydrated, useCartItems, useCartSubtotal } from "@/store/cart.store";
-import { useAddress, useDeliveryFee, useDistrict } from "@/store/checkout.store";
-import Image from "next/image";
-import Link from "next/link";
-import { toast } from "sonner";
+import { getCheckoutValues, useDeliveryFee } from "@/store/checkout.store";
+import { placeOrderZodSchema } from "@/zod/order.validation";
 
 const OrderSummary = () => {
   const isHydrated = useCartHydrated();
   const items = useCartItems();
   const subtotal = useCartSubtotal();
-  const district = useDistrict();
-  const address = useAddress();
   const deliveryFee = useDeliveryFee();
+  const router = useRouter();
+  const { data: user, isPending: isUserPending } = useMe();
+  const placeOrder = usePlaceOrder();
   // No delivery charge on an empty cart, or before a district is picked.
   const shipping = items.length > 0 ? (deliveryFee ?? 0) : 0;
   const totals = [
@@ -28,12 +36,35 @@ const OrderSummary = () => {
   ];
 
   const handleOrder = () => {
-    if (!district || !address.trim()) {
-      toast.error("Please add your district and address first");
+    if (!user) {
+      toast.info("Please log in to place your order");
+      router.push("/login?redirect=/checkout");
       return;
     }
-    // No orders API yet; the cart stays intact until it is connected.
-    toast.info("Ordering will be available soon");
+    if (isAdmin(user)) {
+      toast.error("Admin accounts cannot place orders. Log in with a customer account.");
+      return;
+    }
+
+    const { district, address, phone, paymentMethod, note, leaveAtDoor } = getCheckoutValues();
+    const payload = {
+      items: items.map((item) => ({
+        product: item.productId,
+        quantity: item.quantity,
+        ...(item.variation ? { variation: item.variation } : {}),
+      })),
+      shippingAddress: { district: district ?? "", address, phone },
+      deliveryInstructions: { note: note.trim() || undefined, leaveAtDoor },
+      paymentMethod,
+    };
+
+    // Same checks as the server, so mistakes show up before a request is sent.
+    const parsed = placeOrderZodSchema.safeParse(payload);
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Please check your order details");
+      return;
+    }
+    placeOrder.mutate(parsed.data);
   };
 
   return (
@@ -62,10 +93,9 @@ const OrderSummary = () => {
             {items.map((item) => (
               <li key={item.key} className="flex items-center gap-4 border-b py-4">
                 <div className="relative size-14 shrink-0 overflow-hidden rounded-md border">
-                  <Image
-                    src={assetUrl(item.image)}
+                  <ProductImage
+                    src={item.image}
                     alt={item.name}
-                    fill
                     sizes="56px"
                     className="object-contain"
                   />
@@ -99,10 +129,11 @@ const OrderSummary = () => {
           variant="brand"
           size="lg"
           className="mt-8 w-full"
-          disabled={items.length === 0}
+          disabled={items.length === 0 || isUserPending || placeOrder.isPending}
           onClick={handleOrder}
         >
-          Order Now
+          {placeOrder.isPending && <Loader2 data-icon="inline-start" className="animate-spin" aria-hidden="true" />}
+          {placeOrder.isPending ? "Placing order..." : "Order Now"}
         </Button>
       </div>
 
@@ -115,7 +146,7 @@ const OrderSummary = () => {
         <Link href="/privacy" className="font-medium text-brand underline">
           Privacy
         </Link>
-        . Your credit/debit card data will not be saved.
+        . You pay in cash when the order arrives; the final total is confirmed when the order is placed.
       </p>
       <p className="mt-4 text-sm leading-7 text-muted-foreground">
         A bag fee may be added to your final total if required by law or the

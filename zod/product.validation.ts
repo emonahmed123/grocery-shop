@@ -3,7 +3,8 @@ import { z } from "zod";
 // Form fields stay strings (that is what inputs hold); `toProductPayload`
 // turns them into the shapes the backend stores.
 
-const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** Lower-case words joined by dashes, e.g. green-apple. */
+export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const isNumber = (value: string) => value.trim() !== "" && Number.isFinite(Number(value));
 const isEmpty = (value: string) => value.trim() === "";
@@ -31,7 +32,7 @@ const optionalPrice = z
 export const productZodSchema = z
   .object({
     name: z.string().trim().min(3, "Name must be at least 3 characters"),
-    slug: z.string().trim().regex(SLUG, "Use lower-case letters, numbers and dashes, e.g. green-apple"),
+    slug: z.string().trim().regex(SLUG_PATTERN, "Use lower-case letters, numbers and dashes, e.g. green-apple"),
     category: z.string().trim().min(1, "Choose a category"),
     unit: z.string().trim().min(1, "Unit is required, e.g. 1 kg"),
     description: z.string().trim(),

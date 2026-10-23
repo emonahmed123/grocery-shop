@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import ProductDetails from "@/components/dashboard/products/ProductDetails";
-import { adminProductQuery, categoriesQuery } from "@/lib/dashboardQueries";
+import { categoriesQuery } from "@/queries/category.queries";
+import { adminProductQuery } from "@/queries/product.queries";
 
 export const metadata: Metadata = {
   title: "Product Details | BoroBazar Dashboard",

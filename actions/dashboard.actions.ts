@@ -4,23 +4,44 @@ import axios from "axios";
 
 import { getMeAction } from "@/actions/auth.actions";
 import categoriesJson from "@/public/data/categories.json";
+import { toImageUrl } from "@/lib/assets";
 import { getApiErrorMessage } from "@/lib/axios/httpClient";
 import { isAdmin } from "@/lib/roles";
 import {
+  createCategory,
   createProduct,
+  deleteCategory,
   deleteProduct,
+  getAdminCategories,
   getAdminProduct,
   getAdminProducts,
   getAllOrders,
   getCategories,
+  getDashboardStats,
+  getFlashSaleHistory,
   getFlashSaleProducts,
-  markOrderDelivered,
+  getProductFlashSaleSummary,
   removeFlashSale,
   setFlashSale,
+  updateCategory,
+  updateOrderStatus,
   updateProduct,
 } from "@/services/dashboard.services";
 import type { ApiErrorResponse, ApiResult, Paginated } from "@/types/api.types";
-import type { AdminOrder, AdminProduct, CategoryOption, ProductListQuery } from "@/types/dashboard.types";
+import type {
+  AdminCategory,
+  AdminOrder,
+  AdminProduct,
+  CategoryOption,
+  DashboardStats,
+  FlashSaleHistoryQuery,
+  FlashSaleRecord,
+  FlashSaleState,
+  OrderStatus,
+  ProductFlashSaleSummary,
+  ProductListQuery,
+} from "@/types/dashboard.types";
+import { categoryZodSchema, type ICategoryFormValues, toCategoryPayload } from "@/zod/category.validation";
 import { flashSalePayloadZodSchema, type IFlashSalePayload } from "@/zod/flashSale.validation";
 import { type IProductFormValues, productZodSchema, toProductPayload } from "@/zod/product.validation";
 
@@ -139,6 +160,85 @@ export async function getCategoriesAction(): Promise<ApiResult<CategoryOption[]>
   return { success: true, message: "Store categories", data: fallback };
 }
 
+export async function getAdminCategoriesAction(): Promise<ApiResult<AdminCategory[]>> {
+  try {
+    const categories = await getAdminCategories();
+    return { success: true, message: "Categories loaded", data: categories };
+  } catch (error) {
+    return fail(getApiErrorMessage(error, "Could not load categories"));
+  }
+}
+
+export async function saveCategoryAction(id: string | undefined, values: ICategoryFormValues): Promise<ApiResult<null>> {
+  const denied = await adminOnly();
+  if (denied) return denied;
+  if (id !== undefined && !OBJECT_ID.test(id)) return fail("Unknown category");
+
+  const parsed = categoryZodSchema.safeParse(values);
+  if (!parsed.success) return fail(parsed.error.issues[0]?.message ?? "Please check the category");
+
+  try {
+    const payload = toCategoryPayload(parsed.data);
+    if (id) await updateCategory(id, payload);
+    else await createCategory(payload);
+    return { success: true, message: id ? "Category updated" : "Category added", data: null };
+  } catch (error) {
+    return fail(getApiErrorMessage(error, "Could not save the category"));
+  }
+}
+
+export async function deleteCategoryAction(id: string): Promise<ApiResult<null>> {
+  const denied = await adminOnly();
+  if (denied) return denied;
+  if (!OBJECT_ID.test(id)) return fail("Unknown category");
+
+  try {
+    await deleteCategory(id);
+    return { success: true, message: "Category deleted", data: null };
+  } catch (error) {
+    return fail(getApiErrorMessage(error, "Could not delete the category"));
+  }
+}
+
+/**
+ * Copies the store's demo categories into the backend, so they can be edited.
+ * Ones with a slug that already exists are skipped.
+ */
+export async function importDemoCategoriesAction(): Promise<ApiResult<{ added: number; failed: number }>> {
+  const denied = await adminOnly();
+  if (denied) return denied;
+
+  try {
+    const existing = new Set((await getAdminCategories()).map((category) => category.slug));
+    let added = 0;
+    let failed = 0;
+
+    for (const category of categoriesJson) {
+      if (existing.has(category.slug)) continue;
+      try {
+        await createCategory({
+          name: category.name,
+          slug: category.slug,
+          image: { thumbnail: toImageUrl(category.image.thumbnail), original: toImageUrl(category.image.original) },
+          icon: toImageUrl(category.icon),
+          children: (category.children ?? []).map(({ name, slug }) => ({ name, slug })),
+        });
+        added += 1;
+      } catch {
+        // e.g. a deleted category still holds the name; the rest go on.
+        failed += 1;
+      }
+    }
+
+    const message = failed
+      ? `${added} categories added, ${failed} could not be added`
+      : `${added} categories added`;
+    return { success: true, message, data: { added, failed } };
+  } catch (error) {
+    return fail(getApiErrorMessage(error, "Could not add the demo categories"));
+  }
+}
+
 // ─── Flash sale ──────────────────────────────────────────────────────────────
 
 export async function getFlashSaleProductsAction(
@@ -181,6 +281,38 @@ export async function removeFlashSaleAction(id: string): Promise<ApiResult<null>
   }
 }
 
+const FLASH_SALE_STATES: FlashSaleState[] = ["scheduled", "live", "sold-out", "ended", "removed", "replaced"];
+
+export async function getFlashSaleHistoryAction(
+  query: FlashSaleHistoryQuery,
+): Promise<ApiResult<Paginated<FlashSaleRecord>>> {
+  // Only known values go on: the backend reads them as filters.
+  const clean: FlashSaleHistoryQuery = {
+    page: Math.max(1, Math.floor(query.page) || 1),
+    limit: Math.min(MAX_PAGE_SIZE, Math.max(1, Math.floor(query.limit) || 10)),
+    state: query.state && FLASH_SALE_STATES.includes(query.state) ? query.state : undefined,
+    product: query.product && OBJECT_ID.test(query.product) ? query.product : undefined,
+  };
+
+  try {
+    const page = await getFlashSaleHistory(clean);
+    return { success: true, message: "Flash sale history loaded", data: page };
+  } catch (error) {
+    return fail(getApiErrorMessage(error, "Could not load the flash sale history"));
+  }
+}
+
+export async function getProductFlashSaleSummaryAction(id: string): Promise<ApiResult<ProductFlashSaleSummary>> {
+  if (!OBJECT_ID.test(id)) return fail("Unknown product");
+
+  try {
+    const summary = await getProductFlashSaleSummary(id);
+    return { success: true, message: "Flash sale summary loaded", data: summary };
+  } catch (error) {
+    return fail(getApiErrorMessage(error, "Could not load the flash sale summary"));
+  }
+}
+
 // ─── Orders ──────────────────────────────────────────────────────────────────
 
 export async function getAllOrdersAction(): Promise<ApiResult<AdminOrder[]>> {
@@ -192,15 +324,37 @@ export async function getAllOrdersAction(): Promise<ApiResult<AdminOrder[]>> {
   }
 }
 
-export async function markOrderDeliveredAction(id: string): Promise<ApiResult<null>> {
+const ORDER_STATUS_MESSAGES: Record<OrderStatus, string> = {
+  pending: "Order moved back to pending",
+  confirmed: "Order confirmed",
+  shipped: "Order marked as shipped",
+  delivered: "Order marked as delivered",
+  cancelled: "Order cancelled",
+};
+
+const isOrderStatus = (status: string): status is OrderStatus => Object.hasOwn(ORDER_STATUS_MESSAGES, status);
+
+export async function updateOrderStatusAction(id: string, status: OrderStatus): Promise<ApiResult<null>> {
   const denied = await adminOnly();
   if (denied) return denied;
   if (!OBJECT_ID.test(id)) return fail("Unknown order");
+  if (!isOrderStatus(status)) return fail("Unknown status");
 
   try {
-    await markOrderDelivered(id);
-    return { success: true, message: "Order marked as delivered", data: null };
+    await updateOrderStatus(id, status);
+    return { success: true, message: ORDER_STATUS_MESSAGES[status], data: null };
   } catch (error) {
     return fail(getApiErrorMessage(error, "Could not update the order"));
+  }
+}
+
+// ─── Stats ───────────────────────────────────────────────────────────────────
+
+export async function getDashboardStatsAction(): Promise<ApiResult<DashboardStats>> {
+  try {
+    const stats = await getDashboardStats();
+    return { success: true, message: "Stats loaded", data: stats };
+  } catch (error) {
+    return fail(getApiErrorMessage(error, "Could not load the store stats"));
   }
 }

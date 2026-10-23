@@ -8,9 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { assetUrl } from "@/lib/assets";
+import ProductImage from "@/components/shared/ProductImage";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type ProductGalleryProps = {
@@ -49,10 +48,9 @@ const ProductGallery = ({ name, images, compact = false }: ProductGalleryProps) 
                 selected === index && "border-foreground/40",
               )}
             >
-              <Image
-                src={assetUrl(image)}
+              <ProductImage
+                src={image}
                 alt=""
-                fill
                 sizes="150px"
                 className="object-contain p-2 lg:p-4"
               />
@@ -67,10 +65,9 @@ const ProductGallery = ({ name, images, compact = false }: ProductGalleryProps) 
             {images.map((image, index) => (
               <CarouselItem key={image}>
                 <div className="relative h-80 sm:h-100 lg:h-120 xl:h-146">
-                  <Image
-                    src={assetUrl(image)}
+                  <ProductImage
+                    src={image}
                     alt={`${name} - image ${index + 1}`}
-                    fill
                     priority={index === 0}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     className={cn(

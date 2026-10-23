@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import DashboardOverview from "@/components/dashboard/overview/DashboardOverview";
 import PrefetchBoundary from "@/components/dashboard/PrefetchBoundary";
-import { adminOrdersQuery, adminProductsQuery, categoriesQuery, OVERVIEW_PRODUCT_QUERY } from "@/lib/dashboardQueries";
+import { categoriesQuery } from "@/queries/category.queries";
+import { dashboardStatsQuery } from "@/queries/stats.queries";
 
 export const metadata: Metadata = {
   title: "Dashboard | BoroBazar",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   return (
-    <PrefetchBoundary queries={[adminProductsQuery(OVERVIEW_PRODUCT_QUERY), adminOrdersQuery, categoriesQuery]}>
+    <PrefetchBoundary queries={[dashboardStatsQuery, categoriesQuery]}>
       <DashboardOverview />
     </PrefetchBoundary>
   );

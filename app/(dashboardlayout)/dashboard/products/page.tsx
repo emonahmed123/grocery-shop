@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import PrefetchBoundary from "@/components/dashboard/PrefetchBoundary";
 import ProductsManager from "@/components/dashboard/products/ProductsManager";
-import { adminProductsQuery, categoriesQuery, DEFAULT_PRODUCT_QUERY } from "@/lib/dashboardQueries";
+import { categoriesQuery } from "@/queries/category.queries";
+import { adminProductsQuery, DEFAULT_PRODUCT_QUERY } from "@/queries/product.queries";
 
 export const metadata: Metadata = {
   title: "Products | BoroBazar Dashboard",

@@ -1,12 +1,12 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-import { ProductThumb } from "@/components/dashboard/products/productColumns";
 import AppField, { getFieldError } from "@/components/form/AppField";
 import AppSubmitButton from "@/components/form/AppSubmitButton";
 import AppTextareaField from "@/components/form/AppTextareaField";
+import ImageInput from "@/components/form/ImageInput";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -86,8 +86,14 @@ interface ProductFormProps {
   onDone: () => void;
 }
 
+/** Extra photos a product page can show. */
+const MAX_GALLERY = 8;
+
 const ProductForm = ({ product, categories, onDone }: ProductFormProps) => {
   const save = useSaveProduct();
+  // Saving waits for running uploads, or their images would be missing.
+  const [uploads, setUploads] = useState(0);
+  const trackUpload = (busy: boolean) => setUploads((count) => count + (busy ? 1 : -1));
   const isEditing = Boolean(product);
   // The last slug made from the name; once the admin types a different one, it is theirs.
   const autoSlug = useRef("");
@@ -220,43 +226,41 @@ const ProductForm = ({ product, categories, onDone }: ProductFormProps) => {
 
       <Separator />
 
-      <FormSection title="Images" description="A main image, plus optional extra photos for the product page.">
-        <div className="flex items-end gap-3 sm:col-span-2">
-          <div className="min-w-0 flex-1">
-            <form.Field name="image">
-              {(field) => (
-                <AppField field={field} label="Main Image URL" type="url" placeholder="https://example.com/apple.png" />
-              )}
-            </form.Field>
-          </div>
-          <form.Subscribe selector={(state) => state.values.image}>
-            {(image) => <ProductThumb src={URL.canParse(image) ? image : ""} className="size-12" />}
-          </form.Subscribe>
-        </div>
-
+      <FormSection
+        title="Images"
+        description="Paste a link or upload from your computer. Uploads are hosted on imgbb and their link is saved."
+      >
         <div className="sm:col-span-2">
-          <form.Field name="gallery">
+          <form.Field name="image">
             {(field) => (
-              <AppTextareaField
-                field={field}
-                label="Gallery URLs (optional)"
-                placeholder={"One image URL per line\nhttps://example.com/apple-2.png"}
-                rows={3}
+              <ImageInput
+                label="Main Image"
+                value={field.state.value ? [field.state.value] : []}
+                onChange={(update) => field.handleChange((current) => update(current ? [current] : [])[0] ?? "")}
+                onBlur={field.handleBlur}
+                error={getFieldError(field)}
+                onBusyChange={trackUpload}
               />
             )}
           </form.Field>
-          <form.Subscribe selector={(state) => state.values.gallery}>
-            {(gallery) => {
-              const urls = splitList(gallery, /\n/).filter((url) => URL.canParse(url));
-              return urls.length > 0 ? (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {urls.map((url) => (
-                    <ProductThumb key={url} src={url} className="size-12" />
-                  ))}
-                </div>
-              ) : null;
-            }}
-          </form.Subscribe>
+        </div>
+
+        <div className="sm:col-span-2">
+          {/* The form keeps the gallery as one link per line, like before. */}
+          <form.Field name="gallery">
+            {(field) => (
+              <ImageInput
+                label="Gallery (optional)"
+                max={MAX_GALLERY}
+                value={splitList(field.state.value, /\n/)}
+                onChange={(update) => field.handleChange((current) => update(splitList(current, /\n/)).join("\n"))}
+                onBlur={field.handleBlur}
+                error={getFieldError(field)}
+                hint="Extra photos shown on the product page."
+                onBusyChange={trackUpload}
+              />
+            )}
+          </form.Field>
         </div>
       </FormSection>
 
@@ -293,7 +297,11 @@ const ProductForm = ({ product, categories, onDone }: ProductFormProps) => {
         <form.Subscribe selector={(state) => state.canSubmit}>
           {(canSubmit) => (
             <div className="sm:w-44">
-              <AppSubmitButton isPending={save.isPending} pendingLabel="Saving..." disabled={!canSubmit}>
+              <AppSubmitButton
+                isPending={save.isPending || uploads > 0}
+                pendingLabel={uploads > 0 ? "Uploading..." : "Saving..."}
+                disabled={!canSubmit}
+              >
                 {isEditing ? "Save Changes" : "Add Product"}
               </AppSubmitButton>
             </div>

@@ -11,7 +11,7 @@ import DataTable, { type DataTableActions } from "@/components/shared/table/Data
 import { Button } from "@/components/ui/button";
 import { useAdminProducts, useCategories, useDeleteProduct } from "@/hooks/useDashboard";
 import { useListQuery } from "@/hooks/useListQuery";
-import { DEFAULT_PRODUCT_QUERY } from "@/lib/dashboardQueries";
+import { DEFAULT_PRODUCT_QUERY } from "@/queries/product.queries";
 import type { AdminProduct } from "@/types/dashboard.types";
 
 const NO_PRODUCTS: AdminProduct[] = [];

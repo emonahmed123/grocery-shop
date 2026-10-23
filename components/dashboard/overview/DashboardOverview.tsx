@@ -2,7 +2,6 @@
 
 import { ArrowRight, Clock, DollarSign, Package, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { useMemo } from "react";
 
 import StatCard from "@/components/dashboard/overview/StatCard";
 import PageHeader from "@/components/dashboard/PageHeader";
@@ -11,36 +10,10 @@ import OrderStatusBadge from "@/components/shared/OrderStatusBadge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAdminOrders, useAdminProducts } from "@/hooks/useDashboard";
+import { useDashboardStats } from "@/hooks/useDashboard";
 import { useMe } from "@/hooks/useAuth";
 import { formatPrice } from "@/lib/assets";
-import { OVERVIEW_PRODUCT_QUERY } from "@/lib/dashboardQueries";
 import { formatDate, formatOrderId } from "@/lib/format";
-import type { AdminOrder, AdminProduct } from "@/types/dashboard.types";
-
-const LOW_STOCK = 10;
-
-function getStats(products: AdminProduct[], orders: AdminOrder[]) {
-  const delivered = orders.filter((order) => order.status === "delivered");
-  const categoryCounts = new Map<string, number>();
-  for (const product of products) {
-    categoryCounts.set(product.category, (categoryCounts.get(product.category) ?? 0) + 1);
-  }
-
-  return {
-    revenue: delivered.reduce((total, order) => total + order.totalAmount, 0),
-    deliveredCount: delivered.length,
-    pendingCount: orders.length - delivered.length,
-    customerCount: new Set(orders.map((order) => order.customerName)).size,
-    categoryCount: categoryCounts.size,
-    topCategories: [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6),
-    // Products without stock tracking are left out rather than shown as empty.
-    lowStock: products
-      .filter((product) => product.inStock !== null && product.inStock < LOW_STOCK)
-      .slice(0, 5),
-    recentOrders: orders.slice(0, 5),
-  };
-}
 
 const Panel = ({
   title,
@@ -81,15 +54,11 @@ const Empty = ({ children }: { children: React.ReactNode }) => (
 
 const DashboardOverview = () => {
   const { data: user } = useMe();
-  const products = useAdminProducts(OVERVIEW_PRODUCT_QUERY);
-  const orders = useAdminOrders();
-
-  const stats = useMemo(
-    () => getStats(products.data?.data ?? [], orders.data ?? []),
-    [products.data, orders.data],
-  );
-  const largestCategory = stats.topCategories[0]?.[1] ?? 1;
-  const loadError = products.error ?? orders.error;
+  const { data: stats, error, isPending } = useDashboardStats();
+  const topCategories = stats?.topCategories ?? [];
+  const recentOrders = stats?.recentOrders ?? [];
+  const lowStock = stats?.lowStock ?? [];
+  const largestCategory = topCategories[0]?.count ?? 1;
 
   return (
     <>
@@ -98,53 +67,53 @@ const DashboardOverview = () => {
         description="Here is what is happening in your store."
       />
 
-      {loadError && (
+      {error && (
         <Alert variant="destructive" className="mb-6">
-          <AlertDescription>{loadError.message}</AlertDescription>
+          <AlertDescription>{error.message}</AlertDescription>
         </Alert>
       )}
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           label="Revenue"
-          value={formatPrice(stats.revenue)}
-          hint={`From ${stats.deliveredCount} delivered orders`}
+          value={formatPrice(stats?.revenue ?? 0)}
+          hint={`From ${stats?.deliveredOrders ?? 0} delivered orders`}
           icon={DollarSign}
-          isLoading={orders.isPending}
+          isLoading={isPending}
         />
         <StatCard
           label="Total Orders"
-          value={orders.data?.length ?? 0}
-          hint={`${stats.customerCount} customers`}
+          value={stats?.totalOrders ?? 0}
+          hint={`${stats?.customerCount ?? 0} customers`}
           icon={ShoppingBag}
-          isLoading={orders.isPending}
+          isLoading={isPending}
         />
         <StatCard
           label="Pending Orders"
-          value={stats.pendingCount}
+          value={stats?.pendingOrders ?? 0}
           hint="Waiting for delivery"
           icon={Clock}
-          isLoading={orders.isPending}
+          isLoading={isPending}
         />
         <StatCard
           label="Products"
-          value={products.data?.meta.total ?? 0}
-          hint={`${stats.categoryCount} categories`}
+          value={stats?.totalProducts ?? 0}
+          hint={`${stats?.categoryCount ?? 0} categories`}
           icon={Package}
-          isLoading={products.isPending}
+          isLoading={isPending}
         />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-3">
         <div className="xl:col-span-2">
           <Panel title="Recent Orders" href="/dashboard/orders">
-            {orders.isPending ? (
+            {isPending ? (
               <ListSkeleton />
-            ) : stats.recentOrders.length === 0 ? (
+            ) : recentOrders.length === 0 ? (
               <Empty>No orders yet.</Empty>
             ) : (
               <ul className="divide-y">
-                {stats.recentOrders.map((order) => (
+                {recentOrders.map((order) => (
                   <li key={order.id} className="flex items-center gap-4 py-3 first:pt-0 last:pb-0">
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-foreground">{order.customerName}</p>
@@ -162,13 +131,13 @@ const DashboardOverview = () => {
         </div>
 
         <Panel title="Products by Category" href="/dashboard/products">
-          {products.isPending ? (
+          {isPending ? (
             <ListSkeleton />
-          ) : stats.topCategories.length === 0 ? (
+          ) : topCategories.length === 0 ? (
             <Empty>No products yet.</Empty>
           ) : (
             <ul className="flex flex-col gap-4">
-              {stats.topCategories.map(([category, count]) => (
+              {topCategories.map(({ category, count }) => (
                 <li key={category} className="flex flex-col gap-1.5">
                   <div className="flex justify-between text-sm">
                     <span className="text-foreground">
@@ -191,13 +160,13 @@ const DashboardOverview = () => {
 
       <div className="mt-6">
         <Panel title="Low Stock" href="/dashboard/products">
-          {products.isPending ? (
+          {isPending ? (
             <ListSkeleton />
-          ) : stats.lowStock.length === 0 ? (
-            <Empty>No tracked product is below {LOW_STOCK} in stock.</Empty>
+          ) : lowStock.length === 0 ? (
+            <Empty>No tracked product is below {stats?.lowStockLimit} in stock.</Empty>
           ) : (
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-              {stats.lowStock.map((product) => (
+              {lowStock.map((product) => (
                 <li key={product.id} className="flex items-center gap-3 rounded-md border p-3">
                   <ProductThumb src={product.image} />
                   <div className="min-w-0">

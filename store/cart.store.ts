@@ -9,17 +9,19 @@ import type { Product } from "@/types/product";
  * without loading the whole catalog in the browser.
  */
 export type CartItem = {
-  /** One line per product and variation, e.g. `12` or `12:Large`. */
+  /** One line per product and variation, e.g. `<id>` or `<id>:Large`. */
   key: string;
-  productId: number;
+  productId: string;
   slug: string;
   name: string;
   image: string;
   unit: string;
-  /** Unit price at the time it was added (the sale price when on sale). */
+  /** Unit price when it was added; the backend prices the order again. */
   price: number;
   variation?: string;
   quantity: number;
+  /** Stock when it was added, so the counter cannot go past it. */
+  stock: number;
 };
 
 type AddItemOptions = {
@@ -45,7 +47,7 @@ type CartState = {
 /** localStorage key; also used to sync the cart across tabs. */
 export const CART_STORAGE_KEY = "borobazar-cart";
 
-export const getCartItemKey = (productId: number, variation?: string) =>
+export const getCartItemKey = (productId: string, variation?: string) =>
   variation ? `${productId}:${variation}` : String(productId);
 
 // The store itself is private; components use the hooks below, which keeps
@@ -64,7 +66,9 @@ const useCartStore = create<CartState>()(
                 if (existing) {
                   return {
                     items: state.items.map((item) =>
-                      item.key === key ? { ...item, quantity: item.quantity + quantity } : item,
+                      item.key === key
+                        ? { ...item, quantity: Math.min(item.quantity + quantity, item.stock) }
+                        : item,
                     ),
                   };
                 }
@@ -76,9 +80,10 @@ const useCartStore = create<CartState>()(
                   name: product.name,
                   image: product.image,
                   unit: product.unit,
-                  price: product.salePrice ?? product.price,
+                  price: product.currentPrice,
                   variation,
-                  quantity,
+                  quantity: Math.min(quantity, product.inStock),
+                  stock: product.inStock,
                 };
                 return { items: [...state.items, item] };
               },
@@ -90,7 +95,7 @@ const useCartStore = create<CartState>()(
             set(
               (state) => ({
                 items: state.items.map((item) =>
-                  item.key === key ? { ...item, quantity: item.quantity + 1 } : item,
+                  item.key === key ? { ...item, quantity: Math.min(item.quantity + 1, item.stock) } : item,
                 ),
               }),
               undefined,
@@ -121,7 +126,10 @@ const useCartStore = create<CartState>()(
       }),
       {
         name: CART_STORAGE_KEY,
-        version: 1,
+        // Version 1 held demo products with numeric ids that the backend does
+        // not know, so those carts start empty.
+        version: 2,
+        migrate: () => ({ items: [] }),
         storage: createJSONStorage(() => localStorage),
         // Persist data only; actions are recreated on every load.
         partialize: (state) => ({ items: state.items }),

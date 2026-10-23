@@ -1,18 +1,23 @@
 import NutritionFacts from "@/components/mainlayout/product/NutritionFacts";
 import ProductReviews from "@/components/mainlayout/product/ProductReviews";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { ProductReview } from "@/types/review.types";
 
 type ProductTabsProps = {
+  productId: string;
   description?: string;
+  reviews: ProductReview[];
+  averageRating: number;
+  ratingCount: number;
 };
 
-const ProductTabs = ({ description }: ProductTabsProps) => {
+const ProductTabs = ({ productId, description, reviews, averageRating, ratingCount }: ProductTabsProps) => {
   return (
     <Tabs defaultValue="details" className="mt-10 lg:mt-14">
       <div className="border-b pb-1">
         <TabsList variant="line">
           <TabsTrigger value="details">Product Details</TabsTrigger>
-          <TabsTrigger value="reviews">Review Rating</TabsTrigger>
+          <TabsTrigger value="reviews">Reviews ({reviews.length})</TabsTrigger>
         </TabsList>
       </div>
       <TabsContent value="details" className="mt-4 lg:mt-6">
@@ -29,7 +34,12 @@ const ProductTabs = ({ description }: ProductTabsProps) => {
         </div>
       </TabsContent>
       <TabsContent value="reviews" className="mt-4 lg:mt-6">
-        <ProductReviews />
+        <ProductReviews
+          productId={productId}
+          reviews={reviews}
+          averageRating={averageRating}
+          ratingCount={ratingCount}
+        />
       </TabsContent>
     </Tabs>
   );
