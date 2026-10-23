@@ -63,12 +63,12 @@ Prices, stock and order totals are always worked out by the backend; the fronten
 | HTTP | Axios (server side only) |
 | Other UI | Embla Carousel, Sonner toasts, `next-themes` |
 | Images | imgbb API |
-| Tooling | pnpm, ESLint 9 (`eslint-config-next`, TanStack Query plugin, `@shadcn/lint`) |
+| Tooling | pnpm 10, ESLint 9 (`eslint-config-next`, TanStack Query plugin, `@shadcn/lint`) |
 | Hosting | Vercel |
 
 ## Getting started
 
-Requirements: **Node.js 24** (20.9 or newer works) and **pnpm** (through Corepack), plus a running [grocery-shop-server](https://github.com/emonahmed123/grocery-shop-server).
+Requirements: **Node.js 24** (20.9 or newer works) and **pnpm 10** (Corepack picks the version pinned in `package.json`), plus a running [grocery-shop-server](https://github.com/emonahmed123/grocery-shop-server).
 
 ```bash
 corepack enable
@@ -193,5 +193,5 @@ Component ─▶ hook (useQuery / useMutation) ─▶ query options (queries/)
 The app is deployed on Vercel.
 
 1. Set `BACKEND_URL` and `IMGBB_API_KEY` in **Project Settings → Environment Variables**.
-2. `package.json` pins Node.js `24.x` through `engines`, which overrides the project's Node setting. Next.js 16 does not run on older versions.
-3. Vercel detects pnpm from `pnpm-lock.yaml`; no build settings need changing.
+2. Set **Project Settings → Build and Deployment → Node.js Version** to **24.x**. Next.js 16 does not run on older versions, and Vercel no longer builds with 20.x. `package.json` also pins it through `engines`.
+3. `package.json#packageManager` pins pnpm 10. Without it, Vercel picks pnpm from the project's creation date (pnpm 9 for older projects), and pnpm 9 cannot read this repo's `pnpm-workspace.yaml`. The build, install and output settings stay on their defaults.
