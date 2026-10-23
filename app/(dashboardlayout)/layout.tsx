@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 
 import { getMeAction } from "@/actions/auth.actions";
 import AppSidebar from "@/components/dashboard/layout/AppSidebar";
-import DashboardFooter from "@/components/dashboard/layout/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/layout/DashboardHeader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,7 +24,6 @@ export default async function DashboardLayout({ children }: Readonly<{ children:
         <SidebarInset>
           <DashboardHeader />
           <div className="mx-auto w-full max-w-360 flex-1 px-4 py-6 sm:px-6">{children}</div>
-      
         </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>

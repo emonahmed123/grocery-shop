@@ -15,7 +15,7 @@ const AddToCartButton = ({ product }: { product: Product }) => {
   const { addItem, increaseItem, decreaseItem } = useCartActions();
 
   // Variable products need a choice first, so they open the product page.
-  if (product.maxPrice !== undefined) {
+  if (product.variations) {
     return (
       <Button asChild variant="brand" size="icon-circle">
         <Link href={`/products/${product.slug}`} aria-label={`View ${product.name} options`}>
@@ -32,7 +32,16 @@ const AddToCartButton = ({ product }: { product: Product }) => {
         label={product.name}
         onDecrease={() => decreaseItem(key)}
         onIncrease={() => increaseItem(key)}
+        canIncrease={quantity < product.inStock}
       />
+    );
+  }
+
+  if (product.inStock <= 0) {
+    return (
+      <Button variant="brand" size="icon-circle" aria-label={`${product.name} is out of stock`} disabled>
+        <Plus />
+      </Button>
     );
   }
 

@@ -1,15 +1,23 @@
-export interface OrderProduct {
-  id: string;
+/** One line of an order, as it was priced when the order was placed. */
+export interface OrderItem {
+  productId: string;
   name: string;
   image?: string;
+  unit?: string;
+  variation?: string;
+  price?: number;
+  quantity?: number;
 }
 
 export interface Order {
   id: string;
-  products: OrderProduct[];
-  quantity: number;
+  items: OrderItem[];
+  subTotal?: number;
+  deliveryFee?: number;
   totalAmount: number;
-  /** Usually "pending" or "delivered"; other values from the backend are shown as-is. */
+  /** pending, confirmed, shipped, delivered or cancelled. */
   status: string;
+  paymentMethod?: string;
+  shippingAddress?: { district: string; address: string; phone: string };
   createdAt?: string;
 }

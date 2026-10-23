@@ -19,6 +19,7 @@ const ProductPurchase = ({ product }: ProductPurchaseProps) => {
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCartActions();
   const needsVariation = variations !== undefined && variation === "";
+  const soldOut = product.inStock <= 0 || !product.isAvailable;
 
   const handleAddToCart = () => {
     addItem(product, { quantity, variation: variation || undefined });
@@ -67,7 +68,8 @@ const ProductPurchase = ({ product }: ProductPurchaseProps) => {
           variant="ghost"
           size="icon-lg"
           aria-label="Increase quantity"
-          onClick={() => setQuantity((count) => count + 1)}
+          disabled={quantity >= product.inStock}
+          onClick={() => setQuantity((count) => Math.min(product.inStock, count + 1))}
         >
           <Plus />
         </Button>
@@ -77,11 +79,11 @@ const ProductPurchase = ({ product }: ProductPurchaseProps) => {
         variant="brand"
         size="lg"
         className="h-11 w-full md:h-14"
-        disabled={needsVariation}
+        disabled={needsVariation || soldOut}
         onClick={handleAddToCart}
       >
         <ShoppingBag />
-        Add to Cart
+        {soldOut ? "Out of Stock" : "Add to Cart"}
       </Button>
 
       <div className="grid grid-cols-2 gap-2.5">

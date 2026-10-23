@@ -1,31 +1,37 @@
-import AddChoiceCard from "@/components/mainlayout/checkout/AddChoiceCard";
-import ChoiceCard from "@/components/mainlayout/checkout/ChoiceCard";
-import { RadioGroup } from "@/components/ui/radio-group";
+"use client";
 
-const phoneNumbers = [
-  { id: "primary", title: "Primary Number", number: "(202) 555-0191" },
-  { id: "secondary", title: "Secondary Number", number: "(202) 555-0701" },
-];
+import { Phone } from "lucide-react";
 
+import { Label } from "@/components/ui/label";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import { useCheckoutActions, usePhone } from "@/store/checkout.store";
+
+/** The rider calls this number on delivery. */
 const ContactNumberStep = () => {
+  const phone = usePhone();
+  const { updatePhone } = useCheckoutActions();
+
   return (
-    <div className="grid gap-4 text-sm md:grid-cols-2 md:gap-5">
-      <RadioGroup
-        defaultValue="primary"
-        aria-label="Contact number"
-        className="contents"
-      >
-        {phoneNumbers.map((phone) => (
-          <ChoiceCard
-            key={phone.id}
-            id={`phone-${phone.id}`}
-            value={phone.id}
-            title={phone.title}
-            description={phone.number}
-          />
-        ))}
-      </RadioGroup>
-      <AddChoiceCard label="Add Phone Number" />
+    <div className="flex max-w-md flex-col gap-2.5">
+      <Label htmlFor="phone">Mobile number</Label>
+      <InputGroup className="h-12">
+        <InputGroupAddon>
+          <Phone aria-hidden="true" />
+        </InputGroupAddon>
+        <InputGroupInput
+          id="phone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          value={phone}
+          onChange={(event) => updatePhone(event.target.value)}
+          placeholder="01XXXXXXXXX"
+          aria-describedby="phone-hint"
+        />
+      </InputGroup>
+      <p id="phone-hint" className="text-sm text-muted-foreground">
+        A Bangladeshi mobile number, e.g. 01712345678.
+      </p>
     </div>
   );
 };

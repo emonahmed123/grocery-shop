@@ -6,22 +6,28 @@ import { toast } from "sonner";
 
 import {
   createProductAction,
+  deleteCategoryAction,
   deleteProductAction,
-  markOrderDeliveredAction,
+  importDemoCategoriesAction,
   removeFlashSaleAction,
+  saveCategoryAction,
   setFlashSaleAction,
+  updateOrderStatusAction,
   updateProductAction,
 } from "@/actions/dashboard.actions";
+import { adminCategoriesQuery, categoriesQuery } from "@/queries/category.queries";
 import {
-  adminOrdersQuery,
-  adminProductQuery,
-  adminProductsQuery,
-  categoriesQuery,
-  dashboardKeys,
+  flashSaleHistoryQuery,
   flashSaleQuery,
-  unwrapResult,
-} from "@/lib/dashboardQueries";
-import type { ProductListQuery } from "@/types/dashboard.types";
+  productFlashSaleSummaryQuery,
+} from "@/queries/flashSale.queries";
+import { adminOrdersQuery } from "@/queries/order.queries";
+import { adminProductQuery, adminProductsQuery } from "@/queries/product.queries";
+import { dashboardKeys } from "@/queries/queryKeys";
+import { dashboardStatsQuery } from "@/queries/stats.queries";
+import { unwrapResult } from "@/queries/unwrapResult";
+import type { FlashSaleHistoryQuery, OrderStatus, ProductListQuery } from "@/types/dashboard.types";
+import type { ICategoryFormValues } from "@/zod/category.validation";
 import type { IFlashSalePayload } from "@/zod/flashSale.validation";
 import type { IProductFormValues } from "@/zod/product.validation";
 
@@ -31,7 +37,13 @@ export const useAdminProduct = (id: string) => useQuery(adminProductQuery(id));
 
 export const useFlashSaleProducts = (query: ProductListQuery) => useQuery(flashSaleQuery(query));
 
+export const useFlashSaleHistory = (query: FlashSaleHistoryQuery) => useQuery(flashSaleHistoryQuery(query));
+
+export const useProductFlashSaleSummary = (id: string) => useQuery(productFlashSaleSummaryQuery(id));
+
 export const useAdminOrders = () => useQuery(adminOrdersQuery);
+
+export const useDashboardStats = () => useQuery(dashboardStatsQuery);
 
 export function useCategories() {
   const query = useQuery(categoriesQuery);
@@ -49,14 +61,60 @@ export function useCategories() {
 
 /**
  * Shared success handling: refresh every product list, page and detail (they
- * all live under one key prefix), then confirm.
+ * all live under one key prefix) and the overview stats, then confirm.
  */
 function useRefreshWithToast(queryKey: readonly unknown[]) {
   const queryClient = useQueryClient();
   return (message: string) => {
     toast.success(message);
-    return queryClient.invalidateQueries({ queryKey });
+    return Promise.all([
+      queryClient.invalidateQueries({ queryKey }),
+      queryClient.invalidateQueries({ queryKey: dashboardKeys.stats }),
+    ]);
   };
+}
+
+export const useAdminCategories = () => useQuery(adminCategoriesQuery);
+
+export function useSaveCategory() {
+  const onSaved = useRefreshWithToast(dashboardKeys.categories);
+
+  return useMutation({
+    mutationFn: async ({ id, values }: { id?: string; values: ICategoryFormValues }) => {
+      const result = await saveCategoryAction(id, values);
+      if (!result.success) throw new Error(result.message);
+      return result.message;
+    },
+    onSuccess: onSaved,
+  });
+}
+
+export function useDeleteCategory() {
+  const onDeleted = useRefreshWithToast(dashboardKeys.categories);
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const result = await deleteCategoryAction(id);
+      if (!result.success) throw new Error(result.message);
+      return result.message;
+    },
+    onSuccess: onDeleted,
+    onError: (error) => toast.error(error.message),
+  });
+}
+
+export function useImportDemoCategories() {
+  const onImported = useRefreshWithToast(dashboardKeys.categories);
+
+  return useMutation({
+    mutationFn: async () => {
+      const result = await importDemoCategoriesAction();
+      if (!result.success) throw new Error(result.message);
+      return result.message;
+    },
+    onSuccess: onImported,
+    onError: (error) => toast.error(error.message),
+  });
 }
 
 export function useSaveProduct() {
@@ -111,15 +169,17 @@ export function useRemoveFlashSale() {
   });
 }
 
-export function useMarkOrderDelivered() {
-  const onDelivered = useRefreshWithToast(dashboardKeys.orders);
+export function useUpdateOrderStatus() {
+  // A cancel puts the stock back, so products refresh along with orders.
+  const onUpdated = useRefreshWithToast(dashboardKeys.all);
 
   return useMutation({
-    mutationFn: async (id: string) => {
-      await unwrapResult(markOrderDeliveredAction(id));
-      return "Order marked as delivered";
+    mutationFn: async ({ id, status }: { id: string; status: OrderStatus }) => {
+      const result = await updateOrderStatusAction(id, status);
+      if (!result.success) throw new Error(result.message);
+      return result.message;
     },
-    onSuccess: onDelivered,
+    onSuccess: onUpdated,
     onError: (error) => toast.error(error.message),
   });
 }

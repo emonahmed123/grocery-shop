@@ -2,19 +2,6 @@ import Container from "@/components/mainlayout/layout/Container";
 import { assetUrl } from "@/lib/assets";
 import Image from "next/image";
 
-const stores = [
-  {
-    name: "App Store",
-    href: "https://www.apple.com/app-store/",
-    image: "/assets/images/app-store.png",
-  },
-  {
-    name: "Google Play",
-    href: "https://play.google.com/store",
-    image: "/assets/images/play-store.png",
-  },
-];
-
 const DownloadApp = () => {
   return (
     <section className="overflow-hidden bg-fill-neutral pt-1.5 md:pt-0">
@@ -24,30 +11,11 @@ const DownloadApp = () => {
             <h2 className="mb-3 font-manrope text-2xl leading-9 font-bold text-foreground lg:mb-4 lg:text-3xl lg:leading-snug xl:text-4xl">
               Make your online shop easier with our mobile app
             </h2>
-            <p className="pb-5 text-base leading-7 text-muted-foreground lg:pb-7 xl:pr-8 xl:leading-9">
+            <p className="text-base leading-7 text-muted-foreground xl:pr-8 xl:leading-9">
               BoroBazar makes online grocery shopping fast and easy. Get
               groceries delivered and order the best of seasonal farm fresh
               food.
             </p>
-            <div className="flex justify-center gap-2 md:justify-start md:gap-3">
-              {stores.map((store) => (
-                <a
-                  key={store.name}
-                  href={store.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex transition duration-200 hover:opacity-80"
-                >
-                  <Image
-                    src={assetUrl(store.image)}
-                    alt={`Download on ${store.name}`}
-                    width={170}
-                    height={56}
-                    className="w-36 rounded-md lg:w-44"
-                  />
-                </a>
-              ))}
-            </div>
           </div>
         </div>
         <div className="-mr-16 hidden items-end pl-4 md:flex md:max-w-120 lg:-mr-8 lg:max-w-135">

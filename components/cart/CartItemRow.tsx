@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import QuantityCounter from "@/components/cart/QuantityCounter";
+import ProductImage from "@/components/shared/ProductImage";
 import { SheetClose } from "@/components/ui/sheet";
-import { assetUrl, formatPrice } from "@/lib/assets";
+import { formatPrice } from "@/lib/assets";
 import { type CartItem, useCartActions } from "@/store/cart.store";
 
 const CartItemRow = ({ item }: { item: CartItem }) => {
@@ -16,7 +16,7 @@ const CartItemRow = ({ item }: { item: CartItem }) => {
     <li className="flex gap-4 py-4">
       <SheetClose asChild>
         <Link href={href} className="relative size-18 shrink-0 overflow-hidden rounded-md bg-fill-thumbnail">
-          <Image src={assetUrl(item.image)} alt={item.name} fill sizes="72px" className="object-contain" />
+          <ProductImage src={item.image} alt={item.name} sizes="72px" className="object-contain" />
         </Link>
       </SheetClose>
 
@@ -36,6 +36,7 @@ const CartItemRow = ({ item }: { item: CartItem }) => {
           label={item.name}
           onDecrease={() => decreaseItem(item.key)}
           onIncrease={() => increaseItem(item.key)}
+          canIncrease={item.quantity < item.stock}
         />
       </div>
 

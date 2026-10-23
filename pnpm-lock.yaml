@@ -17,6 +17,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.104.5
         version: 5.104.5(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(csstype@3.2.3)(react@19.3.1)
+      '@tanstack/react-query-next-experimental':
+        specifier: ^5.104.5
+        version: 5.104.5(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(next@16.4.2(@babel/core@7.29.0)(@types/node@20.19.35)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
       '@tanstack/react-table':
         specifier: ^9.3.1
         version: 9.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1679,6 +1682,17 @@ packages:
     peerDependencies:
       '@tanstack/react-query': ^5.104.5
       '@types/react': ^18 || ^19
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@tanstack/react-query-next-experimental@5.104.5':
+    resolution: {integrity: sha512-IpxTRHFszxW1YvLEDuoAwKx9tsXUUBpq432X9BvfO8eTgzw9bKKtCp4ekVfmnP1LSl6WHxzB1eizN6JHek8qMA==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.104.5
+      '@types/react': ^18 || ^19
+      next: ^13 || ^14 || ^15 || ^16
       react: ^18 || ^19
     peerDependenciesMeta:
       '@types/react':
@@ -5704,6 +5718,14 @@ snapshots:
       '@types/react': 19.3.0
     transitivePeerDependencies:
       - csstype
+
+  '@tanstack/react-query-next-experimental@5.104.5(@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(next@16.4.2(@babel/core@7.29.0)(@types/node@20.19.35)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)':
+    dependencies:
+      '@tanstack/react-query': 5.104.5(@types/react@19.3.0)(react@19.3.1)
+      next: 16.4.2(@babel/core@7.29.0)(@types/node@20.19.35)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      react: 19.3.1
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   '@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1)':
     dependencies:

@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatPrice } from "@/lib/assets";
-import { formatDate, formatOrderId } from "@/lib/format";
+import { formatDate, formatOrderId, formatPaymentMethod } from "@/lib/format";
 import type { Order } from "@/types/order.types";
 
 const OrdersTable = ({ orders }: { orders: Order[] }) => (
@@ -20,6 +20,7 @@ const OrdersTable = ({ orders }: { orders: Order[] }) => (
         <TableHead>Order</TableHead>
         <TableHead>Date</TableHead>
         <TableHead>Products</TableHead>
+        <TableHead>Payment</TableHead>
         <TableHead>Status</TableHead>
         <TableHead className="text-right">Total</TableHead>
       </TableRow>
@@ -33,24 +34,36 @@ const OrdersTable = ({ orders }: { orders: Order[] }) => (
           <TableCell>{formatDate(order.createdAt)}</TableCell>
           <TableCell>
             <ul className="flex flex-col gap-2">
-              {order.products.map((product) => (
-                <li key={product.id} className="flex items-center gap-3">
-                  {product.image && (
+              {order.items.map((item, index) => (
+                <li key={`${item.productId}-${item.variation ?? index}`} className="flex items-center gap-3">
+                  {item.image && (
                     <div className="relative size-10 shrink-0 overflow-hidden rounded-md border">
                       {/* Product images come from any host the admin used, so skip optimization. */}
-                      <Image src={product.image} alt="" fill sizes="40px" unoptimized className="object-cover" />
+                      <Image src={item.image} alt="" fill sizes="40px" unoptimized className="object-cover" />
                     </div>
                   )}
-                  <span className="max-w-56 truncate">{product.name}</span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="max-w-56 truncate">{item.name}</span>
+                    {item.quantity !== undefined && (
+                      <span className="text-xs text-muted-foreground">
+                        {item.quantity} x {item.price === undefined ? "" : formatPrice(item.price)}
+                        {item.variation && ` · ${item.variation}`}
+                      </span>
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>
           </TableCell>
+          <TableCell>{formatPaymentMethod(order.paymentMethod)}</TableCell>
           <TableCell>
             <OrderStatusBadge status={order.status} />
           </TableCell>
           <TableCell className="text-right">
             <span className="font-semibold">{formatPrice(order.totalAmount)}</span>
+            {order.deliveryFee !== undefined && (
+              <span className="block text-xs text-muted-foreground">incl. {formatPrice(order.deliveryFee)} delivery</span>
+            )}
           </TableCell>
         </TableRow>
       ))}

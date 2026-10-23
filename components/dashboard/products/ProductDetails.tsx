@@ -14,6 +14,7 @@ import {
   StockBadge,
 } from "@/components/dashboard/products/ProductBadges";
 import { CategoryName, ProductThumb } from "@/components/dashboard/products/productColumns";
+import ProductFlashSaleHistory from "@/components/dashboard/products/ProductFlashSaleHistory";
 import ProductDetailsSkeleton from "@/components/dashboard/products/ProductDetailsSkeleton";
 import ProductFormDialog from "@/components/dashboard/products/ProductFormDialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -150,7 +151,9 @@ const FlashSaleCard = ({ product }: { product: AdminProduct }) => {
         open={confirming}
         onOpenChange={setConfirming}
         title="Remove the flash sale?"
-        description={<>{product.name} goes back to its normal price straight away.</>}
+        description={
+          <>{product.name} goes back to its normal price straight away. The sale stays in the flash sale history.</>
+        }
         confirmLabel="Remove"
         destructive
         isPending={removeFlashSale.isPending}
@@ -292,6 +295,8 @@ const ProductDetails = ({ id }: { id: string }) => {
               {product.description || "No description yet."}
             </p>
           </section>
+
+          <ProductFlashSaleHistory productId={product.id} />
         </div>
       </div>
 

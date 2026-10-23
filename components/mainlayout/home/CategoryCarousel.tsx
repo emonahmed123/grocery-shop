@@ -7,14 +7,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { assetUrl } from "@/lib/assets";
-import categoriesJson from "@/public/data/categories.json";
-import type { Category } from "@/types/category";
+import { getStoreCategories } from "@/services/category.services";
 import Image from "next/image";
 import Link from "next/link";
 
-const CategoryCarousel = () => {
-  const categories: Category[] = categoriesJson;
+const CategoryCarousel = async () => {
+  const categories = await getStoreCategories();
 
   return (
     <Container className="mb-12 lg:mb-14 xl:mb-16">
@@ -35,19 +33,21 @@ const CategoryCarousel = () => {
                 <div className="mx-auto mb-3.5 flex aspect-square w-full max-w-44.5 items-center overflow-hidden rounded-full bg-fill-thumbnail xl:mb-4">
                   <div className="flex size-full shrink-0 -translate-x-full scale-50 transform-gpu items-center justify-center transition-all duration-700 group-hover:translate-x-0 group-hover:scale-100">
                     <Image
-                      src={assetUrl(category.image.thumbnail)}
+                      src={category.image.thumbnail}
                       alt=""
                       width={178}
                       height={178}
+                      unoptimized
                       className="aspect-square size-full rounded-full object-cover"
                     />
                   </div>
                   <div className="flex size-full shrink-0 -translate-x-full scale-100 transform-gpu items-center justify-center transition-all duration-700 group-hover:translate-x-0 group-hover:scale-50">
                     <Image
-                      src={assetUrl(category.image.thumbnail)}
+                      src={category.image.thumbnail}
                       alt={category.name}
                       width={178}
                       height={178}
+                      unoptimized
                       className="aspect-square size-full rounded-full object-cover"
                     />
                   </div>

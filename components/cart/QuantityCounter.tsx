@@ -8,6 +8,8 @@ type QuantityCounterProps = {
   label: string;
   onDecrease: () => void;
   onIncrease: () => void;
+  /** False once the quantity reaches the stock. */
+  canIncrease?: boolean;
   /** `card`: white pill over the product image. `compact`: small row in the cart drawer. */
   variant?: "card" | "compact";
 };
@@ -17,6 +19,7 @@ const QuantityCounter = ({
   label,
   onDecrease,
   onIncrease,
+  canIncrease = true,
   variant = "card",
 }: QuantityCounterProps) => {
   const isCard = variant === "card";
@@ -47,6 +50,7 @@ const QuantityCounter = ({
         variant={isCard ? "ghost" : "outline"}
         size={isCard ? "icon-circle" : "icon-circle-sm"}
         aria-label={`Increase ${label} quantity`}
+        disabled={!canIncrease}
         onClick={onIncrease}
       >
         <Plus />

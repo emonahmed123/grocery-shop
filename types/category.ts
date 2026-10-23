@@ -1,15 +1,17 @@
+/** A store category, from the backend or the built-in demo list. */
 export type Category = {
-  id: number;
+  id: string;
   name: string;
   slug: string;
+  /** Full image URLs. */
   image: {
-    id: number;
     thumbnail: string;
     original: string;
   };
-  icon: string;
+  /** Small icon for the search filters; the thumbnail is used when there is none. */
+  icon?: string;
   children?: {
-    id: number;
+    id: string;
     name: string;
     slug: string;
   }[];

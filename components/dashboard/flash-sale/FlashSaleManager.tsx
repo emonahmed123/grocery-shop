@@ -6,12 +6,14 @@ import { useMemo, useState } from "react";
 import ConfirmDialog from "@/components/dashboard/ConfirmDialog";
 import { flashSaleColumns } from "@/components/dashboard/flash-sale/flashSaleColumns";
 import FlashSaleDialog from "@/components/dashboard/flash-sale/FlashSaleDialog";
+import FlashSaleHistory from "@/components/dashboard/flash-sale/FlashSaleHistory";
 import PageHeader from "@/components/dashboard/PageHeader";
 import DataTable, { type DataTableActions } from "@/components/shared/table/DataTable";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFlashSaleProducts, useRemoveFlashSale } from "@/hooks/useDashboard";
 import { useListQuery } from "@/hooks/useListQuery";
-import { DEFAULT_FLASH_SALE_QUERY } from "@/lib/dashboardQueries";
+import { DEFAULT_FLASH_SALE_QUERY } from "@/queries/flashSale.queries";
 import type { AdminProduct } from "@/types/dashboard.types";
 
 const NO_PRODUCTS: AdminProduct[] = [];
@@ -54,28 +56,40 @@ const FlashSaleManager = () => {
         }
       />
 
-      <DataTable
-        data={page?.data ?? NO_PRODUCTS}
-        columns={flashSaleColumns}
-        getRowId={getProductId}
-        actions={actions}
-        toolbarAction={
-          <Button variant="brand" size="lg" className="h-12" onClick={() => setCreating(true)}>
-            <Zap data-icon="inline-start" />
-            Create Flash Sale
-          </Button>
-        }
-        search={{ placeholder: "Search flash sale products..." }}
-        server={{ ...tableState, rowCount: total, isFetching: isFetching && isPlaceholderData }}
-        isLoading={isPending}
-        error={error?.message}
-        onRetry={() => refetch()}
-        emptyMessage={
-          query.searchTerm
-            ? "No flash sale products match your search."
-            : "No flash sale is running. Scheduled sales appear here once they start."
-        }
-      />
+      {/* Tabs unmount the hidden panel, so the history loads only when opened. */}
+      <Tabs defaultValue="live">
+        <TabsList variant="line">
+          <TabsTrigger value="live">Live now</TabsTrigger>
+          <TabsTrigger value="history">History</TabsTrigger>
+        </TabsList>
+        <TabsContent value="live">
+          <DataTable
+            data={page?.data ?? NO_PRODUCTS}
+            columns={flashSaleColumns}
+            getRowId={getProductId}
+            actions={actions}
+            toolbarAction={
+              <Button variant="brand" size="lg" className="h-12" onClick={() => setCreating(true)}>
+                <Zap data-icon="inline-start" />
+                Create Flash Sale
+              </Button>
+            }
+            search={{ placeholder: "Search flash sale products..." }}
+            server={{ ...tableState, rowCount: total, isFetching: isFetching && isPlaceholderData }}
+            isLoading={isPending}
+            error={error?.message}
+            onRetry={() => refetch()}
+            emptyMessage={
+              query.searchTerm
+                ? "No flash sale products match your search."
+                : "No flash sale is running. Scheduled sales appear here once they start."
+            }
+          />
+        </TabsContent>
+        <TabsContent value="history">
+          <FlashSaleHistory />
+        </TabsContent>
+      </Tabs>
 
       <FlashSaleDialog open={creating} onOpenChange={setCreating} />
 
@@ -85,8 +99,8 @@ const FlashSaleManager = () => {
         title="Remove from the flash sale?"
         description={
           <>
-            <strong className="text-foreground">{toRemove.product?.name}</strong> goes back to its normal price
-            straight away.
+            <strong className="text-foreground">{toRemove.product?.name}</strong> goes back to its normal price straight
+            away. The sale and what it sold stay in the History tab.
           </>
         }
         confirmLabel="Remove"

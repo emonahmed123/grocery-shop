@@ -1,4 +1,14 @@
-import { KeyRound, LayoutDashboard, type LucideIcon, Package, ShoppingBag, Store, UserRound, Zap } from "lucide-react";
+import {
+  KeyRound,
+  LayoutDashboard,
+  LayoutGrid,
+  type LucideIcon,
+  Package,
+  ShoppingBag,
+  Store,
+  UserRound,
+  Zap,
+} from "lucide-react";
 
 export interface DashboardNavItem {
   href: string;
@@ -12,6 +22,7 @@ export const dashboardNav: { title: string; items: DashboardNavItem[] }[] = [
     items: [
       { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { href: "/dashboard/products", label: "Products", icon: Package },
+      { href: "/dashboard/categories", label: "Categories", icon: LayoutGrid },
       { href: "/dashboard/flash-sale", label: "Flash Sale", icon: Zap },
       { href: "/dashboard/orders", label: "All Orders", icon: ShoppingBag },
     ],
