@@ -2,7 +2,7 @@
 export const authRoutes = ["/login", "/register"];
 
 /** Pages that need a logged-in user; guests are sent to login. */
-export const protectedRoutes = ["/checkout", "/my-account", "/dashboard*"];
+export const protectedRoutes = ["/checkout", "/my-account", "/dashboard"];
 
 const matches = (pathname: string, routes: string[]) =>
   routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
