@@ -3,7 +3,6 @@ import "server-only";
 import axios, { type AxiosRequestConfig } from "axios";
 import { cookies } from "next/headers";
 
-import { AUTH_COOKIES } from "@/lib/tokenUtils";
 import type { ApiResponse } from "@/types/api.types";
 
 /** Base axios instance for the backend. Safe to use where `cookies()` is unavailable (proxy). */
@@ -22,14 +21,17 @@ export function createApiClient(config?: AxiosRequestConfig) {
   });
 }
 
-// Runs on the Next.js server, which reads the browser's httpOnly cookie and
-// sends the token the way the backend expects: `Authorization: Bearer <token>`.
+// Runs on the Next.js server, which reads the browser's httpOnly cookies and
+// forwards them; the backend reads the access token from the `accessToken` cookie.
 async function authedClient() {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get(AUTH_COOKIES.accessToken)?.value;
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; ");
 
   return createApiClient({
-    headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
+    headers: { Cookie: cookieHeader },
   });
 }
 
