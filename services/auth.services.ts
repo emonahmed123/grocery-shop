@@ -21,6 +21,7 @@ const AUTH_ENDPOINTS = {
   register: "/auth/signup",
   me: "/auth/me",
   refreshToken: "/auth/refresh-token",
+  logout: "/auth/logout",
   // Older backend deployments lack these two; the forms report that clearly.
   forgotPassword: "/auth/forget-password",
   resetPassword: "/auth/reset-password",
@@ -69,6 +70,19 @@ export async function registerUser(payload: NewAccount) {
 export async function getMe() {
   const response = await httpClient.get<BackendUser>(AUTH_ENDPOINTS.me);
   return { message: response.message, data: toAuthUser(response.data) };
+}
+
+/**
+ * Tells the backend the user logged out, so it clears the auth cookies it set
+ * on its own domain. Best effort: older backends have no logout route, and the
+ * store's own cookies are cleared either way.
+ */
+export async function logout() {
+  try {
+    await httpClient.post<null>(AUTH_ENDPOINTS.logout);
+  } catch {
+    // Nothing to undo: the tokens are stateless and expire on their own.
+  }
 }
 
 /** Asks the backend to email a reset link to this address. */
