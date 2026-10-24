@@ -4,12 +4,17 @@ export const authRoutes = ["/login", "/register"];
 /** Pages that need a logged-in user; guests are sent to login. */
 export const protectedRoutes = ["/checkout", "/my-account", "/dashboard"];
 
+/** Pages only admins may open; other users are sent to their account. */
+export const adminRoutes = ["/dashboard"];
+
 const matches = (pathname: string, routes: string[]) =>
   routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 
 export const isAuthRoute = (pathname: string) => matches(pathname, authRoutes);
 
 export const isProtectedRoute = (pathname: string) => matches(pathname, protectedRoutes);
+
+export const isAdminRoute = (pathname: string) => matches(pathname, adminRoutes);
 
 const SAME_SITE_BASE = "http://same-site.invalid";
 

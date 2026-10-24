@@ -1,3 +1,5 @@
+import jwt, { type JwtPayload } from "jsonwebtoken";
+
 import type { AuthTokens } from "@/types/auth.types";
 
 export const AUTH_COOKIES = {
@@ -14,25 +16,36 @@ type CookieOptions = {
   maxAge?: number;
 };
 
-/** Reads a JWT's payload (the middle, base64url part) without verifying it. */
-function decodeJwtPayload(token: string): { exp?: number } | null {
+/**
+ * Checks the access token's signature and expiry with the backend's
+ * `JWT_ACCESS_SECRET`. Returns the payload, or null when the token is expired,
+ * forged or the secret is not set. Server only: the secret never reaches the browser.
+ */
+export function verifyAccessToken(token: string) {
+  const secret = process.env.JWT_ACCESS_SECRET;
+  if (!secret) return null;
+
   try {
-    const payload = token.split(".")[1];
-    if (!payload) return null;
-    const json = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-    const decoded: unknown = JSON.parse(json);
-    return decoded && typeof decoded === "object" ? decoded : null;
+    const decoded = jwt.verify(token, secret);
+    return typeof decoded === "string" ? null : (decoded as JwtPayload);
   } catch {
     return null;
   }
 }
 
-/**
- * Seconds until the token's `exp`. The signature is not checked here: that is
- * the backend's job, so this frontend never needs the JWT secret.
- */
+/** Reads a JWT's payload without verifying it; null when it is malformed. */
+function decodeToken(token: string) {
+  try {
+    // jwt.decode throws on a payload that is not JSON, so a junk cookie must not crash the proxy.
+    return jwt.decode(token, { json: true });
+  } catch {
+    return null;
+  }
+}
+
+/** Seconds until the token's `exp`, read without checking the signature. */
 export function getTokenSecondsRemaining(token: string) {
-  const payload = decodeJwtPayload(token);
+  const payload = decodeToken(token);
   if (!payload) return 0;
   if (typeof payload.exp !== "number") return Number.POSITIVE_INFINITY;
 
