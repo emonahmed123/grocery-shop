@@ -1,10 +1,22 @@
-// import { Button } from "@nextui-org/react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import heroBanner from "@/public/images/banner-2.png";
 
 const Banner = () => {
   return (
-    <div className='w-full bg-no-repeat bg-cover bg-center flex items-center  bg-fill-thumbnail min-h-[400px] md:min-h-[460px] lg:min-h-[500px] xl:min-h-[550px] 2xl:min-h-[650px] py-20 py:pt-24 mb-5   bg-[url("https://borobazar.vercel.app/assets/images/hero/banner-2.png")]  font-manrope'>
+    <div className="relative isolate w-full overflow-hidden flex items-center min-h-[400px] md:min-h-[460px] lg:min-h-[500px] xl:min-h-[550px] 2xl:min-h-[650px] py-20 py:pt-24 mb-5 font-manrope">
+      {/* LCP image: next/image serves resized WebP per viewport, preloads it and shows a blur until it loads. */}
+      <Image
+        src={heroBanner}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        quality={75}
+        placeholder="blur"
+        className="-z-10 object-cover object-center"
+      />
       <div className="mx-auto h-full flex flex-col text-center px-6 xl:max-w-[750px] 2xl:max-w-[850px] max-w-[480px] md:max-w-[550px]">
         <div className="text-center">
           <h1 className=" text-3xl md:text-4xl font-manrope font-extrabold leading-snug md:leading-tight xl:leading-[1.3em] mb-3 md:mb-4 xl:mb-3 -mt-2 xl:-mt-3 2xl:-mt-4 text-brand-tree-dark xl:text-5xl 2xl:text-[55px] text-[#0b4635]">
