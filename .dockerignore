@@ -1,0 +1,27 @@
+# Rebuilt inside the image
+node_modules
+.next
+out
+build
+coverage
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets: pass env vars at runtime instead
+.env*
+!.env.example
+*.pem
+
+# Not needed in the build context
+.git
+.gitignore
+.vercel
+.claude
+.vscode
+.idea
+Dockerfile
+.dockerignore
+compose.yaml
+npm-debug.log*
+.pnpm-debug.log*
+.DS_Store

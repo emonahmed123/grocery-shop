@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    image: borobazar:latest
+    ports:
+      - "3000:3000"
+    # BACKEND_URL, JWT_ACCESS_SECRET and IMGBB_API_KEY (see .env.example).
+    # Inside the container, "localhost" is the container itself: for a backend
+    # running on your machine use BACKEND_URL=http://host.docker.internal:5000.
+    env_file:
+      - .env.local
+    extra_hosts:
+      # Makes host.docker.internal resolve on Linux too (built in on Docker Desktop).
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

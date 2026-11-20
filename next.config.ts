@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The Docker build sets BUILD_STANDALONE=1 to get a self-contained server in
+  // .next/standalone. Vercel and local builds are left on the default output.
+  output: process.env.BUILD_STANDALONE === "1" ? "standalone" : undefined,
   experimental: {
     serverActions: {
       // Image uploads go through a server action, one image (up to 4 MB) per
