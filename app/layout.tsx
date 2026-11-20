@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Geist, Geist_Mono, Inter, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { siteOwner } from "@/lib/siteConfig";
@@ -41,6 +42,8 @@ export default function RootLayout({
   return (
     // Font variables live on <html> so `--font-sans` in :root can resolve them.
     <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
+      {/* Loads on every route; also initialises window.dataLayer. */}
+      <GoogleTagManager gtmId="GTM-T75R424H" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
