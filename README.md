@@ -13,6 +13,7 @@ The data and business rules live in a separate Express + MongoDB API: [grocery-s
 - [File structure](#file-structure)
 - [Frontend architecture](#frontend-architecture)
 - [Deployment](#deployment)
+- [Docker](#docker)
 
 ## Project overview
 
@@ -195,3 +196,24 @@ The app is deployed on Vercel.
 1. Set `BACKEND_URL` and `IMGBB_API_KEY` in **Project Settings → Environment Variables**.
 2. Set **Project Settings → Build and Deployment → Node.js Version** to **24.x**. Next.js 16 does not run on older versions, and Vercel no longer builds with 20.x. `package.json` also pins it through `engines`.
 3. `package.json#packageManager` pins pnpm 10. Without it, Vercel picks pnpm from the project's creation date (pnpm 9 for older projects), and pnpm 9 cannot read this repo's `pnpm-workspace.yaml`. The build, install and output settings stay on their defaults.
+
+## Docker
+
+The `Dockerfile` builds a production image: Node 24 on Alpine, pnpm through Corepack, and Next.js [standalone output](https://nextjs.org/docs/app/api-reference/config/next-config-js/output) (enabled only inside the image through `BUILD_STANDALONE=1`, so Vercel and local builds are unchanged). The server runs as a non-root user on port 3000.
+
+The environment variables are read at runtime, not at build time, so one image works in any environment and no secrets are baked into it.
+
+With Docker Compose, using the values in `.env.local`:
+
+```bash
+docker compose up --build    # http://localhost:3000
+```
+
+Or with plain Docker:
+
+```bash
+docker build -t borobazar .
+docker run -p 3000:3000 --env-file .env.local borobazar
+```
+
+Inside the container, `localhost` means the container itself. If the backend runs on your machine, set `BACKEND_URL=http://host.docker.internal:5000`.
