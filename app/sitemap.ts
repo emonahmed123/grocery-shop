@@ -21,6 +21,18 @@ const STATIC_PAGES: { path: string; changeFrequency: "daily" | "weekly" | "yearl
   { path: "/terms", changeFrequency: "yearly", priority: 0.2 },
 ];
 
+/**
+ * Next.js writes sitemap values into the XML as they are, so characters such
+ * as the `&` in an image URL's query string must be escaped here.
+ */
+const escapeXml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+
 /** Every product the store shows, fetched page by page. */
 async function getAllProducts(): Promise<Product[]> {
   const first = await getProducts({ page: 1, limit: PAGE_SIZE });
@@ -34,7 +46,7 @@ async function getAllProducts(): Promise<Product[]> {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages: MetadataRoute.Sitemap = STATIC_PAGES.map(({ path, changeFrequency, priority }) => ({
-    url: `${siteUrl}${path}`,
+    url: escapeXml(`${siteUrl}${path}`),
     changeFrequency,
     priority,
   }));
@@ -45,10 +57,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...pages,
     ...products.map((product) => ({
-      url: `${siteUrl}/products/${encodeURIComponent(product.slug)}`,
+      url: escapeXml(`${siteUrl}/products/${encodeURIComponent(product.slug)}`),
       changeFrequency: "weekly" as const,
       priority: 0.7,
-      images: product.image ? [product.image] : undefined,
+      images: product.image ? [escapeXml(product.image)] : undefined,
     })),
   ];
 }
