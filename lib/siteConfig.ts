@@ -9,3 +9,9 @@ export const siteOwner = {
   facebook: "https://www.facebook.com/Emonahmed65",
   linkedin: "https://www.linkedin.com/in/emon-ahmed123",
 };
+
+/**
+ * The live store's address, used for absolute links such as the sitemap.
+ * Set SITE_URL to override it (for example after moving to a custom domain).
+ */
+export const siteUrl = (process.env.SITE_URL ?? "https://grocery-store-sable.vercel.app").replace(/\/$/, "");
