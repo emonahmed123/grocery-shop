@@ -4,6 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* used by components/ui/message-scroller.tsx */
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+@utility scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.21 0.03 263.61);
